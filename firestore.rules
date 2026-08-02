@@ -1,0 +1,177 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helper Functions ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Get the authenticated user's profile document
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // Check if user profile exists
+    function hasUserProfile() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    // Verify if the user belongs to the same tenant as the resource being accessed
+    function isSameTenant(resourceTenantId) {
+      return isSignedIn() && hasUserProfile() && getUserData().tenantId == resourceTenantId;
+    }
+
+    // Verify if the user is at least an accountant or admin (for writing financial data)
+    function isAccountantOrAdmin() {
+      return isSignedIn() && hasUserProfile() && (getUserData().role == 'admin' || getUserData().role == 'accountant');
+    }
+
+    // Verify if the user is at least sales, accountant or admin (for writing invoices/contacts)
+    function isSalesOrHigher() {
+      return isSignedIn() && hasUserProfile() && (getUserData().role == 'admin' || getUserData().role == 'accountant' || getUserData().role == 'sales');
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // --- Enterprise Entities Rules ---
+
+    // Tenancy matching
+    match /tenants/{tenantId} {
+      allow read: if isSignedIn() && hasUserProfile() && getUserData().tenantId == tenantId;
+      allow write: if isSignedIn() && isValidId(tenantId) && hasUserProfile() && getUserData().tenantId == tenantId && getUserData().role == 'admin';
+    }
+
+    // Users rules
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || (hasUserProfile() && getUserData().tenantId == resource.data.tenantId));
+      allow create: if isSignedIn() && isValidId(userId) && request.auth.uid == userId;
+      allow update: if isSignedIn() && (
+        (request.auth.uid == userId && request.resource.data.role == resource.data.role && request.resource.data.tenantId == resource.data.tenantId)
+        || (hasUserProfile() && getUserData().tenantId == resource.data.tenantId && getUserData().role == 'admin')
+      );
+      allow delete: if isSignedIn() && hasUserProfile() && getUserData().tenantId == resource.data.tenantId && getUserData().role == 'admin' && request.auth.uid != userId;
+    }
+
+    // Accounts
+    match /accounts/{accountId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(accountId) && isSameTenant(request.resource.data.tenantId) && isAccountantOrAdmin();
+    }
+
+    // Contacts
+    match /contacts/{contactId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(contactId) && isSameTenant(request.resource.data.tenantId) && isSalesOrHigher();
+    }
+
+    // Invoices
+    match /invoices/{invoiceId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(invoiceId) && isSameTenant(request.resource.data.tenantId) && isSalesOrHigher();
+    }
+
+    // Expenses
+    match /expenses/{expenseId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(expenseId) && isSameTenant(request.resource.data.tenantId) && isAccountantOrAdmin();
+    }
+
+    // Bank Transactions feeds
+    match /bankTransactions/{btId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(btId) && isSameTenant(request.resource.data.tenantId) && isAccountantOrAdmin();
+    }
+
+    // Products / Stock Inventory
+    match /products/{productId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(productId) && isSameTenant(request.resource.data.tenantId) && isSalesOrHigher();
+    }
+
+    // Employees
+    match /employees/{employeeId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow create: if isSignedIn() && isValidId(employeeId) && isSameTenant(request.resource.data.tenantId) && (getUserData().role == 'admin' || getUserData().role == 'hr');
+      allow update: if isSignedIn() && isSameTenant(resource.data.tenantId) && (
+        getUserData().role == 'admin' || getUserData().role == 'hr' || (getUserData().role == 'employee' && resource.data.email == getUserData().email)
+      );
+      allow delete: if isSignedIn() && isSameTenant(resource.data.tenantId) && getUserData().role == 'admin';
+    }
+
+    // Tamper-proof Audit Logs
+    match /AuditLog/{logId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow create: if isSignedIn() && isSameTenant(request.resource.data.tenantId);
+      allow update, delete: if false; // Immutable audit logs
+    }
+    match /audit_logs/{logId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow create: if isSignedIn() && isSameTenant(request.resource.data.tenantId);
+      allow update, delete: if false; // Immutable audit logs
+    }
+    match /audit_log/{logId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow create: if isSignedIn() && isSameTenant(request.resource.data.tenantId);
+      allow update, delete: if false; // Immutable audit logs
+    }
+
+    // Payroll & HR processes
+    match /payroll/{payrollId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(payrollId) && isSameTenant(request.resource.data.tenantId) && (getUserData().role == 'admin' || getUserData().role == 'hr' || getUserData().role == 'accountant');
+    }
+    match /attendance/{attId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(attId) && isSameTenant(request.resource.data.tenantId) && (getUserData().role == 'admin' || getUserData().role == 'hr');
+    }
+    match /leaves/{leaveId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(leaveId) && isSameTenant(request.resource.data.tenantId) && (getUserData().role == 'admin' || getUserData().role == 'hr' || getUserData().role == 'employee');
+    }
+
+    // Purchasing, Inventory and Shipping
+    match /purchase_orders/{poId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(poId) && isSameTenant(request.resource.data.tenantId) && isSalesOrHigher();
+    }
+    match /shipping_transactions/{shipId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(shipId) && isSameTenant(request.resource.data.tenantId) && isSalesOrHigher();
+    }
+    match /workflow_rules/{ruleId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(ruleId) && isSameTenant(request.resource.data.tenantId) && getUserData().role == 'admin';
+    }
+    match /approvals/{approvalId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(approvalId) && isSameTenant(request.resource.data.tenantId);
+    }
+    match /company_settings/{settingId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(settingId) && isSameTenant(request.resource.data.tenantId) && getUserData().role == 'admin';
+    }
+
+    // Accounting journal entries
+    match /accountingEntries/{entryId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(entryId) && isSameTenant(request.resource.data.tenantId) && isAccountantOrAdmin();
+    }
+    match /accountingEntryDetails/{detailId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(detailId) && isSameTenant(request.resource.data.tenantId) && isAccountantOrAdmin();
+    }
+    match /recurring_invoice_templates/{templateId} {
+      allow read: if isSignedIn() && isSameTenant(resource.data.tenantId);
+      allow write: if isSignedIn() && isValidId(templateId) && isSameTenant(request.resource.data.tenantId) && isAccountantOrAdmin();
+    }
+
+  }
+}

@@ -1,0 +1,2846 @@
+{
+  "tenants": [
+    {
+      "id": "tenant-promet-sa",
+      "name": "شركة الهضبة للحلول التقنية",
+      "subdomain": "promet",
+      "plan": "pro",
+      "subscriptionStatus": "active",
+      "subscriptionEndsAt": "2027-01-01T00:00:00Z",
+      "createdAt": "2026-01-01T08:00:00Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "u-1",
+      "tenantId": "tenant-promet-sa",
+      "email": "admin@promet.sa",
+      "name": "أحمد حماد",
+      "role": "admin",
+      "isActive": true,
+      "createdAt": "2026-01-01T08:00:00Z",
+      "username": "admin",
+      "password_hash": "$2b$10$L4HBMIbVQsQ2BbrgNsl6cO5q4sHiqMe5BtBKAhzHUojpSWZdWV0ei",
+      "role_id": 1,
+      "is_active": true
+    },
+    {
+      "id": "u-2",
+      "tenantId": "tenant-promet-sa",
+      "email": "acc@promet.sa",
+      "name": "سارة الشمري",
+      "role": "accountant",
+      "isActive": true,
+      "createdAt": "2026-01-10T09:30:00Z",
+      "username": "acc",
+      "password_hash": "$2b$10$A5IuN3g/F8oQ6nBa0GDMWOVTNRMiuCntoCHJyVzRzMFzPqcAyqvsq",
+      "role_id": 4,
+      "is_active": true
+    },
+    {
+      "id": "u-3",
+      "tenantId": "tenant-promet-sa",
+      "email": "sales@promet.sa",
+      "name": "خالد الحربي",
+      "role": "sales",
+      "isActive": true,
+      "createdAt": "2026-01-15T11:00:00Z",
+      "username": "sales",
+      "password_hash": "$2b$10$7fvet/d8iE0Czqvelu/o3eUrzpUk1YQ.Ao5gE5Vi0SxDyLq5qlb7O",
+      "role_id": 4,
+      "is_active": true
+    },
+    {
+      "id": "u-4",
+      "tenantId": "tenant-promet-sa",
+      "email": "viewer@promet.sa",
+      "name": "محمد القحطاني",
+      "role": "viewer",
+      "isActive": true,
+      "createdAt": "2026-02-01T14:45:00Z",
+      "username": "viewer",
+      "password_hash": "$2b$10$snVq0OXmXD8GklZt3PAjlei7xb8lIDbm5zpcFWStiSIRh0jGLGaYa",
+      "role_id": 4,
+      "is_active": true
+    }
+  ],
+  "accounts": [
+    {
+      "id": "acc-1",
+      "tenantId": "tenant-promet-sa",
+      "code": "1010",
+      "name": "حساب مصرف الراجحي الجاري (البنك)",
+      "type": "asset",
+      "isActive": true,
+      "balance": 145000
+    },
+    {
+      "id": "acc-2",
+      "tenantId": "tenant-promet-sa",
+      "code": "1020",
+      "name": "النقدية في الصندوق (الخزينة)",
+      "type": "asset",
+      "isActive": true,
+      "balance": 8500
+    },
+    {
+      "id": "acc-3",
+      "tenantId": "tenant-promet-sa",
+      "code": "1200",
+      "name": "حسابات المدينين (العملاء)",
+      "type": "asset",
+      "isActive": true,
+      "balance": 41250
+    },
+    {
+      "id": "acc-4",
+      "tenantId": "tenant-promet-sa",
+      "code": "1300",
+      "name": "المخزون السلعي",
+      "type": "asset",
+      "isActive": true,
+      "balance": 35000
+    },
+    {
+      "id": "acc-5",
+      "tenantId": "tenant-promet-sa",
+      "code": "2010",
+      "name": "حسابات الدائنين (الموردين)",
+      "type": "liability",
+      "isActive": true,
+      "balance": 12500
+    },
+    {
+      "id": "acc-6",
+      "tenantId": "tenant-promet-sa",
+      "code": "2200",
+      "name": "ضريبة القيمة المضافة المستحقة (15%)",
+      "type": "liability",
+      "isActive": true,
+      "balance": 5400
+    },
+    {
+      "id": "acc-7",
+      "tenantId": "tenant-promet-sa",
+      "code": "3010",
+      "name": "رأس مال الشركة",
+      "type": "equity",
+      "isActive": true,
+      "balance": 100000
+    },
+    {
+      "id": "acc-8",
+      "tenantId": "tenant-promet-sa",
+      "code": "4010",
+      "name": "مبيعات المنتجات",
+      "type": "revenue",
+      "isActive": true,
+      "balance": 154000
+    },
+    {
+      "id": "acc-9",
+      "tenantId": "tenant-promet-sa",
+      "code": "4020",
+      "name": "إيرادات استشارات وخدمات",
+      "type": "revenue",
+      "isActive": true,
+      "balance": 75200
+    },
+    {
+      "id": "acc-10",
+      "tenantId": "tenant-promet-sa",
+      "code": "5012",
+      "name": "تكلفة البضاعة المباعة",
+      "type": "expense",
+      "isActive": true,
+      "balance": 48000
+    },
+    {
+      "id": "acc-11",
+      "tenantId": "tenant-promet-sa",
+      "code": "5022",
+      "name": "إيجار المكاتب",
+      "type": "expense",
+      "isActive": true,
+      "balance": 25000
+    },
+    {
+      "id": "acc-12",
+      "tenantId": "tenant-promet-sa",
+      "code": "5030",
+      "name": "مصروف الكهرباء والمياه",
+      "type": "expense",
+      "isActive": true,
+      "balance": 3450
+    },
+    {
+      "id": "acc-13",
+      "tenantId": "tenant-promet-sa",
+      "code": "5040",
+      "name": "مصروف التسويق والإعلانات",
+      "type": "expense",
+      "isActive": true,
+      "balance": 14200
+    },
+    {
+      "id": "acc-14",
+      "tenantId": "tenant-promet-sa",
+      "code": "5010",
+      "name": "مرتبات الموظفين",
+      "type": "expense",
+      "isActive": true,
+      "balance": 0
+    },
+    {
+      "id": "acc-15",
+      "tenantId": "tenant-promet-sa",
+      "code": "5020",
+      "name": "الأجور والبدلات",
+      "type": "expense",
+      "isActive": true,
+      "balance": 0
+    },
+    {
+      "id": "acc-16",
+      "tenantId": "tenant-promet-sa",
+      "code": "2510",
+      "name": "التأمينات الاجتماعية",
+      "type": "liability",
+      "isActive": true,
+      "balance": 0
+    },
+    {
+      "id": "acc-17",
+      "tenantId": "tenant-promet-sa",
+      "code": "2520",
+      "name": "ضريبة المرتبات",
+      "type": "liability",
+      "isActive": true,
+      "balance": 0
+    }
+  ],
+  "contacts": [
+    {
+      "id": "con-1",
+      "tenantId": "tenant-promet-sa",
+      "type": "customer",
+      "name": "شركة الأندلس للتطوير العقاري",
+      "email": "info@andalus.sa",
+      "phone": "+966501112223",
+      "address": "شارع العليا، الرياض",
+      "balance": 15500,
+      "createdAt": "2026-01-05T10:00:00Z"
+    },
+    {
+      "id": "con-2",
+      "tenantId": "tenant-promet-sa",
+      "type": "customer",
+      "name": "مؤسسة نجد للتقنية",
+      "email": "contact@najdtech.com",
+      "phone": "+966504445556",
+      "address": "طريق الملك عبدالعزيز، الدمام",
+      "balance": 25750,
+      "createdAt": "2026-01-12T11:30:00Z"
+    },
+    {
+      "id": "con-3",
+      "tenantId": "tenant-promet-sa",
+      "type": "customer",
+      "name": "متجر الرياض السريع",
+      "email": "orders@riyadhfast.com",
+      "phone": "+966502223334",
+      "address": "الصحافة، الرياض",
+      "balance": 0,
+      "createdAt": "2026-02-18T16:20:00Z"
+    },
+    {
+      "id": "con-4",
+      "tenantId": "tenant-promet-sa",
+      "type": "vendor",
+      "name": "شركة الموردين الأساسية المحدودة",
+      "email": "sales@basicsupplies.sa",
+      "phone": "+966114002200",
+      "address": "المنطقة الصناعية، جدة",
+      "balance": 8000,
+      "createdAt": "2026-01-02T09:00:00Z"
+    },
+    {
+      "id": "con-5",
+      "tenantId": "tenant-promet-sa",
+      "type": "vendor",
+      "name": "شركة كهرباء الرياض",
+      "email": "billing@riyadhelec.sa",
+      "phone": "920001111",
+      "address": "المربع، الرياض",
+      "balance": 1200,
+      "createdAt": "2026-01-01T12:00:00Z"
+    },
+    {
+      "id": "con-6",
+      "tenantId": "tenant-promet-sa",
+      "type": "vendor",
+      "name": "مطبعة المدينة الرقمية",
+      "email": "print@madinaprint.sa",
+      "phone": "+966507778889",
+      "address": "الروابي، جدة",
+      "balance": 450,
+      "createdAt": "2026-03-01T15:00:00Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "inv-1",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-1",
+      "invoiceNumber": "INV-2026-001",
+      "date": "2026-05-10",
+      "dueDate": "2026-06-10",
+      "totalAmount": 15500,
+      "paidAmount": 0,
+      "status": "overdue",
+      "notes": "نقدر تعاملكم معنا. الرجاء السداد في غضون 30 يوماً.",
+      "createdAt": "2026-05-10T10:00:00Z",
+      "lines": [
+        {
+          "id": "line-1-1",
+          "invoiceId": "inv-1",
+          "description": "تثبيت وتكامل نظام بروميت الذكي الفئة الاحترافية",
+          "quantity": 1,
+          "unitPrice": 12000,
+          "amount": 12000
+        },
+        {
+          "id": "line-1-2",
+          "invoiceId": "inv-1",
+          "description": "أجهزة قارئ باركود حراري سلكي",
+          "quantity": 5,
+          "unitPrice": 700,
+          "amount": 3500
+        }
+      ],
+      "eta_status": "pending"
+    },
+    {
+      "id": "inv-2",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-2",
+      "invoiceNumber": "INV-2026-002",
+      "date": "2026-05-20",
+      "dueDate": "2026-06-20",
+      "totalAmount": 25750,
+      "paidAmount": 0,
+      "status": "overdue",
+      "notes": "شروط الدفع: سداد مباشر.",
+      "createdAt": "2026-05-20T11:30:00Z",
+      "lines": [
+        {
+          "id": "line-2-1",
+          "invoiceId": "inv-2",
+          "description": "أجهزة كاشير متكاملة باللمس",
+          "quantity": 5,
+          "unitPrice": 2500,
+          "amount": 12500
+        },
+        {
+          "id": "line-2-2",
+          "invoiceId": "inv-2",
+          "description": "رخص نظام نقاط البيع والمخازن السحابية",
+          "quantity": 11,
+          "unitPrice": 1200,
+          "amount": 13250
+        }
+      ],
+      "eta_status": "pending"
+    },
+    {
+      "id": "inv-3",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-3",
+      "invoiceNumber": "INV-2026-06-001",
+      "date": "2026-06-01",
+      "dueDate": "2026-07-01",
+      "totalAmount": 8400,
+      "paidAmount": 8400,
+      "status": "paid",
+      "notes": "تم سداد الفاتورة بالكامل عبر الدفع الإلكتروني. شكراً لك!",
+      "createdAt": "2026-06-01T16:20:00Z",
+      "lines": [
+        {
+          "id": "line-3-1",
+          "invoiceId": "inv-3",
+          "description": "استشارة محاسبية وضريبية وتأسيس الـ Chart of Accounts",
+          "quantity": 12,
+          "unitPrice": 500,
+          "amount": 6000
+        },
+        {
+          "id": "line-3-2",
+          "invoiceId": "inv-3",
+          "description": "طابعة فواتير حرارية محمولة بلوتوث",
+          "quantity": 4,
+          "unitPrice": 600,
+          "amount": 2400
+        }
+      ],
+      "eta_status": "pending"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "exp-1",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-5",
+      "expenseDate": "2026-05-02",
+      "amount": 1200,
+      "category": "مصروف الكهرباء والمياه",
+      "description": "فاتورة مجمع المكاتب للكهرباء عن شهر إبريل",
+      "createdAt": "2026-05-02T12:00:00Z"
+    },
+    {
+      "id": "exp-2",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-4",
+      "expenseDate": "2026-05-15",
+      "amount": 8000,
+      "category": "تكلفة البضاعة المباعة",
+      "description": "شراء شحنات إضافية من أجهزة الكاشير للمخازن",
+      "createdAt": "2026-05-15T09:00:00Z"
+    },
+    {
+      "id": "exp-3",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-6",
+      "expenseDate": "2026-06-05",
+      "amount": 450,
+      "category": "مصروف التسويق والإعلانات",
+      "description": "طباعة بروشورات وبانرات تسويق لمنتج نظام محاسبي سحابي",
+      "createdAt": "2026-06-05T15:00:00Z"
+    }
+  ],
+  "bankTransactions": [
+    {
+      "id": "bt-new-1-1783216543171",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-07-05",
+      "amount": -120,
+      "description": "محطة بنزين سهل - وقود السيارة",
+      "category": "مصروف النقل والمواصلات",
+      "isReconciled": false,
+      "createdAt": "2026-07-05T01:55:43.171Z"
+    },
+    {
+      "id": "bt-new-2-1783216543171",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-07-05",
+      "amount": 15500,
+      "description": "حوالة واردة - سداد فاتورة INV-2026-001 الأندلس العقارية",
+      "category": "حسابات المدينين (العملاء)",
+      "isReconciled": false,
+      "createdAt": "2026-07-05T01:55:43.171Z"
+    },
+    {
+      "id": "bt-new-1-1783216543169",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-07-05",
+      "amount": -120,
+      "description": "محطة بنزين سهل - وقود السيارة",
+      "category": "مصروف النقل والمواصلات",
+      "isReconciled": false,
+      "createdAt": "2026-07-05T01:55:43.169Z"
+    },
+    {
+      "id": "bt-new-2-1783216543169",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-07-05",
+      "amount": 15500,
+      "description": "حوالة واردة - سداد فاتورة INV-2026-001 الأندلس العقارية",
+      "category": "حسابات المدينين (العملاء)",
+      "isReconciled": false,
+      "createdAt": "2026-07-05T01:55:43.169Z"
+    },
+    {
+      "id": "bt-1",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-06-01",
+      "amount": 8400,
+      "description": "سداد فاتورة INV-2026-06-001 - متجر الرياض السريع",
+      "category": "مبيعات المنتجات",
+      "isReconciled": true,
+      "createdAt": "2026-06-01T17:00:00Z"
+    },
+    {
+      "id": "bt-2",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-06-03",
+      "amount": -450,
+      "description": "حوالة رقم 91823 مطبعة المدينة الرقمية",
+      "category": "مصروف التسويق والإعلانات",
+      "isReconciled": false,
+      "createdAt": "2026-06-03T10:00:00Z"
+    },
+    {
+      "id": "bt-3",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-06-04",
+      "amount": 10500,
+      "description": "حوالة واردة من مجموعة الراجحي القابضة - دفعة مقدمة",
+      "category": "إيرادات استشارات وخدمات",
+      "isReconciled": false,
+      "createdAt": "2026-06-04T14:00:00Z"
+    },
+    {
+      "id": "bt-4",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-06-06",
+      "amount": -350,
+      "description": "فاتورة شركة الاتصالات السعودية والإنترنت STC",
+      "category": "مصروف الكهرباء والمياه",
+      "isReconciled": false,
+      "createdAt": "2026-06-06T11:00:00Z"
+    },
+    {
+      "id": "bt-5",
+      "tenantId": "tenant-promet-sa",
+      "bankAccountId": "1010",
+      "date": "2026-06-08",
+      "amount": -1500,
+      "description": "صيانة أجهزة تكييف المقر الرئيسي",
+      "category": "تكلفة تشغيلية",
+      "isReconciled": false,
+      "createdAt": "2026-06-08T15:30:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "p-1",
+      "tenantId": "tenant-promet-sa",
+      "name": "استشارة محاسبية وضريبية متكاملة",
+      "sku": "CONS-01",
+      "description": "استشارة تشمل تصفية الحسابات وتهيئة الدفاتر والميزانية",
+      "unitPrice": 500,
+      "stockQuantity": 9999,
+      "reorderPoint": 0,
+      "isActive": true
+    },
+    {
+      "id": "p-2",
+      "tenantId": "tenant-promet-sa",
+      "name": "رخصة نظام بروميت المحاسبي السحابي (سنوية)",
+      "sku": "PROM-LIC",
+      "description": "رخصة ممتدة سحابية لشركة واحدة",
+      "unitPrice": 1200,
+      "stockQuantity": 145,
+      "reorderPoint": 5,
+      "isActive": true
+    },
+    {
+      "id": "p-3",
+      "tenantId": "tenant-promet-sa",
+      "name": "جهاز كاشير متكامل باللمس",
+      "sku": "POS-TOUCH-01",
+      "description": "شاشة لمس 15 بوصة مع طابعة مدمجة ودرج نقود",
+      "unitPrice": 2500,
+      "stockQuantity": 4,
+      "reorderPoint": 5,
+      "isActive": true
+    },
+    {
+      "id": "p-4",
+      "tenantId": "tenant-promet-sa",
+      "name": "طابعة فواتير حرارية محمولة بلوتوث",
+      "sku": "PRNT-BT",
+      "description": "طابعة متنقلة لمندوبي المبيعات لطباعة الفواتير الفورية",
+      "unitPrice": 450,
+      "stockQuantity": 2,
+      "reorderPoint": 5,
+      "isActive": true
+    }
+  ],
+  "purchaseOrders": [
+    {
+      "id": "po-1",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-4",
+      "poNumber": "PO-2026-001",
+      "date": "2026-05-12",
+      "totalAmount": 12000,
+      "status": "approved",
+      "createdAt": "2026-05-12T09:00:00Z",
+      "lines": [
+        {
+          "description": "أجهزة كاشير باللمس",
+          "quantity": 5,
+          "unitPrice": 2400,
+          "amount": 12000
+        }
+      ]
+    }
+  ],
+  "salesOrders": [
+    {
+      "id": "so-1",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-1",
+      "soNumber": "SO-2026-001",
+      "date": "2026-05-18",
+      "totalAmount": 18000,
+      "status": "pending",
+      "createdAt": "2026-05-18T10:00:00Z",
+      "lines": [
+        {
+          "description": "تركيب وتشغيل نظام بروميت المحاسبي",
+          "quantity": 1,
+          "unitPrice": 18000,
+          "amount": 18000
+        }
+      ]
+    }
+  ],
+  "quotations": [
+    {
+      "id": "q-1",
+      "tenantId": "tenant-promet-sa",
+      "contactId": "con-2",
+      "qNumber": "QT-2026-001",
+      "date": "2026-05-05",
+      "totalAmount": 29500,
+      "status": "accepted",
+      "createdAt": "2026-05-05T08:00:00Z",
+      "lines": [
+        {
+          "description": "نظام جرد وتوريد متكامل للشركة",
+          "quantity": 1,
+          "unitPrice": 29500,
+          "amount": 29500
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay-1",
+      "tenantId": "tenant-promet-sa",
+      "invoiceId": "inv-3",
+      "paymentNumber": "PAY-2026-01",
+      "date": "2026-06-01",
+      "amount": 8400,
+      "paymentMethod": "bank_transfer",
+      "notes": "تم الاستلام بحساب مصرف الراجحي",
+      "createdAt": "2026-06-01T16:30:00Z"
+    }
+  ],
+  "fixedAssets": [
+    {
+      "id": "fa-1",
+      "tenantId": "tenant-promet-sa",
+      "name": "سيارة توصيل هيلوكس 2024",
+      "code": "FA-001",
+      "asset_code": "FA-001",
+      "category_id": "cat-3",
+      "purchaseDate": "2024-01-15",
+      "purchase_date": "2024-01-15",
+      "purchaseValue": 85000,
+      "purchase_cost": 85000,
+      "total_cost": 85000,
+      "additional_costs": 0,
+      "depreciation_method": "straight_line",
+      "useful_life_years": 5,
+      "salvage_value": 8500,
+      "depreciationRate": 20,
+      "depreciation_rate": 20,
+      "accumulated_depreciation": 20000,
+      "net_book_value": 65000,
+      "currentValue": 65000,
+      "status": "active",
+      "location": "فرع أكتوبر الرئيسي",
+      "createdAt": "2024-01-15T12:00:00Z"
+    }
+  ],
+  "settings": [
+    {
+      "id": "settings-global",
+      "tenantId": "tenant-promet-sa",
+      "companyName": "شركة الهضبة للحلول التقنية",
+      "vatNumber": "310123456700003",
+      "vatRate": 15,
+      "currency": "EGP",
+      "fiscalYearEnd": "12-31",
+      "visibleSections": {
+        "dashboard": true,
+        "invoices": true,
+        "expenses": true,
+        "inventory": true,
+        "reports": true,
+        "banking": true,
+        "hr": true,
+        "assets": true
+      }
+    }
+  ],
+  "assetCategories": [
+    {
+      "id": "cat-1",
+      "tenantId": "tenant-promet-sa",
+      "name": "مباني وإنشاءات",
+      "code": "1010",
+      "description": "المباني والمقرات الإدارية والتشغيلية",
+      "depreciation_method": "straight_line",
+      "useful_life_years": 20,
+      "salvage_value_percent": 10,
+      "depreciation_rate": 5,
+      "asset_account_id": "acc-1010",
+      "depreciation_expense_account_id": "acc-5010",
+      "accumulated_depreciation_account_id": "acc-2010",
+      "is_active": true,
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "cat-2",
+      "tenantId": "tenant-promet-sa",
+      "name": "آلات ومعدات",
+      "code": "1020",
+      "description": "الآلات وخطوط الإنتاج والأجهزة الصناعية",
+      "depreciation_method": "straight_line",
+      "useful_life_years": 10,
+      "salvage_value_percent": 10,
+      "depreciation_rate": 10,
+      "asset_account_id": "acc-1020",
+      "depreciation_expense_account_id": "acc-5010",
+      "accumulated_depreciation_account_id": "acc-2020",
+      "is_active": true,
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "cat-3",
+      "tenantId": "tenant-promet-sa",
+      "name": "سيارات ووسائل نقل",
+      "code": "1030",
+      "description": "السيارات والشاحنات ووسائل النقل واللوجستيات",
+      "depreciation_method": "straight_line",
+      "useful_life_years": 5,
+      "salvage_value_percent": 10,
+      "depreciation_rate": 20,
+      "asset_account_id": "acc-1030",
+      "depreciation_expense_account_id": "acc-5010",
+      "accumulated_depreciation_account_id": "acc-2030",
+      "is_active": true,
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "cat-4",
+      "tenantId": "tenant-promet-sa",
+      "name": "أجهزة كمبيوتر وإلكترونيات",
+      "code": "1040",
+      "description": "أجهزة الحاسوب المحمولة والمكتبية والخوادم والشبكات",
+      "depreciation_method": "straight_line",
+      "useful_life_years": 3,
+      "salvage_value_percent": 5,
+      "depreciation_rate": 33.33,
+      "asset_account_id": "acc-1040",
+      "depreciation_expense_account_id": "acc-5010",
+      "accumulated_depreciation_account_id": "acc-2040",
+      "is_active": true,
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "cat-5",
+      "tenantId": "tenant-promet-sa",
+      "name": "أثاث وتجهيزات مكتبية",
+      "code": "1050",
+      "description": "المكاتب، الكراسي، تجهيزات قاعات الاجتماعات وديكورات مكاتب",
+      "depreciation_method": "straight_line",
+      "useful_life_years": 7,
+      "salvage_value_percent": 10,
+      "depreciation_rate": 14.28,
+      "asset_account_id": "acc-1050",
+      "depreciation_expense_account_id": "acc-5010",
+      "accumulated_depreciation_account_id": "acc-2050",
+      "is_active": true,
+      "createdAt": "2026-01-01T08:00:00Z"
+    }
+  ],
+  "assetTransactions": [
+    {
+      "id": "at-1",
+      "tenantId": "tenant-promet-sa",
+      "asset_id": "fa-1",
+      "transaction_type": "purchase",
+      "transaction_date": "2024-01-15",
+      "amount": 90000,
+      "description": "شراء سيارة هيلوكس وتجهيزها",
+      "reference_type": "invoice",
+      "reference_id": "inv-cash-fa1",
+      "created_by": "u-1",
+      "createdAt": "2024-01-15T12:05:00Z"
+    },
+    {
+      "id": "at-2",
+      "tenantId": "tenant-promet-sa",
+      "asset_id": "fa-1",
+      "transaction_type": "depreciation",
+      "transaction_date": "2025-01-01",
+      "amount": 16200,
+      "description": "إهلاك مجمع لعام 2024",
+      "reference_type": "journal",
+      "reference_id": "je-101",
+      "created_by": "u-2",
+      "createdAt": "2025-01-01T12:00:00Z"
+    },
+    {
+      "id": "at-3",
+      "tenantId": "tenant-promet-sa",
+      "asset_id": "fa-2",
+      "transaction_type": "purchase",
+      "transaction_date": "2025-06-10",
+      "amount": 26200,
+      "description": "شراء خادم رئيسي HP DL380",
+      "reference_type": "invoice",
+      "reference_id": "inv-cash-fa2",
+      "created_by": "u-1",
+      "createdAt": "2025-06-10T14:15:00Z"
+    }
+  ],
+  "depreciationLog": [],
+  "assetRevaluations": [],
+  "maintenanceContracts": [],
+  "employees": [
+    {
+      "id": "emp-1",
+      "tenantId": "tenant-promet-sa",
+      "name": "أحمد رأفت",
+      "email": "ahmed.raafat@promet.eg",
+      "department": "التقنية والتطوير",
+      "position": "مطور برمجيات أول",
+      "basicSalary": 18000,
+      "allowance": 2000,
+      "iban": "EG1234567890123456789012",
+      "joinDate": "2026-01-10",
+      "isActive": true
+    },
+    {
+      "id": "emp-2",
+      "tenantId": "tenant-promet-sa",
+      "name": "منى الشافعي",
+      "email": "mona.shafei@promet.eg",
+      "department": "الموارد البشرية",
+      "position": "أخصائي شؤون موظفين",
+      "basicSalary": 12000,
+      "allowance": 1000,
+      "iban": "EG1234567890123456789023",
+      "joinDate": "2026-02-01",
+      "isActive": true
+    },
+    {
+      "id": "emp-3",
+      "tenantId": "tenant-promet-sa",
+      "name": "محمود عبد العزيز",
+      "email": "m.abdelaziz@promet.eg",
+      "department": "الحسابات والمالية",
+      "position": "محاسب أول",
+      "basicSalary": 15000,
+      "allowance": 1500,
+      "iban": "EG1234567890123456789034",
+      "joinDate": "2026-01-01",
+      "isActive": true
+    },
+    {
+      "id": "emp-4",
+      "tenantId": "tenant-promet-sa",
+      "name": "ياسمين ممدوح",
+      "email": "yasmin.m@promet.eg",
+      "department": "المبيعات والتسويق",
+      "position": "مسؤول مبيعات",
+      "basicSalary": 9000,
+      "allowance": 3000,
+      "iban": "EG1234567890123456789045",
+      "joinDate": "2026-03-15",
+      "isActive": true
+    }
+  ],
+  "payroll": [
+    {
+      "id": "payr-1",
+      "tenantId": "tenant-promet-sa",
+      "employeeId": "emp-1",
+      "employeeName": "أحمد رأفت",
+      "month": "2026-05",
+      "basicSalary": 18000,
+      "allowance": 2000,
+      "deductions": 0,
+      "netSalary": 20000,
+      "status": "paid",
+      "paidAt": "2026-05-31T15:00:00Z"
+    },
+    {
+      "id": "payr-2",
+      "tenantId": "tenant-promet-sa",
+      "employeeId": "emp-2",
+      "employeeName": "منى الشافعي",
+      "month": "2026-05",
+      "basicSalary": 12000,
+      "allowance": 1000,
+      "deductions": 0,
+      "netSalary": 13000,
+      "status": "paid",
+      "paidAt": "2026-05-31T15:00:00Z"
+    },
+    {
+      "id": "payr-3",
+      "tenantId": "tenant-promet-sa",
+      "employeeId": "emp-3",
+      "employeeName": "محمود عبد العزيز",
+      "month": "2026-05",
+      "basicSalary": 15000,
+      "allowance": 1500,
+      "deductions": 0,
+      "netSalary": 16500,
+      "status": "paid",
+      "paidAt": "2026-05-31T15:00:00Z"
+    }
+  ],
+  "leaves": [
+    {
+      "id": "lev-1",
+      "tenantId": "tenant-promet-sa",
+      "employeeId": "emp-1",
+      "employeeName": "أحمد رأفت",
+      "type": "سنوية",
+      "startDate": "2026-07-01",
+      "endDate": "2026-07-10",
+      "days": 10,
+      "status": "approved",
+      "reason": "إجازة زواج سنوية",
+      "createdAt": "2026-06-15T10:00:00Z"
+    },
+    {
+      "id": "lev-2",
+      "tenantId": "tenant-promet-sa",
+      "employeeId": "emp-4",
+      "employeeName": "ياسمين ممدوح",
+      "type": "مرضية",
+      "startDate": "2026-06-20",
+      "endDate": "2026-06-22",
+      "days": 2,
+      "status": "approved",
+      "reason": "وعكة صحية طارئة",
+      "createdAt": "2026-06-20T08:30:00Z"
+    },
+    {
+      "id": "lev-3",
+      "tenantId": "tenant-promet-sa",
+      "employeeId": "emp-2",
+      "employeeName": "منى الشافعي",
+      "type": "عارضة",
+      "startDate": "2026-06-28",
+      "endDate": "2026-06-29",
+      "days": 1,
+      "status": "approved",
+      "reason": "ظروف عائلية خاصة طارئة",
+      "createdAt": "2026-06-25T09:15:00Z"
+    }
+  ],
+  "departments": [
+    {
+      "id": "dept-1",
+      "tenantId": "tenant-promet-sa",
+      "name": "المبيعات",
+      "description": "قسم المبيعات والتسويق",
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "dept-2",
+      "tenantId": "tenant-promet-sa",
+      "name": "المشتريات",
+      "description": "قسم شراء المواد الخام والمستلزمات",
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "dept-3",
+      "tenantId": "tenant-promet-sa",
+      "name": "المخازن",
+      "description": "قسم إدارة المخزون والمستودعات والسلع",
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "dept-4",
+      "tenantId": "tenant-promet-sa",
+      "name": "المحاسبة",
+      "description": "قسم الحسابات والمالية والرواتب",
+      "createdAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "dept-5",
+      "tenantId": "tenant-promet-sa",
+      "name": "الإدارة",
+      "description": "الإدارة العامة والإشراف والتوجيه",
+      "createdAt": "2026-01-01T08:00:00Z"
+    }
+  ],
+  "attendance": [],
+  "accountingEntries": [
+    {
+      "id": "je-1",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-01",
+      "description": "إيداع رأس المال الافتتاحي في البنك",
+      "reference_type": "manual",
+      "reference_id": null,
+      "created_at": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "je-2",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-02",
+      "description": "سداد إيجار المكاتب السنوي مقدمًا",
+      "reference_type": "manual",
+      "reference_id": null,
+      "created_at": "2026-01-02T10:00:00Z"
+    },
+    {
+      "id": "je-3",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-05",
+      "description": "شراء بضاعة (أجهزة كاشير) للمخزن",
+      "reference_type": "manual",
+      "reference_id": null,
+      "created_at": "2026-01-05T09:00:00Z"
+    },
+    {
+      "id": "je-4",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-10",
+      "description": "فاتورة مبيعات عميل - شركة الأندلس العقارية",
+      "reference_type": "invoice",
+      "reference_id": "inv-1",
+      "created_at": "2026-01-10T11:00:00Z"
+    },
+    {
+      "id": "je-5",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-12",
+      "description": "إثبات تكلفة البضاعة المباعة لصفقة الأندلس",
+      "reference_type": "manual",
+      "reference_id": null,
+      "created_at": "2026-01-12T12:00:00Z"
+    },
+    {
+      "id": "je-6",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-15",
+      "description": "تحصيل دفعة استشارات تقنية نقدًا",
+      "reference_type": "manual",
+      "reference_id": null,
+      "created_at": "2026-01-15T14:00:00Z"
+    },
+    {
+      "id": "je-7",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-20",
+      "description": "سداد فاتورة الكهرباء والمياه للفرع",
+      "reference_type": "expense",
+      "reference_id": "exp-1",
+      "created_at": "2026-01-20T16:00:00Z"
+    },
+    {
+      "id": "je-8",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-25",
+      "description": "مصاريف حملة تسويقية على جوجل ومواقع التواصل",
+      "reference_type": "expense",
+      "reference_id": "exp-3",
+      "created_at": "2026-01-25T11:30:00Z"
+    },
+    {
+      "id": "je-9",
+      "tenantId": "tenant-promet-sa",
+      "entry_date": "2026-01-30",
+      "description": "تحصيل جزء من حسابات المدينين من شركة الأندلس",
+      "reference_type": "payment",
+      "reference_id": "pay-1",
+      "created_at": "2026-01-30T10:00:00Z"
+    }
+  ],
+  "accountingEntryDetails": [
+    {
+      "id": "jed-1-1",
+      "entry_id": "je-1",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 100000,
+      "credit": 0,
+      "notes": "رأس مال افتتاحي نقدي"
+    },
+    {
+      "id": "jed-1-2",
+      "entry_id": "je-1",
+      "account_code": "3010",
+      "account_name": "رأس مال الشركة",
+      "debit": 0,
+      "credit": 100000,
+      "notes": "رأس مال افتتاحي نقدي"
+    },
+    {
+      "id": "jed-2-1",
+      "entry_id": "je-2",
+      "account_code": "5022",
+      "account_name": "إيجار المكاتب",
+      "debit": 15000,
+      "credit": 0,
+      "notes": "سداد الإيجار السنوي"
+    },
+    {
+      "id": "jed-2-2",
+      "entry_id": "je-2",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 0,
+      "credit": 15000,
+      "notes": "سداد الإيجار السنوي"
+    },
+    {
+      "id": "jed-3-1",
+      "entry_id": "je-3",
+      "account_code": "1300",
+      "account_name": "المخزون السلعي",
+      "debit": 20000,
+      "credit": 0,
+      "notes": "شراء بضاعة كاشير"
+    },
+    {
+      "id": "jed-3-2",
+      "entry_id": "je-3",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 0,
+      "credit": 20000,
+      "notes": "شراء بضاعة كاشير"
+    },
+    {
+      "id": "jed-4-1",
+      "entry_id": "je-4",
+      "account_code": "1200",
+      "account_name": "حسابات المدينين (العملاء)",
+      "debit": 30000,
+      "credit": 0,
+      "notes": "فاتورة رقم INV-2026-001"
+    },
+    {
+      "id": "jed-4-2",
+      "entry_id": "je-4",
+      "account_code": "4010",
+      "account_name": "مبيعات المنتجات",
+      "debit": 0,
+      "credit": 30000,
+      "notes": "مبيعات المنتجات الآجلة"
+    },
+    {
+      "id": "jed-5-1",
+      "entry_id": "je-5",
+      "account_code": "5012",
+      "account_name": "تكلفة البضاعة المباعة",
+      "debit": 12000,
+      "credit": 0,
+      "notes": "صرف مخزون مباع"
+    },
+    {
+      "id": "jed-5-2",
+      "entry_id": "je-5",
+      "account_code": "1300",
+      "account_name": "المخزون السلعي",
+      "debit": 0,
+      "credit": 12000,
+      "notes": "صرف مخزون مباع"
+    },
+    {
+      "id": "jed-6-1",
+      "entry_id": "je-6",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 45000,
+      "credit": 0,
+      "notes": "استشارات تقنية لعميل"
+    },
+    {
+      "id": "jed-6-2",
+      "entry_id": "je-6",
+      "account_code": "4020",
+      "account_name": "إيرادات استشارات وخدمات",
+      "debit": 0,
+      "credit": 45000,
+      "notes": "استشارات تقنية لعميل"
+    },
+    {
+      "id": "jed-7-1",
+      "entry_id": "je-7",
+      "account_code": "5030",
+      "account_name": "مصروف الكهرباء والمياه",
+      "debit": 2500,
+      "credit": 0,
+      "notes": "فاتورة مجمع المكاتب"
+    },
+    {
+      "id": "jed-7-2",
+      "entry_id": "je-7",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 0,
+      "credit": 2500,
+      "notes": "فاتورة مجمع المكاتب"
+    },
+    {
+      "id": "jed-8-1",
+      "entry_id": "je-8",
+      "account_code": "5040",
+      "account_name": "مصروف التسويق والإعلانات",
+      "debit": 6000,
+      "credit": 0,
+      "notes": "إعلانات جوجل وسوشيال"
+    },
+    {
+      "id": "jed-8-2",
+      "entry_id": "je-8",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 0,
+      "credit": 6000,
+      "notes": "إعلانات جوجل وسوشيال"
+    },
+    {
+      "id": "jed-9-1",
+      "entry_id": "je-9",
+      "account_code": "1010",
+      "account_name": "حساب مصرف الراجحي الجاري (البنك)",
+      "debit": 15000,
+      "credit": 0,
+      "notes": "تحصيل جزء من مديونية الأندلس"
+    },
+    {
+      "id": "jed-9-2",
+      "entry_id": "je-9",
+      "account_code": "1200",
+      "account_name": "حسابات المدينين (العملاء)",
+      "debit": 0,
+      "credit": 15000,
+      "notes": "تحصيل جزء من مديونية الأندلس"
+    }
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "name": "admin",
+      "description": "مدير النظام - صلاحية كاملة"
+    },
+    {
+      "id": 2,
+      "name": "hr",
+      "description": "مسؤول الموارد البشرية"
+    },
+    {
+      "id": 3,
+      "name": "manager",
+      "description": "مدير قسم"
+    },
+    {
+      "id": 4,
+      "name": "employee",
+      "description": "موظف عادي"
+    }
+  ],
+  "permissions": [
+    {
+      "id": 1,
+      "name": "view_employees",
+      "description": "عرض الموظفين"
+    },
+    {
+      "id": 2,
+      "name": "add_employee",
+      "description": "إضافة موظف"
+    },
+    {
+      "id": 3,
+      "name": "edit_employee",
+      "description": "تعديل موظف"
+    },
+    {
+      "id": 4,
+      "name": "delete_employee",
+      "description": "حذف موظف"
+    },
+    {
+      "id": 5,
+      "name": "view_attendance",
+      "description": "عرض الحضور"
+    },
+    {
+      "id": 6,
+      "name": "manage_attendance",
+      "description": "تسجيل وإدارة الحضور"
+    },
+    {
+      "id": 7,
+      "name": "view_leaves",
+      "description": "عرض الإجازات"
+    },
+    {
+      "id": 8,
+      "name": "request_leave",
+      "description": "تقديم طلب إجازة"
+    },
+    {
+      "id": 9,
+      "name": "approve_leave",
+      "description": "الموافقة على الإجازات"
+    },
+    {
+      "id": 10,
+      "name": "view_payroll",
+      "description": "عرض الرواتب"
+    },
+    {
+      "id": 11,
+      "name": "calculate_payroll",
+      "description": "حساب الرواتب"
+    },
+    {
+      "id": 12,
+      "name": "approve_payroll",
+      "description": "اعتماد الرواتب"
+    },
+    {
+      "id": 13,
+      "name": "post_payroll",
+      "description": "ترحيل الرواتب"
+    },
+    {
+      "id": 14,
+      "name": "view_accounting",
+      "description": "عرض القيود المحاسبية"
+    },
+    {
+      "id": 15,
+      "name": "manage_users",
+      "description": "إدارة المستخدمين"
+    },
+    {
+      "id": 16,
+      "name": "manage_roles",
+      "description": "إدارة الأدوار والصلاحيات"
+    }
+  ],
+  "role_permissions": [
+    {
+      "role_id": 1,
+      "permission_id": 1
+    },
+    {
+      "role_id": 1,
+      "permission_id": 2
+    },
+    {
+      "role_id": 1,
+      "permission_id": 3
+    },
+    {
+      "role_id": 1,
+      "permission_id": 4
+    },
+    {
+      "role_id": 1,
+      "permission_id": 5
+    },
+    {
+      "role_id": 1,
+      "permission_id": 6
+    },
+    {
+      "role_id": 1,
+      "permission_id": 7
+    },
+    {
+      "role_id": 1,
+      "permission_id": 8
+    },
+    {
+      "role_id": 1,
+      "permission_id": 9
+    },
+    {
+      "role_id": 1,
+      "permission_id": 10
+    },
+    {
+      "role_id": 1,
+      "permission_id": 11
+    },
+    {
+      "role_id": 1,
+      "permission_id": 12
+    },
+    {
+      "role_id": 1,
+      "permission_id": 13
+    },
+    {
+      "role_id": 1,
+      "permission_id": 14
+    },
+    {
+      "role_id": 1,
+      "permission_id": 15
+    },
+    {
+      "role_id": 1,
+      "permission_id": 16
+    },
+    {
+      "role_id": 2,
+      "permission_id": 1
+    },
+    {
+      "role_id": 2,
+      "permission_id": 2
+    },
+    {
+      "role_id": 2,
+      "permission_id": 3
+    },
+    {
+      "role_id": 2,
+      "permission_id": 5
+    },
+    {
+      "role_id": 2,
+      "permission_id": 6
+    },
+    {
+      "role_id": 2,
+      "permission_id": 7
+    },
+    {
+      "role_id": 2,
+      "permission_id": 8
+    },
+    {
+      "role_id": 2,
+      "permission_id": 9
+    },
+    {
+      "role_id": 2,
+      "permission_id": 10
+    },
+    {
+      "role_id": 2,
+      "permission_id": 11
+    },
+    {
+      "role_id": 2,
+      "permission_id": 12
+    },
+    {
+      "role_id": 3,
+      "permission_id": 1
+    },
+    {
+      "role_id": 3,
+      "permission_id": 5
+    },
+    {
+      "role_id": 3,
+      "permission_id": 7
+    },
+    {
+      "role_id": 3,
+      "permission_id": 8
+    },
+    {
+      "role_id": 4,
+      "permission_id": 8
+    }
+  ],
+  "performance_reviews": [],
+  "trainings": [],
+  "training_enrollments": [],
+  "job_openings": [],
+  "job_applications": [],
+  "interviews": [],
+  "warehouses": [
+    {
+      "id": 1,
+      "name": "المستودع الرئيسي - الرياض",
+      "code": "WH-MAIN",
+      "location": "الرياض، الملز",
+      "manager_id": 1,
+      "status": "active",
+      "created_at": "2026-06-27T00:00:00.000Z"
+    }
+  ],
+  "product_categories": [
+    {
+      "id": 1,
+      "name": "أجهزة إلكترونية",
+      "description": "الهواتف وأجهزة الكمبيوتر وملحقاتها",
+      "parent_id": null,
+      "created_at": "2026-06-27T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "أدوات مكتبية",
+      "description": "الأقلام والأوراق والمستلزمات المكتبية",
+      "parent_id": null,
+      "created_at": "2026-06-27T00:00:00.000Z"
+    }
+  ],
+  "products_advanced": [],
+  "inventory_transactions": [],
+  "inventory_stock": [],
+  "purchase_orders": [
+    {
+      "id": 1,
+      "po_number": "PO-2026-001",
+      "vendor_id": "con-4",
+      "order_date": "2026-06-15",
+      "expected_delivery": "2026-06-25",
+      "subtotal": 10000,
+      "tax": 1400,
+      "total": 11400,
+      "status": "approved",
+      "created_at": "2026-07-05T14:27:11.252Z"
+    },
+    {
+      "id": 2,
+      "po_number": "PO-2026-002",
+      "vendor_id": "con-5",
+      "order_date": "2026-06-18",
+      "expected_delivery": "2026-06-28",
+      "subtotal": 5000,
+      "tax": 700,
+      "total": 5700,
+      "status": "approved",
+      "created_at": "2026-07-05T14:27:11.252Z"
+    }
+  ],
+  "purchase_order_items": [],
+  "inventory_counts": [],
+  "projects": [
+    {
+      "id": 1,
+      "name": "بناء البوابة السحابية للعملاء",
+      "code": "PRJ-CLOUD",
+      "description": "تصميم وتنفيذ البوابة السحابية الموحدة لتتبع الفواتير والمدفوعات الإلكترونية للعملاء.",
+      "client_id": 1,
+      "project_manager_id": 1,
+      "department_id": 1,
+      "start_date": "2026-06-01",
+      "end_date": "2026-08-15",
+      "budget": 150000,
+      "priority": "high",
+      "status": "active",
+      "created_at": "2026-06-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "تطوير تطبيق الهاتف للشركة",
+      "code": "PRJ-MOBILE",
+      "description": "تطوير الواجهات المحمولة لنظام ERP الداخلي لتسهيل العمليات الميدانية وجرد المخازن.",
+      "client_id": null,
+      "project_manager_id": 1,
+      "department_id": 1,
+      "start_date": "2026-07-01",
+      "end_date": "2026-11-30",
+      "budget": 95000,
+      "priority": "medium",
+      "status": "planning",
+      "created_at": "2026-06-27T00:00:00.000Z"
+    }
+  ],
+  "project_tasks": [
+    {
+      "id": 1,
+      "project_id": 1,
+      "title": "إعداد التصاميم الأولية للواجهات (Figma Mockups)",
+      "description": "بناء وتصميم واجهات المستخدم الرئيسية وتجربة العميل وعرضها للمراجعة والاعتماد.",
+      "assigned_to": 1,
+      "start_date": "2026-06-01",
+      "due_date": "2026-06-15",
+      "estimated_hours": 30,
+      "actual_hours": 30,
+      "status": "completed",
+      "priority": "medium",
+      "created_at": "2026-06-01T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "project_id": 1,
+      "title": "برمجة وبناء البنية الخلفية وقواعد البيانات (REST API)",
+      "description": "بناء الواجهات البرمجية وتكاملها مع المنظومة السحابية وقاعدة البيانات المحلية.",
+      "assigned_to": 1,
+      "start_date": "2026-06-16",
+      "due_date": "2026-07-15",
+      "estimated_hours": 60,
+      "actual_hours": 20,
+      "status": "in_progress",
+      "priority": "high",
+      "created_at": "2026-06-16T00:00:00.000Z"
+    }
+  ],
+  "project_team": [
+    {
+      "id": 1,
+      "project_id": 1,
+      "employee_id": 1,
+      "role": "مهندس واجهات برمجية أول",
+      "start_date": "2026-06-01"
+    }
+  ],
+  "project_progress": [],
+  "project_expenses": [],
+  "project_notifications": [],
+  "user_notifications": [],
+  "notification_types": [
+    {
+      "id": 1,
+      "name": "payroll_approved",
+      "description": "تم اعتماد الراتب",
+      "icon": "💰",
+      "color": "#10b981",
+      "is_active": true
+    },
+    {
+      "id": 2,
+      "name": "leave_approved",
+      "description": "تم الموافقة على الإجازة",
+      "icon": "✅",
+      "color": "#10b981",
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "name": "leave_rejected",
+      "description": "تم رفض الإجازة",
+      "icon": "❌",
+      "color": "#ef4444",
+      "is_active": true
+    },
+    {
+      "id": 4,
+      "name": "task_assigned",
+      "description": "تم تعيين مهمة جديدة",
+      "icon": "📋",
+      "color": "#2563eb",
+      "is_active": true
+    },
+    {
+      "id": 5,
+      "name": "task_overdue",
+      "description": "مهمة متأخرة",
+      "icon": "⚠️",
+      "color": "#f59e0b",
+      "is_active": true
+    },
+    {
+      "id": 6,
+      "name": "stock_low",
+      "description": "منتج قارب على النفاد",
+      "icon": "📦",
+      "color": "#ef4444",
+      "is_active": true
+    },
+    {
+      "id": 7,
+      "name": "invoice_created",
+      "description": "فاتورة جديدة",
+      "icon": "📄",
+      "color": "#8b5cf6",
+      "is_active": true
+    },
+    {
+      "id": 8,
+      "name": "project_status",
+      "description": "تحديث حالة المشروع",
+      "icon": "🏗️",
+      "color": "#3b82f6",
+      "is_active": true
+    },
+    {
+      "id": 9,
+      "name": "security_login",
+      "description": "تسجيل دخول جديد",
+      "icon": "🔐",
+      "color": "#64748b",
+      "is_active": true
+    }
+  ],
+  "user_notification_settings": [
+    {
+      "id": "s-1-1",
+      "user_id": "u-1",
+      "notification_type_id": 1,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-2",
+      "user_id": "u-1",
+      "notification_type_id": 2,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-3",
+      "user_id": "u-1",
+      "notification_type_id": 3,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-4",
+      "user_id": "u-1",
+      "notification_type_id": 4,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-5",
+      "user_id": "u-1",
+      "notification_type_id": 5,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-6",
+      "user_id": "u-1",
+      "notification_type_id": 6,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-7",
+      "user_id": "u-1",
+      "notification_type_id": 7,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-8",
+      "user_id": "u-1",
+      "notification_type_id": 8,
+      "receive_in_app": true,
+      "receive_by_email": true
+    },
+    {
+      "id": "s-1-9",
+      "user_id": "u-1",
+      "notification_type_id": 9,
+      "receive_in_app": true,
+      "receive_by_email": true
+    }
+  ],
+  "saved_reports": [
+    {
+      "id": 1,
+      "name": "تقرير المبيعات والنمو الربع سنوي",
+      "description": "تحليل مبيعات وإيرادات الربع الأول والثاني لعام 2026 ومقارنتها بنسب الضرائب والخصومات.",
+      "report_type": "sales",
+      "filters": {
+        "period": "monthly"
+      },
+      "columns": [
+        "period",
+        "invoice_count",
+        "total_amount",
+        "total_tax",
+        "avg_invoice"
+      ],
+      "chart_type": "line",
+      "chart_config": {
+        "xAxis": "period",
+        "yAxis": "total_amount"
+      },
+      "is_favorite": true,
+      "is_public": true,
+      "created_by": "u-1",
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 2,
+      "name": "تحليلات كفاءة وإنتاجية الكادر البشري",
+      "description": "تقييم أداء الموظفين الإجمالي، الالتزام بالدوام ونسب إنجاز المهام في المشاريع الموكلة.",
+      "report_type": "employees",
+      "filters": {
+        "department_id": ""
+      },
+      "columns": [
+        "full_name",
+        "job_title",
+        "department_name",
+        "avg_rating",
+        "tasks_completed"
+      ],
+      "chart_type": "bar",
+      "chart_config": {
+        "xAxis": "full_name",
+        "yAxis": "avg_rating"
+      },
+      "is_favorite": false,
+      "is_public": true,
+      "created_by": "u-1",
+      "created_at": "2026-07-05T01:35:03.245Z"
+    }
+  ],
+  "report_preferences": [
+    {
+      "id": 1,
+      "user_id": "u-1",
+      "default_dashboard": "overview",
+      "date_range_days": 30,
+      "auto_refresh_seconds": 300,
+      "theme": "light"
+    }
+  ],
+  "crm_customers": [
+    {
+      "id": "cust-1",
+      "contact_id": "con-1",
+      "company_name": "شركة الأندلس للتطوير العقاري",
+      "industry": "العقارات والإنشاءات",
+      "website": "www.andalus.sa",
+      "tax_id": "310123456700003",
+      "commercial_register": "1010123456",
+      "customer_type": "company",
+      "customer_segment": "gold",
+      "annual_revenue": 15000000,
+      "employee_count": 85,
+      "preferred_contact_method": "whatsapp",
+      "assigned_to": "emp-4",
+      "credit_limit": 100000,
+      "payment_terms": 30,
+      "notes": "عميل قديم مهتم بنظام بروميت وحلول الربط السحابي مع الفواتير الإلكترونية",
+      "created_by": "u-1",
+      "created_at": "2026-06-25T10:00:00Z"
+    },
+    {
+      "id": "cust-2",
+      "contact_id": "con-2",
+      "company_name": "مؤسسة نجد للتقنية",
+      "industry": "البرمجيات والاتصالات",
+      "website": "www.najdtech.com",
+      "tax_id": "310123456700024",
+      "commercial_register": "1010123488",
+      "customer_type": "company",
+      "customer_segment": "premium",
+      "annual_revenue": 24000000,
+      "employee_count": 120,
+      "preferred_contact_method": "meeting",
+      "assigned_to": "emp-4",
+      "credit_limit": 250000,
+      "payment_terms": 45,
+      "notes": "شريك تقني معتمد مهتم بحلول كاشير ونقاط البيع السحابية",
+      "created_by": "u-1",
+      "created_at": "2026-06-26T11:30:00Z"
+    }
+  ],
+  "crm_contact_persons": [
+    {
+      "id": "cp-1",
+      "customer_id": "cust-1",
+      "full_name": "أ. عبد الله الرويس",
+      "job_title": "مدير تقنية المعلومات",
+      "email": "ruwais@andalus.sa",
+      "phone": "+966501112223",
+      "mobile": "+966501112223",
+      "is_primary": true,
+      "notes": "نقطة التواصل التقنية لجدولة الاجتماعات"
+    }
+  ],
+  "crm_pipeline_stages": [
+    {
+      "id": "stage-1",
+      "name": "🏷️ عميل محتمل",
+      "order_index": 1,
+      "probability": 10,
+      "color": "#94a3b8"
+    },
+    {
+      "id": "stage-2",
+      "name": "📞 تواصل أولي",
+      "order_index": 2,
+      "probability": 20,
+      "color": "#60a5fa"
+    },
+    {
+      "id": "stage-3",
+      "name": "📝 عرض سعري",
+      "order_index": 3,
+      "probability": 40,
+      "color": "#f59e0b"
+    },
+    {
+      "id": "stage-4",
+      "name": "🤝 مفاوضة",
+      "order_index": 4,
+      "probability": 60,
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "stage-5",
+      "name": "✅ موافقة مبدئية",
+      "order_index": 5,
+      "probability": 80,
+      "color": "#10b981"
+    },
+    {
+      "id": "stage-6",
+      "name": "🎉 إغلاق صفقة",
+      "order_index": 6,
+      "probability": 100,
+      "color": "#059669"
+    }
+  ],
+  "crm_opportunities": [
+    {
+      "id": "opp-1",
+      "customer_id": "cust-1",
+      "name": "مشروع ترقية أنظمة الأندلس السحابية",
+      "description": "ترقية الخوادم وربط 10 فروع بنظام بروميت المتكامل",
+      "amount": 125000,
+      "currency": "EGP",
+      "pipeline_stage_id": "stage-3",
+      "expected_close_date": "2026-07-15",
+      "probability": 40,
+      "assigned_to": "emp-4",
+      "source": "referral",
+      "status": "active",
+      "notes": "العميل أبدى حماساً كبيراً للعرض الفني، في انتظار مراجعة الميزانية",
+      "created_by": "u-1",
+      "created_at": "2026-06-25T10:05:00Z"
+    },
+    {
+      "id": "opp-2",
+      "customer_id": "cust-2",
+      "name": "توريد أجهزة كاشير لمؤسسة نجد",
+      "description": "توريد 15 جهاز كاشير متطور باللمس وطابعات باركود",
+      "amount": 37500,
+      "currency": "EGP",
+      "pipeline_stage_id": "stage-5",
+      "expected_close_date": "2026-07-05",
+      "probability": 80,
+      "assigned_to": "emp-4",
+      "source": "meeting",
+      "status": "active",
+      "notes": "تمت الموافقة المبدئية ومراجعة الدفعة المقدمة",
+      "created_by": "u-1",
+      "created_at": "2026-06-26T12:00:00Z"
+    }
+  ],
+  "crm_activities": [
+    {
+      "id": "act-1",
+      "customer_id": "cust-1",
+      "opportunity_id": "opp-1",
+      "activity_type": "meeting",
+      "subject": "اجتماع لمناقشة العرض المالي والفني",
+      "description": "تم الاجتماع مع م. عبد الله ومناقشة تفاصيل ترقية الفروع ونقل البيانات",
+      "activity_date": "2026-06-26T11:00:00Z",
+      "duration_minutes": 60,
+      "assigned_to": "emp-4",
+      "status": "completed",
+      "follow_up_date": "2026-07-02",
+      "created_by": "u-1",
+      "created_at": "2026-06-26T12:00:00Z"
+    },
+    {
+      "id": "act-2",
+      "customer_id": "cust-2",
+      "opportunity_id": "opp-2",
+      "activity_type": "call",
+      "subject": "مكالمة هاتفية لتأكيد كمية الأجهزة المطلوبة",
+      "description": "تأكيد طلب 15 جهاز كاشير وتعديل بنود تسليم الضمان والتدريب",
+      "activity_date": "2026-06-27T14:30:00Z",
+      "duration_minutes": 15,
+      "assigned_to": "emp-4",
+      "status": "completed",
+      "follow_up_date": null,
+      "created_by": "u-1",
+      "created_at": "2026-06-27T15:00:00Z"
+    }
+  ],
+  "crm_quotes": [],
+  "crm_quote_items": [],
+  "audit_log": [
+    {
+      "id": 1,
+      "session_id": "sess-init",
+      "user_id": "u-1",
+      "user_name": "أحمد حماد",
+      "user_role": "admin",
+      "ip_address": "127.0.0.1",
+      "user_agent": "Mozilla/5.0",
+      "action_type": "LOGIN",
+      "table_name": "users",
+      "record_id": 1,
+      "record_identifier": "admin@promet.sa",
+      "description": "تسجيل دخول ناجح للمدير العام أحمد حماد",
+      "status": "success",
+      "created_at": "2026-06-28T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "session_id": "sess-init",
+      "user_id": "u-1",
+      "user_name": "أحمد حماد",
+      "user_role": "admin",
+      "ip_address": "127.0.0.1",
+      "user_agent": "Mozilla/5.0",
+      "action_type": "UPDATE",
+      "table_name": "settings",
+      "record_id": 1,
+      "record_identifier": "النظام المالي",
+      "description": "تعديل إعدادات أقسام النظام المالي وتفعيل ميزات المبيعات وعلاقات العملاء CRM",
+      "status": "success",
+      "created_at": "2026-06-28T01:10:00Z"
+    }
+  ],
+  "audit_sensitive_changes": [
+    {
+      "id": 1,
+      "audit_log_id": 2,
+      "sensitive_type": "salary",
+      "description": "زيادة الراتب الأساسي للموظفة سارة الشمري",
+      "old_value": 12000,
+      "new_value": 15000,
+      "approved_by": 1,
+      "approval_status": "approved",
+      "created_at": "2026-06-28T01:12:00Z"
+    },
+    {
+      "id": 2,
+      "audit_log_id": null,
+      "sensitive_type": "discount",
+      "description": "خصم خاص بنسبة 20% لشركة الأندلس العقارية",
+      "old_value": 0,
+      "new_value": 20,
+      "approved_by": null,
+      "approval_status": "pending",
+      "created_at": "2026-06-28T02:30:00Z"
+    }
+  ],
+  "audit_user_activity": [
+    {
+      "id": 1,
+      "user_id": "u-1",
+      "activity_date": "2026-06-28",
+      "total_actions": 12,
+      "inserts": 4,
+      "updates": 5,
+      "deletes": 0,
+      "views": 3,
+      "exports": 0,
+      "created_at": "2026-06-28T00:00:00Z"
+    }
+  ],
+  "audit_retention_policy": [
+    {
+      "id": 1,
+      "table_name": "audit_log",
+      "retention_days": 365,
+      "is_active": true
+    },
+    {
+      "id": 2,
+      "table_name": "audit_sensitive_changes",
+      "retention_days": 730,
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "table_name": "audit_user_activity",
+      "retention_days": 180,
+      "is_active": true
+    }
+  ],
+  "audit_alerts": [
+    {
+      "id": 1,
+      "alert_type": "sensitive_change",
+      "severity": "high",
+      "message": "طلب تعديل راتب معلق بحاجة لموافقة المدير العام أحمد حماد",
+      "details": {
+        "table": "employees",
+        "record_id": "emp-1"
+      },
+      "is_read": false,
+      "created_at": "2026-06-28T01:12:00Z"
+    }
+  ],
+  "eta_settings": [
+    {
+      "company_name": "شركة الهضبة للحلول التقنية",
+      "tax_id": "305-648-129",
+      "company_address": "شارع العليا، الرياض",
+      "activity_code": "4690",
+      "branch_code": "01",
+      "building_number": "40",
+      "floor_number": "2",
+      "room_number": "201",
+      "postal_code": "11564",
+      "api_url": "https://api.invoicing.eta.gov.eg/api/v1",
+      "client_id": "cli_89283749",
+      "client_secret": "sec_98127391",
+      "is_active": true
+    }
+  ],
+  "eta_submissions_log": [],
+  "bank_transactions_imported": [
+    {
+      "id": "bti-sync-1-1783216543171",
+      "bank_account_id": "ba-1",
+      "transaction_date": "2026-07-05",
+      "description": "حوالة واردة - سداد فاتورة INV-2026-002 مؤسسة الأمل التجارية",
+      "amount": 25750,
+      "transaction_type": "credit",
+      "reference_number": "INV-2026-002",
+      "counterparty_name": "مؤسسة الأمل التجارية",
+      "counterparty_account": "SA4444555566667777888899",
+      "reconciliation_status": "pending",
+      "matched_invoice_id": null,
+      "matched_payment_id": null,
+      "matched_contact_id": null,
+      "match_score": null,
+      "match_method": null,
+      "matched_by": null,
+      "matched_at": null,
+      "notes": "",
+      "created_at": "2026-07-05T01:55:43.171Z",
+      "updated_at": "2026-07-05T01:55:43.171Z"
+    },
+    {
+      "id": "bti-sync-2-1783216543171",
+      "bank_account_id": "ba-1",
+      "transaction_date": "2026-07-05",
+      "description": "رسوم الخدمات البنكية الدورية - الراجحي",
+      "amount": 75,
+      "transaction_type": "debit",
+      "reference_number": "FEE-1783216543171",
+      "counterparty_name": "مصرف الراجحي",
+      "counterparty_account": "SA1234500000001234567890",
+      "reconciliation_status": "pending",
+      "matched_invoice_id": null,
+      "matched_payment_id": null,
+      "matched_contact_id": null,
+      "match_score": null,
+      "match_method": null,
+      "matched_by": null,
+      "matched_at": null,
+      "notes": "",
+      "created_at": "2026-07-05T01:55:43.171Z",
+      "updated_at": "2026-07-05T01:55:43.171Z"
+    },
+    {
+      "id": "bti-sync-1-1783216543169",
+      "bank_account_id": "ba-1",
+      "transaction_date": "2026-07-05",
+      "description": "حوالة واردة - سداد فاتورة INV-2026-002 مؤسسة الأمل التجارية",
+      "amount": 25750,
+      "transaction_type": "credit",
+      "reference_number": "INV-2026-002",
+      "counterparty_name": "مؤسسة الأمل التجارية",
+      "counterparty_account": "SA4444555566667777888899",
+      "reconciliation_status": "pending",
+      "matched_invoice_id": null,
+      "matched_payment_id": null,
+      "matched_contact_id": null,
+      "match_score": null,
+      "match_method": null,
+      "matched_by": null,
+      "matched_at": null,
+      "notes": "",
+      "created_at": "2026-07-05T01:55:43.169Z",
+      "updated_at": "2026-07-05T01:55:43.169Z"
+    },
+    {
+      "id": "bti-sync-2-1783216543170",
+      "bank_account_id": "ba-1",
+      "transaction_date": "2026-07-05",
+      "description": "رسوم الخدمات البنكية الدورية - الراجحي",
+      "amount": 75,
+      "transaction_type": "debit",
+      "reference_number": "FEE-1783216543170",
+      "counterparty_name": "مصرف الراجحي",
+      "counterparty_account": "SA1234500000001234567890",
+      "reconciliation_status": "pending",
+      "matched_invoice_id": null,
+      "matched_payment_id": null,
+      "matched_contact_id": null,
+      "match_score": null,
+      "match_method": null,
+      "matched_by": null,
+      "matched_at": null,
+      "notes": "",
+      "created_at": "2026-07-05T01:55:43.170Z",
+      "updated_at": "2026-07-05T01:55:43.170Z"
+    }
+  ],
+  "reconciliation_log": [],
+  "reconciliation_rules": [],
+  "anomaly_rules": [
+    {
+      "id": 1,
+      "name": "فواتير مكررة",
+      "description": "اكتشاف فواتير بنفس الرقم أو المبلغ خلال 7 أيام",
+      "rule_type": "pattern",
+      "conditions": {
+        "days": 7,
+        "threshold": 2
+      },
+      "severity": "high",
+      "is_active": true,
+      "created_at": "2026-07-05T14:29:35.216Z"
+    },
+    {
+      "id": 2,
+      "name": "تغيير راتب مفاجئ",
+      "description": "اكتشاف زيادة أو نقصان في الراتب بنسبة >30%",
+      "rule_type": "threshold",
+      "conditions": {
+        "percentage": 30
+      },
+      "severity": "high",
+      "is_active": true,
+      "created_at": "2026-07-05T14:29:35.216Z"
+    },
+    {
+      "id": 3,
+      "name": "حركة مخزون غير عادية",
+      "description": "اكتشاف حركة مخزون خارج الحدود الطبيعية (أكثر من 150 وحدة دفعة واحدة)",
+      "rule_type": "threshold",
+      "conditions": {
+        "deviation": 3,
+        "quantity": 150
+      },
+      "severity": "medium",
+      "is_active": true,
+      "created_at": "2026-07-05T14:29:35.216Z"
+    },
+    {
+      "id": 4,
+      "name": "دخول مشبوه",
+      "description": "اكتشاف محاولات دخول فاشلة متكررة (5 محاولات فاشلة خلال 10 دقائق)",
+      "rule_type": "pattern",
+      "conditions": {
+        "attempts": 5,
+        "minutes": 10
+      },
+      "severity": "critical",
+      "is_active": true,
+      "created_at": "2026-07-05T14:29:35.216Z"
+    }
+  ],
+  "anomaly_detection": [
+    {
+      "id": 1,
+      "anomaly_type": "duplicate_invoice",
+      "severity": "high",
+      "description": "تم اكتشاف فواتير مكررة برقم 'INV-2026-002' للعميل شركة الهضبة بقيمة 12,500 ج.م",
+      "details": {
+        "invoice_number": "INV-2026-002",
+        "count": 2,
+        "ids": "inv-2, inv-9"
+      },
+      "reference_type": "invoice",
+      "reference_id": "inv-2",
+      "status": "pending",
+      "detected_by": "النظام",
+      "assigned_to": 1,
+      "assigned_to_name": "أحمد حماد",
+      "detected_at": "2026-07-05T14:29:35.216Z",
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "anomaly_type": "suspicious_login",
+      "severity": "critical",
+      "description": "5 محاولات دخول فاشلة للمستخدم 'sales_user' من عنوان IP غير معروف خلال 10 دقائق",
+      "details": {
+        "username": "sales_user",
+        "attempts": 5,
+        "last_attempt": "2026-07-05T14:29:35.216Z"
+      },
+      "reference_type": "user",
+      "reference_id": "u-2",
+      "status": "investigating",
+      "detected_by": "النظام",
+      "assigned_to": 1,
+      "assigned_to_name": "أحمد حماد",
+      "detected_at": "2026-07-05T14:29:35.216Z",
+      "notes": "تم التواصل مع الموظف للتحقق من ملكية الحساب وجاري التحقيق في الـ IP"
+    }
+  ],
+  "closing_periods": [],
+  "closing_tasks": [],
+  "suggested_adjustments": [],
+  "closing_log": [],
+  "daily_workers_attendance": [],
+  "daily_workers_payments": [],
+  "probation_alerts": [],
+  "installment_types": [
+    {
+      "id": 1,
+      "name": "قرض سيارة",
+      "description": "تمويل شراء سيارة",
+      "icon": "🚗",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 2,
+      "name": "وحدة سكنية",
+      "description": "شراء وحدة سكنية",
+      "icon": "🏠",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 3,
+      "name": "قرض شخصي",
+      "description": "قرض شخصي من البنك",
+      "icon": "💳",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 4,
+      "name": "أجهزة تقسيط",
+      "description": "شراء أجهزة بالتقسيط",
+      "icon": "📱",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 5,
+      "name": "أقساط دراسية",
+      "description": "مصروفات تعليمية",
+      "icon": "🎓",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 6,
+      "name": "تغطية طبية",
+      "description": "أقساط تأمين صحي",
+      "icon": "🏥",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    },
+    {
+      "id": 7,
+      "name": "قرض تجاري",
+      "description": "تمويل مشروع تجاري",
+      "icon": "🏢",
+      "is_active": true,
+      "created_at": "2026-07-05T01:35:03.245Z"
+    }
+  ],
+  "employee_installments": [],
+  "installment_payments": [],
+  "installment_deductions": [],
+  "activity_types": [
+    {
+      "id": 0,
+      "code": "scrap",
+      "name": "🧹 الخردة وإعادة التدوير",
+      "description": "شركات جمع وتدوير الخردة",
+      "icon": "🧹",
+      "color": "#8B5CF6",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "scrap_inventory",
+        "scrap_transactions",
+        "scrap_reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-09T19:20:22.265Z"
+    },
+    {
+      "id": 1,
+      "code": "transport",
+      "name": "🚛 نقل وشحن",
+      "description": "شركات النقل والشحن البري",
+      "icon": "🚛",
+      "color": "#6C2BD9",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "fleet",
+        "shipments",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 2,
+      "code": "manufacturing",
+      "name": "🏭 تصنيع",
+      "description": "مصانع وشركات التصنيع",
+      "icon": "🏭",
+      "color": "#3B82F6",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "inventory",
+        "production",
+        "equipment",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 3,
+      "code": "construction",
+      "name": "🏗️ مقاولات",
+      "description": "شركات المقاولات والبناء",
+      "icon": "🏗️",
+      "color": "#F59E0B",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "projects",
+        "assets",
+        "equipment",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 4,
+      "code": "retail",
+      "name": "🛒 تجزئة",
+      "description": "متاجر التجزئة والمبيعات",
+      "icon": "🛒",
+      "color": "#10B981",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "inventory",
+        "crm",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 5,
+      "code": "hotel",
+      "name": "🏨 فندق",
+      "description": "فنادق ومنتجعات سياحية",
+      "icon": "🏨",
+      "color": "#EC4899",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "crm",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 6,
+      "code": "healthcare",
+      "name": "🏥 صحي",
+      "description": "مستشفيات وعيادات طبية",
+      "icon": "🏥",
+      "color": "#EF4444",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "crm",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 7,
+      "code": "education",
+      "name": "🎓 تعليمي",
+      "description": "مدارس وجامعات ومراكز تعليمية",
+      "icon": "🎓",
+      "color": "#8B5CF6",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "invoices",
+        "crm",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 8,
+      "code": "agriculture",
+      "name": "🌾 زراعي",
+      "description": "مزارع وشركات زراعية",
+      "icon": "🌾",
+      "color": "#10B981",
+      "default_modules": [
+        "dashboard",
+        "employees",
+        "payroll",
+        "inventory",
+        "reports"
+      ],
+      "is_active": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    }
+  ],
+  "company_settings": [
+    {
+      "id": 1,
+      "company_name": "شركة الهضبة للحلول التقنية",
+      "activity_code": "retail",
+      "activity_id": 4,
+      "tax_id": "300054321000003",
+      "address": "شارع العليا، الرياض، المملكة العربية السعودية",
+      "phone": "+966501112223",
+      "email": "info@promet.sa",
+      "currency": "EGP",
+      "language": "ar",
+      "timezone": "Africa/Cairo",
+      "fiscal_year_start": "2026-01-01",
+      "fiscal_year_end": "2026-12-31",
+      "created_at": "2026-07-05T02:24:12.489Z",
+      "updated_at": "2026-07-05T02:24:12.489Z"
+    }
+  ],
+  "company_activity_modules": [
+    {
+      "id": 1,
+      "company_id": 1,
+      "module_code": "dashboard",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 2,
+      "company_id": 1,
+      "module_code": "employees",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 3,
+      "company_id": 1,
+      "module_code": "payroll",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 4,
+      "company_id": 1,
+      "module_code": "invoices",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 5,
+      "company_id": 1,
+      "module_code": "inventory",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 6,
+      "company_id": 1,
+      "module_code": "crm",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 7,
+      "company_id": 1,
+      "module_code": "reports",
+      "is_enabled": true,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    }
+  ],
+  "custom_fields": [
+    {
+      "id": 1,
+      "activity_code": "transport",
+      "entity_type": "vehicle",
+      "field_name": "license_plate",
+      "field_label": "رقم اللوحة",
+      "field_type": "text",
+      "options": null,
+      "is_required": true,
+      "order_index": 1,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 2,
+      "activity_code": "transport",
+      "entity_type": "vehicle",
+      "field_name": "driver_name",
+      "field_label": "اسم السائق",
+      "field_type": "text",
+      "options": null,
+      "is_required": false,
+      "order_index": 2,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 3,
+      "activity_code": "manufacturing",
+      "entity_type": "product",
+      "field_name": "raw_material_ratio",
+      "field_label": "نسبة المواد الخام",
+      "field_type": "number",
+      "options": null,
+      "is_required": false,
+      "order_index": 1,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    },
+    {
+      "id": 4,
+      "activity_code": "construction",
+      "entity_type": "employee",
+      "field_name": "safety_certified",
+      "field_label": "حاصل على شهادة السلامة المهنية",
+      "field_type": "checkbox",
+      "options": null,
+      "is_required": false,
+      "order_index": 1,
+      "created_at": "2026-07-05T02:24:12.489Z"
+    }
+  ],
+  "modules": [
+    {
+      "id": 1,
+      "code": "dashboard",
+      "name": "📊 لوحة التحكم",
+      "description": "عرض إحصائيات وتقارير",
+      "icon": "📊",
+      "is_active": true,
+      "is_core": 1,
+      "order_index": 1,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 2,
+      "code": "employees",
+      "name": "👥 الموظفين",
+      "description": "إدارة الموظفين والرواتب",
+      "icon": "👥",
+      "is_active": true,
+      "is_core": 1,
+      "order_index": 2,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 3,
+      "code": "payroll",
+      "name": "💰 الرواتب",
+      "description": "إدارة الرواتب الشهرية",
+      "icon": "💰",
+      "is_active": true,
+      "is_core": 1,
+      "order_index": 3,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 4,
+      "code": "invoices",
+      "name": "📄 الفواتير",
+      "description": "إدارة الفواتير والمبيعات",
+      "icon": "📄",
+      "is_active": true,
+      "is_core": 1,
+      "order_index": 4,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 5,
+      "code": "inventory",
+      "name": "📦 المخزون",
+      "description": "إدارة المنتجات والمخزون",
+      "icon": "📦",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 5,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 6,
+      "code": "projects",
+      "name": "📋 المشاريع",
+      "description": "إدارة المشاريع والمهام",
+      "icon": "📋",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 6,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 7,
+      "code": "assets",
+      "name": "🏗️ الأصول",
+      "description": "إدارة الأصول الثابتة",
+      "icon": "🏗️",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 7,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 8,
+      "code": "crm",
+      "name": "🤝 العملاء",
+      "description": "إدارة علاقات العملاء",
+      "icon": "🤝",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 8,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 9,
+      "code": "reports",
+      "name": "📊 التقارير",
+      "description": "تقارير وتحليلات",
+      "icon": "📊",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 9,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 10,
+      "code": "fleet",
+      "name": "🚛 الأسطول",
+      "description": "إدارة السيارات والمركبات",
+      "icon": "🚛",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 10,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 11,
+      "code": "shipments",
+      "name": "📦 الشحنات",
+      "description": "إدارة الشحنات والتوصيل",
+      "icon": "📦",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 11,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 12,
+      "code": "production",
+      "name": "🏭 الإنتاج",
+      "description": "إدارة خطوط الإنتاج",
+      "icon": "🏭",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 12,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 13,
+      "code": "equipment",
+      "name": "⚙️ المعدات",
+      "description": "إدارة المعدات والآلات",
+      "icon": "⚙️",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 13,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 14,
+      "code": "banking",
+      "name": "🏦 البنوك",
+      "description": "إدارة الحسابات البنكية",
+      "icon": "🏦",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 14,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 15,
+      "code": "audit",
+      "name": "🛡️ التدقيق",
+      "description": "سجل العمليات",
+      "icon": "🛡️",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 15,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 16,
+      "code": "scrap_inventory",
+      "name": "🧹 مخزون الخردة",
+      "description": "إدارة مخزون الخردة والمعادن",
+      "icon": "🧹",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 16,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 17,
+      "code": "scrap_transactions",
+      "name": "📊 حركات الخردة",
+      "description": "تسجيل حركات الشراء والبيع والوزن",
+      "icon": "📊",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 17,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    },
+    {
+      "id": 18,
+      "code": "scrap_reports",
+      "name": "📋 تقارير الخردة",
+      "description": "تقارير حركة الخردة وأسعار الكيلو والكميات",
+      "icon": "📋",
+      "is_active": true,
+      "is_core": false,
+      "order_index": 18,
+      "created_at": "2026-07-09T19:20:22.354Z"
+    }
+  ],
+  "user_modules": []
+}

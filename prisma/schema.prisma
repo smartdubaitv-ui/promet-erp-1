@@ -1,0 +1,960 @@
+// This is your Prisma schema file,
+// generated automatically from database.json structure.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model tenants {
+  id String @id
+  name String?
+  subdomain String?
+  plan String?
+  subscriptionStatus String?
+  subscriptionEndsAt String?
+  createdAt String?
+}
+
+model users {
+  id String @id
+  tenantId String?
+  email String?
+  name String?
+  role String?
+  isActive Boolean?
+  createdAt String?
+  username String?
+  password_hash String?
+  role_id Int?
+  is_active Boolean?
+}
+
+model accounts {
+  id String @id
+  tenantId String?
+  code String?
+  name String?
+  type String?
+  isActive Boolean?
+  balance Decimal?
+}
+
+model contacts {
+  id String @id
+  tenantId String?
+  type String?
+  name String?
+  email String?
+  phone String?
+  address String?
+  balance Decimal?
+  createdAt String?
+}
+
+model invoices {
+  id String @id
+  tenantId String?
+  contactId String?
+  invoiceNumber String?
+  date String?
+  dueDate String?
+  totalAmount Decimal?
+  paidAmount Decimal?
+  status String?
+  notes String?
+  createdAt String?
+  lines String?
+  eta_status String?
+
+  @@index([contactId])
+}
+
+model expenses {
+  id String @id
+  tenantId String?
+  contactId String?
+  expenseDate String?
+  amount Decimal?
+  category String?
+  description String?
+  createdAt String?
+}
+
+model bankTransactions {
+  id String @id
+  tenantId String?
+  bankAccountId String?
+  date String?
+  amount Decimal?
+  description String?
+  category String?
+  isReconciled Boolean?
+  createdAt String?
+}
+
+model products {
+  id String @id
+  tenantId String?
+  name String?
+  sku String?
+  description String?
+  unitPrice Decimal?
+  stockQuantity Int?
+  reorderPoint Int?
+  isActive Boolean?
+}
+
+model purchaseOrders {
+  id String @id
+  tenantId String?
+  contactId String?
+  poNumber String?
+  date String?
+  totalAmount Decimal?
+  status String?
+  createdAt String?
+  lines String?
+}
+
+model salesOrders {
+  id String @id
+  tenantId String?
+  contactId String?
+  soNumber String?
+  date String?
+  totalAmount Decimal?
+  status String?
+  createdAt String?
+  lines String?
+}
+
+model quotations {
+  id String @id
+  tenantId String?
+  contactId String?
+  qNumber String?
+  date String?
+  totalAmount Decimal?
+  status String?
+  createdAt String?
+  lines String?
+}
+
+model payments {
+  id String @id
+  tenantId String?
+  invoiceId String?
+  paymentNumber String?
+  date String?
+  amount Decimal?
+  paymentMethod String?
+  notes String?
+  createdAt String?
+}
+
+model fixedAssets {
+  id String @id
+  tenantId String?
+  name String?
+  code String?
+  asset_code String?
+  category_id String?
+  purchaseDate String?
+  purchase_date String?
+  purchaseValue Int?
+  purchase_cost Int?
+  total_cost Int?
+  additional_costs Int?
+  depreciation_method String?
+  useful_life_years Int?
+  salvage_value Int?
+  depreciationRate Int?
+  depreciation_rate Int?
+  accumulated_depreciation Int?
+  net_book_value Int?
+  currentValue Int?
+  status String?
+  location String?
+  createdAt String?
+}
+
+model settings {
+  id String @id
+  tenantId String?
+  companyName String?
+  vatNumber String?
+  vatRate Int?
+  currency String?
+  fiscalYearEnd String?
+  visibleSections String?
+}
+
+model assetCategories {
+  id String @id
+  tenantId String?
+  name String?
+  code String?
+  description String?
+  depreciation_method String?
+  useful_life_years Int?
+  salvage_value_percent Int?
+  depreciation_rate Int?
+  asset_account_id String?
+  depreciation_expense_account_id String?
+  accumulated_depreciation_account_id String?
+  is_active Boolean?
+  createdAt String?
+}
+
+model assetTransactions {
+  id String @id
+  tenantId String?
+  asset_id String?
+  transaction_type String?
+  transaction_date String?
+  amount Int?
+  description String?
+  reference_type String?
+  reference_id String?
+  created_by String?
+  createdAt String?
+}
+
+model depreciationLog {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model assetRevaluations {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model maintenanceContracts {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model employees {
+  id String @id
+  tenantId String?
+  name String?
+  email String?
+  department String?
+  position String?
+  basicSalary Int?
+  allowance Int?
+  iban String?
+  joinDate String?
+  isActive Boolean?
+}
+
+model payroll {
+  id String @id
+  tenantId String?
+  employeeId String?
+  employeeName String?
+  month String?
+  basicSalary Int?
+  allowance Int?
+  deductions Int?
+  netSalary Int?
+  status String?
+  paidAt String?
+
+  @@index([employeeId])
+}
+
+model leaves {
+  id String @id
+  tenantId String?
+  employeeId String?
+  employeeName String?
+  type String?
+  startDate String?
+  endDate String?
+  days Int?
+  status String?
+  reason String?
+  createdAt String?
+}
+
+model departments {
+  id String @id
+  tenantId String?
+  name String?
+  description String?
+  createdAt String?
+}
+
+model attendance {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model accountingEntries {
+  id String @id
+  tenantId String?
+  entry_date String?
+  description String?
+  reference_type String?
+  reference_id String?
+  created_at String?
+}
+
+model accountingEntryDetails {
+  id String @id
+  entry_id String?
+  account_code String?
+  account_name String?
+  debit Int?
+  credit Int?
+  notes String?
+}
+
+model roles {
+  id String @id
+  name String?
+  description String?
+}
+
+model permissions {
+  id String @id
+  name String?
+  description String?
+}
+
+model role_permissions {
+  id            String @id @default(uuid())
+  role_id       String
+  permission_id String
+}
+
+model performance_reviews {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model trainings {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model training_enrollments {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model job_openings {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model job_applications {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model interviews {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model warehouses {
+  id String @id
+  name String?
+  code String?
+  location String?
+  manager_id Int?
+  status String?
+  created_at String?
+}
+
+model product_categories {
+  id String @id
+  name String?
+  description String?
+  parent_id String?
+  created_at String?
+}
+
+model products_advanced {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model inventory_transactions {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model inventory_stock {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model purchase_orders {
+  id String @id
+  po_number String?
+  vendor_id String?
+  order_date String?
+  expected_delivery String?
+  subtotal Int?
+  tax Int?
+  total Int?
+  status String?
+  created_at String?
+}
+
+model purchase_order_items {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model inventory_counts {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model projects {
+  id String @id
+  name String?
+  code String?
+  description String?
+  client_id Int?
+  project_manager_id Int?
+  department_id Int?
+  start_date String?
+  end_date String?
+  budget Int?
+  priority String?
+  status String?
+  created_at String?
+}
+
+model project_tasks {
+  id String @id
+  project_id Int?
+  title String?
+  description String?
+  assigned_to Int?
+  start_date String?
+  due_date String?
+  estimated_hours Int?
+  actual_hours Int?
+  status String?
+  priority String?
+  created_at String?
+}
+
+model project_team {
+  id String @id
+  project_id Int?
+  employee_id Int?
+  role String?
+  start_date String?
+}
+
+model project_progress {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model project_expenses {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model project_notifications {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model user_notifications {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model notification_types {
+  id String @id
+  name String?
+  description String?
+  icon String?
+  color String?
+  is_active Boolean?
+}
+
+model user_notification_settings {
+  id String @id
+  user_id String?
+  notification_type_id Int?
+  receive_in_app Boolean?
+  receive_by_email Boolean?
+}
+
+model saved_reports {
+  id String @id
+  name String?
+  description String?
+  report_type String?
+  filters String?
+  columns String?
+  chart_type String?
+  chart_config String?
+  is_favorite Boolean?
+  is_public Boolean?
+  created_by String?
+  created_at String?
+}
+
+model report_preferences {
+  id String @id
+  user_id String?
+  default_dashboard String?
+  date_range_days Int?
+  auto_refresh_seconds Int?
+  theme String?
+}
+
+model crm_customers {
+  id String @id
+  contact_id String?
+  company_name String?
+  industry String?
+  website String?
+  tax_id String?
+  commercial_register String?
+  customer_type String?
+  customer_segment String?
+  annual_revenue Int?
+  employee_count Int?
+  preferred_contact_method String?
+  assigned_to String?
+  credit_limit Int?
+  payment_terms Int?
+  notes String?
+  created_by String?
+  created_at String?
+}
+
+model crm_contact_persons {
+  id String @id
+  customer_id String?
+  full_name String?
+  job_title String?
+  email String?
+  phone String?
+  mobile String?
+  is_primary Boolean?
+  notes String?
+}
+
+model crm_pipeline_stages {
+  id String @id
+  name String?
+  order_index Int?
+  probability Int?
+  color String?
+}
+
+model crm_opportunities {
+  id String @id
+  customer_id String?
+  name String?
+  description String?
+  amount Int?
+  currency String?
+  pipeline_stage_id String?
+  expected_close_date String?
+  probability Int?
+  assigned_to String?
+  source String?
+  status String?
+  notes String?
+  created_by String?
+  created_at String?
+}
+
+model crm_activities {
+  id String @id
+  customer_id String?
+  opportunity_id String?
+  activity_type String?
+  subject String?
+  description String?
+  activity_date String?
+  duration_minutes Int?
+  assigned_to String?
+  status String?
+  follow_up_date String?
+  created_by String?
+  created_at String?
+}
+
+model crm_quotes {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model crm_quote_items {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model audit_log {
+  id String @id
+  session_id String?
+  user_id String?
+  user_name String?
+  user_role String?
+  ip_address String?
+  user_agent String?
+  action_type String?
+  table_name String?
+  record_id Int?
+  record_identifier String?
+  description String?
+  status String?
+  created_at String?
+}
+
+model audit_sensitive_changes {
+  id String @id
+  audit_log_id Int?
+  sensitive_type String?
+  description String?
+  old_value Int?
+  new_value Int?
+  approved_by Int?
+  approval_status String?
+  created_at String?
+}
+
+model audit_user_activity {
+  id String @id
+  user_id String?
+  activity_date String?
+  total_actions Int?
+  inserts Int?
+  updates Int?
+  deletes Int?
+  views Int?
+  exports Int?
+  created_at String?
+}
+
+model audit_retention_policy {
+  id String @id
+  table_name String?
+  retention_days Int?
+  is_active Boolean?
+}
+
+model audit_alerts {
+  id String @id
+  alert_type String?
+  severity String?
+  message String?
+  details String?
+  is_read Boolean?
+  created_at String?
+}
+
+model eta_settings {
+  id              String   @id @default(uuid())
+  company_name    String?
+  tax_id          String?
+  company_address String?
+  activity_code   String?
+  branch_code     String?
+  building_number String?
+  floor_number    String?
+  room_number     String?
+  postal_code     String?
+  api_url         String?
+  client_id       String?
+  client_secret   String?
+  is_active       Boolean? @default(true)
+}
+
+model eta_submissions_log {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model bank_transactions_imported {
+  id String @id
+  bank_account_id String?
+  transaction_date String?
+  description String?
+  amount Int?
+  transaction_type String?
+  reference_number String?
+  counterparty_name String?
+  counterparty_account String?
+  reconciliation_status String?
+  matched_invoice_id String?
+  matched_payment_id String?
+  matched_contact_id String?
+  match_score String?
+  match_method String?
+  matched_by String?
+  matched_at String?
+  notes String?
+  created_at String?
+  updated_at String?
+}
+
+model reconciliation_log {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model reconciliation_rules {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model anomaly_rules {
+  id String @id
+  name String?
+  description String?
+  rule_type String?
+  conditions String?
+  severity String?
+  is_active Boolean?
+  created_at String?
+}
+
+model anomaly_detection {
+  id String @id
+  anomaly_type String?
+  severity String?
+  description String?
+  details String?
+  reference_type String?
+  reference_id String?
+  status String?
+  detected_by String?
+  assigned_to Int?
+  assigned_to_name String?
+  detected_at String?
+  notes String?
+}
+
+model closing_periods {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model closing_tasks {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model suggested_adjustments {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model closing_log {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model daily_workers_attendance {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model daily_workers_payments {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model probation_alerts {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model installment_types {
+  id String @id
+  name String?
+  description String?
+  icon String?
+  is_active Boolean?
+  created_at String?
+}
+
+model employee_installments {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model installment_payments {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model installment_deductions {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model activity_types {
+  id String @id
+  code String?
+  name String?
+  description String?
+  icon String?
+  color String?
+  default_modules String?
+  is_active Boolean?
+  created_at String?
+}
+
+model company_settings {
+  id String @id
+  company_name String?
+  activity_code String?
+  activity_id Int?
+  tax_id String?
+  address String?
+  phone String?
+  email String?
+  currency String?
+  language String?
+  timezone String?
+  fiscal_year_start String?
+  fiscal_year_end String?
+  created_at String?
+  updated_at String?
+}
+
+model company_activity_modules {
+  id String @id
+  company_id Int?
+  module_code String?
+  is_enabled Boolean?
+  created_at String?
+}
+
+model custom_fields {
+  id String @id
+  activity_code String?
+  entity_type String?
+  field_name String?
+  field_label String?
+  field_type String?
+  options String?
+  is_required Boolean?
+  order_index Int?
+  created_at String?
+}
+
+model modules {
+  id String @id
+  code String?
+  name String?
+  description String?
+  icon String?
+  is_active Boolean?
+  is_core Boolean?
+  order_index Int?
+  created_at String?
+}
+
+model user_modules {
+  id String @id
+  tenantId String?
+  createdAt String?
+  updatedAt String?
+}
+
+model AuditLog {
+  id          String  @id
+  tenantId    String?
+  userId      String?
+  userEmail   String?
+  action      String?
+  resource    String?
+  resourceId  String?
+  changes     String?
+  prevHash    String?
+  currentHash String?
+}
+
+

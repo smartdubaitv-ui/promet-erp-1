@@ -1,11 +1,49 @@
-<div align="center">
+# نظام Hegazy ERP المحاسبي والإداري المتكامل
+## Hegazy ERP System - Full Source Code
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+مرحباً بك! هذا هو الكود المصدري الكامل للنظام المحاسبي والإداري المتكامل (ERP) لشركة Hegazy، جاهز للتشغيل المحلي على جهاز الكمبيوتر الخاص بك.
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+### 🚀 خطوات التشغيل المحلي (How to Run Locally)
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+#### 1. متطلبات التشغيل (Prerequisites)
+تأكد من تثبيت البرامج التالية على جهازك:
+* **Node.js** (إصدار 18 أو أحدث)
+* **npm** (يأتي مدمجاً مع Node.js)
 
-</div>
+#### 2. تثبيت المكتبات البرمجية (Install Dependencies)
+افتح واجهة الأوامر (Terminal / Command Prompt) في مجلد المشروع الرئيسي (حيث يوجد ملف `package.json`) وقم بتشغيل الأمر التالي:
+```bash
+npm install
+```
+
+#### 3. تشغيل النظام في بيئة التطوير (Run in Development Mode)
+بعد اكتمال تثبيت المكتبات، قم بتشغيل الأمر التالي لبدء الخادم المحلي:
+```bash
+npm run dev
+```
+
+سيتم تشغيل الخادم على الرابط المحلي:
+👉 **`http://localhost:3000`**
+
+---
+
+### 📁 هيكل المجلدات الرئيسي (Project Structure)
+* `server.ts` - خادم Express الخلفي (Backend API & Database Control)
+* `src/` - كود الواجهة الأمامية بالكامل (React + Vite + Tailwind CSS)
+* `src/App.tsx` - المكون الرئيسي للواجهة الأمامية والتحكم بالنوافذ والصفحات
+* `database.json` - قاعدة البيانات المحلية المؤقتة للنظام (تُحدّث تلقائياً)
+* `package.json` - ملف تكوين المشروع وإدارة المكتبات والاعتمادات البرمجية
+
+---
+
+### 🤖 المساعد الذكي (AI Copilot)
+النظام يدعم المساعد الذكي الذي يقوم بتحليل السجلات المالية والرواتب وحالة المخزون والإجابة على استفساراتك فوراً.
+لتفعيل الذكاء الاصطناعي الكامل محلياً، يمكنك إضافة مفتاح Gemini API Key في ملف بيئي `.env` كالتالي:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+بالتوفيق في إدارة وتطوير نظامك الخاص!
+**فريق تطوير Hegazy ERP**

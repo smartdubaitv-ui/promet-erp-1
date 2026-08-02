@@ -1,0 +1,185 @@
+{
+  "entities": {
+    "Tenant": {
+      "title": "Tenant",
+      "description": "SaaS Tenant representing a corporate subscriber.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "subdomain": { "type": "string" },
+        "plan": { "type": "string", "enum": ["basic", "pro", "enterprise"] },
+        "subscriptionStatus": { "type": "string" },
+        "subscriptionEndsAt": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "plan", "subscriptionStatus"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User details with subscription capabilities and administrative roles.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "accountant", "sales", "viewer"] },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "tenantId", "email", "name", "role", "isActive"]
+    },
+    "Account": {
+      "title": "Account",
+      "description": "Chart of accounts mapped to balance sheet/ledger properties.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["asset", "liability", "equity", "revenue", "expense"] },
+        "parentId": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "balance": { "type": "number" }
+      },
+      "required": ["id", "tenantId", "code", "name", "type", "isActive", "balance"]
+    },
+    "Contact": {
+      "title": "Contact",
+      "description": "A customer or vendor entity.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "type": { "type": "string", "enum": ["customer", "vendor"] },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "balance": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "tenantId", "type", "name", "balance"]
+    },
+    "InvoiceLine": {
+      "title": "InvoiceLine",
+      "description": "Single line item inside an invoice transaction.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceId": { "type": "string" },
+        "description": { "type": "string" },
+        "quantity": { "type": "number" },
+        "unitPrice": { "type": "number" },
+        "amount": { "type": "number" }
+      },
+      "required": ["id", "invoiceId", "description", "quantity", "unitPrice", "amount"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Sales invoice mapping product lines and outstanding totals.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "contactId": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "date": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["draft", "sent", "unpaid", "paid", "overdue"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "tenantId", "contactId", "invoiceNumber", "date", "dueDate", "totalAmount", "paidAmount", "status"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Purchased operations expense with category.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "contactId": { "type": "string" },
+        "expenseDate": { "type": "string" },
+        "amount": { "type": "number" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "receiptUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "tenantId", "expenseDate", "amount", "category"]
+    },
+    "BankTransaction": {
+      "title": "BankTransaction",
+      "description": "Synchronized bank transactions ready for corporate ledger reconciliation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "bankAccountId": { "type": "string" },
+        "date": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "isReconciled": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "tenantId", "bankAccountId", "date", "amount", "description", "isReconciled"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Product or corporate inventory item details.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tenantId": { "type": "string" },
+        "name": { "type": "string" },
+        "sku": { "type": "string" },
+        "description": { "type": "string" },
+        "unitPrice": { "type": "number" },
+        "stockQuantity": { "type": "number" },
+        "reorderPoint": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "tenantId", "name", "sku", "unitPrice", "stockQuantity", "reorderPoint", "isActive"]
+    }
+  },
+  "firestore": {
+    "/tenants/{tenantId}": {
+      "schema": "Tenant",
+      "description": "Registered SaaS Tenants/Corporates"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles of authorized company personnel."
+    },
+    "/accounts/{accountId}": {
+      "schema": "Account",
+      "description": "Chart of general ledger asset/liability/revenue/expenses codes."
+    },
+    "/contacts/{contactId}": {
+      "schema": "Contact",
+      "description": "Registered clients and vendor contacts."
+    },
+    "/invoices/{invoiceId}": {
+      "schema": "Invoice",
+      "description": "Customer invoices tracking billing dues."
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Expense invoices and tax receipts."
+    },
+    "/bankTransactions/{bankTransactionId}": {
+      "schema": "BankTransaction",
+      "description": "Raw feed elements representing Plaid-synchronized bank statements."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Service list and stock items catalog."
+    }
+  }
+}

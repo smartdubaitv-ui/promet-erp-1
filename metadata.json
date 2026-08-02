@@ -1,0 +1,8 @@
+{
+  "name": "شركة الهضبة - النظام المحاسبي المتكامل",
+  "description": "نظام محاسبي سحابي متكامل لإدارة الفواتير والعملاء والموردين والمخزون، وتتبع المصروفات، وإعداد التقارير المالية والتحليلات المدعومة بالذكاء الاصطناعي على طراز QuickBooks Online.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

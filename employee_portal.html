@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة الموظفين - الهضبة ERP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-slate-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="bg-blue-600 p-2 rounded-lg text-white">
+            <i class="fa-solid fa-hotel text-lg"></i>
+          </div>
+          <span class="text-xl font-bold tracking-tight">بوابة الموظفين | الهضبة ERP</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span id="nav-emp-name" class="text-sm font-medium bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">جاري التحميل...</span>
+          <a href="/" class="text-xs text-slate-400 hover:text-white transition-colors flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            العودة للوحة التحكم
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-full lg:w-64 flex-shrink-0">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4 sticky top-8 space-y-1">
+        <button onclick="switchTab('profile')" id="btn-profile" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all bg-slate-900 text-white shadow-sm shadow-slate-900/10">
+          <i class="fa-solid fa-user-tie text-base"></i>
+          ملفي الشخصي
+        </button>
+        <button onclick="switchTab('attendance')" id="btn-attendance" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50">
+          <i class="fa-solid fa-calendar-check text-base"></i>
+          سجل الحضور والغياب
+        </button>
+        <button onclick="switchTab('leaves')" id="btn-leaves" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50">
+          <i class="fa-solid fa-bed text-base"></i>
+          طلبات الإجازات
+        </button>
+        <button onclick="switchTab('payroll')" id="btn-payroll" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50">
+          <i class="fa-solid fa-money-check-dollar text-base"></i>
+          مسيرات الرواتب
+        </button>
+        <button onclick="switchTab('reviews')" id="btn-reviews" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50">
+          <i class="fa-solid fa-chart-line text-base"></i>
+          تقييمات الأداء
+        </button>
+        <button onclick="switchTab('trainings')" id="btn-trainings" class="tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50">
+          <i class="fa-solid fa-graduation-cap text-base"></i>
+          الدورات التدريبية
+        </button>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <section class="flex-1 bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 md:p-8 min-h-[500px]">
+      
+      <!-- TAB: Profile -->
+      <div id="tab-profile" class="tab-content space-y-6">
+        <div class="flex flex-col md:flex-row items-center gap-6 pb-6 border-b border-slate-100">
+          <div class="w-20 h-20 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-3xl font-bold">
+            <i class="fa-solid fa-user-astronaut"></i>
+          </div>
+          <div class="text-center md:text-right space-y-1">
+            <h2 id="prof-name" class="text-2xl font-bold text-slate-900">جاري التحميل...</h2>
+            <p id="prof-position" class="text-blue-600 font-medium text-sm">مطور برمجيات أول</p>
+            <p id="prof-department" class="text-slate-500 text-xs">القسم: جاري التحميل...</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+            <span class="text-xs text-slate-400">البريد الإلكتروني</span>
+            <p id="prof-email" class="font-semibold text-slate-800">جاري التحميل...</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+            <span class="text-xs text-slate-400">رقم الهاتف</span>
+            <p id="prof-phone" class="font-semibold text-slate-800">جاري التحميل...</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+            <span class="text-xs text-slate-400">الرقم القومي</span>
+            <p id="prof-national-id" class="font-semibold text-slate-800">جاري التحميل...</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
+            <span class="text-xs text-slate-400">الراتب الأساسي</span>
+            <p id="prof-salary" class="font-semibold text-slate-800">جاري التحميل...</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1 md:col-span-2">
+            <span class="text-xs text-slate-400">رقم الحساب البنكي (IBAN)</span>
+            <p id="prof-iban" class="font-semibold text-slate-800">جاري التحميل...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Attendance -->
+      <div id="tab-attendance" class="tab-content hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold text-slate-900">سجل حضور وانصراف الموظف</h3>
+          <span class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg text-slate-500 font-medium">محدث في الوقت الفعلي</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700">
+                <th class="p-3 rounded-r-lg">اليوم / التاريخ</th>
+                <th class="p-3">وقت الحضور</th>
+                <th class="p-3">وقت الانصراف</th>
+                <th class="p-3">الإضافي (ساعات)</th>
+                <th class="p-3 rounded-l-lg">الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="attendance-tbody" class="divide-y divide-slate-100">
+              <!-- Rendered Dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Leaves -->
+      <div id="tab-leaves" class="tab-content hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold text-slate-900">طلبات الإجازات</h3>
+          <button onclick="toggleModal('leave-modal', true)" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-500/15">
+            <i class="fa-solid fa-plus"></i>
+            تقديم طلب إجازة جديد
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700">
+                <th class="p-3 rounded-r-lg">النوع</th>
+                <th class="p-3">البداية</th>
+                <th class="p-3">النهاية</th>
+                <th class="p-3">السبب</th>
+                <th class="p-3 rounded-l-lg">الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="leaves-tbody" class="divide-y divide-slate-100">
+              <!-- Rendered Dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Payroll -->
+      <div id="tab-payroll" class="tab-content hidden space-y-6">
+        <h3 class="text-xl font-bold text-slate-900">مسيرات الرواتب وكشوفات المستحقات</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700">
+                <th class="p-3 rounded-r-lg">الشهر</th>
+                <th class="p-3">الراتب الأساسي</th>
+                <th class="p-3">البدلات</th>
+                <th class="p-3">الاستقطاعات</th>
+                <th class="p-3">التأمينات</th>
+                <th class="p-3">صافي الراتب المستحق</th>
+                <th class="p-3 rounded-l-lg">الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="payroll-tbody" class="divide-y divide-slate-100">
+              <!-- Rendered Dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: Reviews -->
+      <div id="tab-reviews" class="tab-content hidden space-y-6">
+        <h3 class="text-xl font-bold text-slate-900">تقييمات الأداء والتقارير الدورية</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="reviews-container">
+          <!-- Rendered Dynamically -->
+        </div>
+      </div>
+
+      <!-- TAB: Trainings -->
+      <div id="tab-trainings" class="tab-content hidden space-y-6">
+        <h3 class="text-xl font-bold text-slate-900">الدورات التدريبية المتاحة</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="trainings-container">
+          <!-- Rendered Dynamically -->
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- MODAL: Request Leave -->
+  <div id="leave-modal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-3xl w-full max-w-lg p-6 shadow-2xl border border-slate-100 space-y-4 m-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h4 class="text-lg font-bold text-slate-900">طلب إجازة جديدة</h4>
+        <button onclick="toggleModal('leave-modal', false)" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="leave-form" onsubmit="submitLeave(event)" class="space-y-4">
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-500">نوع الإجازة</label>
+          <select id="leave-type" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500" required>
+            <option value="سنوية">سنوية</option>
+            <option value="مرضية">مرضية</option>
+            <option value="طارئة">طارئة</option>
+            <option value="بدون راتب">بدون راتب</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-500">تاريخ البدء</label>
+            <input type="date" id="leave-start" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500" required>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-slate-500">تاريخ الانتهاء</label>
+            <input type="date" id="leave-end" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500" required>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label class="text-xs font-semibold text-slate-500">سبب الطلب / ملاحظات</label>
+          <textarea id="leave-reason" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-blue-500" required></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all">
+          إرسال طلب الإجازة للمراجعة
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-800 text-sm font-semibold flex items-center gap-2 transform translate-y-20 opacity-0 transition-all z-50">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-green-400"></i>
+    <span id="toast-text">تمت العملية بنجاح!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-100 border-t border-slate-200/80 py-4 mt-12 text-center text-xs text-slate-400">
+    ERP جميع الحقوق محفوظة لشركة الهضبة © 2026
+  </footer>
+
+  <script>
+    let currentEmployee = null;
+
+    // Show Toast
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toast-text');
+      const icon = document.getElementById('toast-icon');
+
+      text.innerText = message;
+      if (isSuccess) {
+        icon.className = "fa-solid fa-circle-check text-green-400 text-base";
+      } else {
+        icon.className = "fa-solid fa-circle-xmark text-red-400 text-base";
+      }
+
+      toast.className = toast.className.replace('translate-y-20 opacity-0', 'translate-y-0 opacity-100');
+      setTimeout(() => {
+        toast.className = toast.className.replace('translate-y-0 opacity-100', 'translate-y-20 opacity-0');
+      }, 3000);
+    }
+
+    // Toggle Modals
+    function toggleModal(id, show) {
+      const modal = document.getElementById(id);
+      if (show) {
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    // Switch Tabs
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50";
+      });
+
+      const activeBtn = document.getElementById(`btn-${tabId}`);
+      activeBtn.className = "tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-right text-sm font-semibold transition-all bg-slate-900 text-white shadow-sm shadow-slate-900/10";
+    }
+
+    // Fetch Profile
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/employee/profile');
+        if (!res.ok) throw new Error("تعذر جلب ملف الموظف");
+        currentEmployee = await res.json();
+
+        document.getElementById('nav-emp-name').innerText = currentEmployee.name;
+        document.getElementById('prof-name').innerText = currentEmployee.name;
+        document.getElementById('prof-position').innerText = currentEmployee.position || "أخصائي محاسبة";
+        document.getElementById('prof-department').innerText = `القسم: ${currentEmployee.department || 'غير محدد'}`;
+        document.getElementById('prof-email').innerText = currentEmployee.email || 'لا يوجد بريد إلكتروني';
+        document.getElementById('prof-phone').innerText = currentEmployee.phone || 'لا يوجد هاتف';
+        document.getElementById('prof-national-id').innerText = currentEmployee.nationalId || '-';
+        document.getElementById('prof-salary').innerText = `${(currentEmployee.basicSalary || 0).toLocaleString()} ج.م`;
+        document.getElementById('prof-iban').innerText = currentEmployee.iban || '-';
+
+        // Load specific tabs after getting employee ID
+        loadAttendance();
+        loadLeaves();
+        loadPayroll();
+        loadReviews();
+        loadTrainings();
+      } catch (err) {
+        console.error(err);
+        showToast("خطأ في الاتصال بالخادم", false);
+      }
+    }
+
+    // Load Attendance Records
+    async function loadAttendance() {
+      if (!currentEmployee) return;
+      try {
+        const res = await fetch(`/api/attendance?employee_id=${currentEmployee.id}`);
+        const records = await res.json();
+        const tbody = document.getElementById('attendance-tbody');
+        tbody.innerHTML = '';
+
+        if (records.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">لا يوجد سجلات حضور مسجلة.</td></tr>`;
+          return;
+        }
+
+        records.forEach(r => {
+          const statusColors = r.status === 'present' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+          const statusLabels = r.status === 'present' ? 'حاضر' : 'غائب';
+          tbody.innerHTML += `
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="p-3 font-medium text-slate-900">${r.date || r.createdAt?.slice(0,10) || '-'}</td>
+              <td class="p-3">${r.check_in || '-'}</td>
+              <td class="p-3">${r.check_out || '-'}</td>
+              <td class="p-3">${r.overtime_hours || 0}</td>
+              <td class="p-3">
+                <span class="px-2.5 py-1 text-xs font-bold rounded-lg ${statusColors}">${statusLabels}</span>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Load Leave Requests
+    async function loadLeaves() {
+      if (!currentEmployee) return;
+      try {
+        const res = await fetch('/api/leaves');
+        const allLeaves = await res.json();
+        const myLeaves = allLeaves.filter(l => String(l.employee_id || l.employeeId) === String(currentEmployee.id));
+        
+        const tbody = document.getElementById('leaves-tbody');
+        tbody.innerHTML = '';
+
+        if (myLeaves.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">لا يوجد طلبات إجازة مسجلة.</td></tr>`;
+          return;
+        }
+
+        myLeaves.forEach(l => {
+          let badge = 'bg-amber-100 text-amber-700';
+          let text = 'قيد الانتظار';
+          if (l.status === 'approved') {
+            badge = 'bg-green-100 text-green-700';
+            text = 'موافقة';
+          } else if (l.status === 'rejected') {
+            badge = 'bg-red-100 text-red-700';
+            text = 'مرفوض';
+          }
+          tbody.innerHTML += `
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="p-3 font-semibold text-slate-900">${l.type}</td>
+              <td class="p-3">${l.start_date || l.startDate}</td>
+              <td class="p-3">${l.end_date || l.endDate}</td>
+              <td class="p-3 text-slate-500">${l.reason || '-'}</td>
+              <td class="p-3">
+                <span class="px-2.5 py-1 text-xs font-bold rounded-lg ${badge}">${text}</span>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Submit Leave Request
+    async function submitLeave(event) {
+      event.preventDefault();
+      if (!currentEmployee) return;
+
+      const type = document.getElementById('leave-type').value;
+      const startDate = document.getElementById('leave-start').value;
+      const endDate = document.getElementById('leave-end').value;
+      const reason = document.getElementById('leave-reason').value;
+
+      try {
+        const res = await fetch('/api/leaves', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            employeeId: currentEmployee.id,
+            employee_id: currentEmployee.id,
+            employeeName: currentEmployee.name,
+            type,
+            startDate,
+            endDate,
+            start_date: startDate,
+            end_date: endDate,
+            reason,
+            status: 'pending'
+          })
+        });
+
+        if (!res.ok) throw new Error("فشل تقديم الطلب");
+        
+        showToast("تم إرسال طلب الإجازة بنجاح!");
+        toggleModal('leave-modal', false);
+        document.getElementById('leave-form').reset();
+        loadLeaves();
+      } catch (err) {
+        console.error(err);
+        showToast("فشل تقديم طلب الإجازة", false);
+      }
+    }
+
+    // Load Payroll
+    async function loadPayroll() {
+      if (!currentEmployee) return;
+      try {
+        const res = await fetch('/api/payroll');
+        const payrolls = await res.json();
+        const myPayrolls = payrolls.filter(p => String(p.employeeId || p.employee_id) === String(currentEmployee.id));
+
+        const tbody = document.getElementById('payroll-tbody');
+        tbody.innerHTML = '';
+
+        if (myPayrolls.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">لا يوجد كشوف رواتب معتمدة حالياً.</td></tr>`;
+          return;
+        }
+
+        myPayrolls.forEach(p => {
+          let badge = 'bg-blue-100 text-blue-700';
+          let statusText = 'معتمد';
+          if (p.status === 'paid') {
+            badge = 'bg-green-100 text-green-700';
+            statusText = 'مدفوع';
+          }
+          tbody.innerHTML += `
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="p-3 font-semibold text-slate-900">${p.month || p.month_year || p.monthYear}</td>
+              <td class="p-3">${(p.basicSalary || p.basic_salary || 0).toLocaleString()} ج.م</td>
+              <td class="p-3 text-green-600">+${(p.allowance || p.allowances || 0).toLocaleString()} ج.م</td>
+              <td class="p-3 text-red-600">-${(p.deductions || 0).toLocaleString()} ج.م</td>
+              <td class="p-3 text-red-500">-${(p.social_insurance || p.socialInsurance || 0).toLocaleString()} ج.م</td>
+              <td class="p-3 font-bold text-slate-900">${(p.netSalary || p.net_salary || 0).toLocaleString()} ج.م</td>
+              <td class="p-3">
+                <span class="px-2.5 py-1 text-xs font-bold rounded-lg ${badge}">${statusText}</span>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Load Performance Reviews
+    async function loadReviews() {
+      if (!currentEmployee) return;
+      try {
+        const res = await fetch('/api/performance-reviews');
+        const reviews = await res.json();
+        const myReviews = reviews.filter(r => String(r.employeeId) === String(currentEmployee.id));
+
+        const container = document.getElementById('reviews-container');
+        container.innerHTML = '';
+
+        if (myReviews.length === 0) {
+          container.innerHTML = `<div class="col-span-2 text-center text-slate-400 py-8">لا يوجد تقييمات أداء مسجلة حتى الآن.</div>`;
+          return;
+        }
+
+        myReviews.forEach(r => {
+          container.innerHTML += `
+            <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-slate-400">تاريخ التقييم: ${r.reviewDate}</span>
+                <span class="text-amber-500 text-sm font-bold flex items-center gap-1">
+                  <i class="fa-solid fa-star"></i>
+                  ${r.score} / 5
+                </span>
+              </div>
+              <p class="text-slate-700 text-sm font-medium leading-relaxed">"${r.comments || 'أداء مستقر وملتزم بتسليم المطلوب.'}"</p>
+            </div>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Load Trainings and Enrollments
+    async function loadTrainings() {
+      if (!currentEmployee) return;
+      try {
+        const [trainingsRes, enrollmentsRes] = await Promise.all([
+          fetch('/api/trainings'),
+          fetch('/api/training-enrollments')
+        ]);
+        const trainings = await trainingsRes.json();
+        const enrollments = await enrollmentsRes.json();
+
+        const container = document.getElementById('trainings-container');
+        container.innerHTML = '';
+
+        if (trainings.length === 0) {
+          container.innerHTML = `<div class="col-span-2 text-center text-slate-400 py-8">لا يوجد دورات تدريبية حالياً.</div>`;
+          return;
+        }
+
+        trainings.forEach(t => {
+          const isEnrolled = enrollments.some(e => String(e.trainingId) === String(t.id) && String(e.employeeId) === String(currentEmployee.id));
+          const btn = isEnrolled 
+            ? `<button class="w-full bg-green-100 text-green-700 font-bold text-xs py-2.5 rounded-xl cursor-default flex items-center justify-center gap-1.5"><i class="fa-solid fa-check"></i> مسجل في الدورة</button>`
+            : `<button onclick="enrollInTraining('${t.id}')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-2.5 rounded-xl transition-all">التسجيل في الدورة</button>`;
+
+          container.innerHTML += `
+            <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2.5 py-1 rounded-md">المدة: ${t.duration}</span>
+                <h4 class="text-base font-bold text-slate-900">${t.title}</h4>
+                <p class="text-xs text-slate-500 leading-relaxed">${t.description}</p>
+                <p class="text-xs text-slate-400"><b>المدرب:</b> ${t.trainer} | <b>البداية:</b> ${t.startDate || '-'}</p>
+              </div>
+              ${btn}
+            </div>
+          `;
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Enroll in Training
+    async function enrollInTraining(trainingId) {
+      if (!currentEmployee) return;
+      try {
+        const res = await fetch('/api/training-enrollments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            trainingId,
+            employeeId: currentEmployee.id,
+            enrollDate: new Date().toISOString().split('T')[0],
+            status: 'enrolled'
+          })
+        });
+
+        if (!res.ok) throw new Error("فشل التسجيل");
+
+        showToast("تم التسجيل في الدورة التدريبية بنجاح!");
+        loadTrainings();
+      } catch (err) {
+        console.error(err);
+        showToast("فشل التسجيل في الدورة", false);
+      }
+    }
+
+    // Initialize Page
+    window.onload = loadProfile;
+  </script>
+</body>
+</html>

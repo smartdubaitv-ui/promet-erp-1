@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مرحباً بك في الهضبة ERP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #0B2B4A 0%, #1a4a7a 100%); min-height: 100vh; }
+    .slide { transition: all 0.5s ease; }
+    .slide.active { opacity: 1; transform: translateX(0); }
+    .slide.inactive { opacity: 0; transform: translateX(50px); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; cursor: pointer; }
+    .dot.active { background: #2563eb; width: 30px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden">
+      
+      <!-- Slides -->
+      <div id="slidesContainer" class="relative h-[500px] overflow-hidden">
+        
+        <!-- Slide 1 -->
+        <div class="slide active absolute inset-0 p-8 flex flex-col items-center justify-center text-center">
+          <div class="text-6xl mb-6">🏗️</div>
+          <h1 class="text-3xl font-bold text-slate-800 mb-3">مرحباً بك في الهضبة ERP</h1>
+          <p class="text-slate-500 max-w-md">نظام محاسبي وإداري متكامل يساعدك على إدارة شركتك بسهولة وكفاءة</p>
+          <div class="grid grid-cols-2 gap-4 mt-6 w-full max-w-md">
+            <div class="p-4 bg-slate-50 rounded-xl">
+              <span class="text-2xl">📊</span>
+              <p class="text-sm font-bold mt-1">محاسبة متكاملة</p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl">
+              <span class="text-2xl">👥</span>
+              <p class="text-sm font-bold mt-1">موارد بشرية</p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl">
+              <span class="text-2xl">📦</span>
+              <p class="text-sm font-bold mt-1">إدارة المخزون</p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl">
+              <span class="text-2xl">📋</span>
+              <p class="text-sm font-bold mt-1">مشاريع ومهام</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="slide inactive absolute inset-0 p-8 flex flex-col items-center justify-center text-center opacity-0">
+          <div class="text-6xl mb-6">🚀</div>
+          <h2 class="text-2xl font-bold text-slate-800 mb-3">كل شيء في مكان واحد</h2>
+          <p class="text-slate-500 max-w-md">إدارة الموظفين، الرواتب، الفواتير، المخزون، والمشاريع من منصة واحدة</p>
+          <div class="grid grid-cols-3 gap-4 mt-6 w-full max-w-md">
+            <div class="p-3 bg-blue-50 rounded-xl text-center">
+              <span class="text-2xl">💰</span>
+              <p class="text-xs font-bold mt-1">رواتب</p>
+            </div>
+            <div class="p-3 bg-green-50 rounded-xl text-center">
+              <span class="text-2xl">📄</span>
+              <p class="text-xs font-bold mt-1">فواتير</p>
+            </div>
+            <div class="p-3 bg-amber-50 rounded-xl text-center">
+              <span class="text-2xl">📊</span>
+              <p class="text-xs font-bold mt-1">تقارير</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="slide inactive absolute inset-0 p-8 flex flex-col items-center justify-center text-center opacity-0">
+          <div class="text-6xl mb-6">🤖</div>
+          <h2 class="text-2xl font-bold text-slate-800 mb-3">مساعد ذكي للمحاسبة</h2>
+          <p class="text-slate-500 max-w-md">اسأل المساعد الذكي أي سؤال عن شركتك وسيجيبك فوراً</p>
+          <div class="mt-6 p-4 bg-slate-50 rounded-xl w-full max-w-md text-right">
+            <p class="text-sm text-slate-600">💬 "كم عدد الموظفين؟"</p>
+            <p class="text-sm text-slate-600">💬 "ما هي الإيرادات هذا الشهر؟"</p>
+            <p class="text-sm text-slate-600">💬 "حالة المخزون؟"</p>
+          </div>
+        </div>
+        
+        <!-- Slide 4 -->
+        <div class="slide inactive absolute inset-0 p-8 flex flex-col items-center justify-center text-center opacity-0">
+          <div class="text-6xl mb-6">🌍</div>
+          <h2 class="text-2xl font-bold text-slate-800 mb-3">متعدد اللغات والعملات</h2>
+          <p class="text-slate-500 max-w-md">استخدم التطبيق بأي لغة وبأي عملة تناسب عملك</p>
+          <div class="flex gap-4 mt-6">
+            <span class="text-3xl">🇪🇬</span>
+            <span class="text-3xl">🇬🇧</span>
+            <span class="text-3xl">🇫🇷</span>
+            <span class="text-3xl">🇹🇷</span>
+            <span class="text-3xl">🇪🇸</span>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Controls -->
+      <div class="p-6 border-t border-slate-100 flex items-center justify-between">
+        <div class="flex gap-2" id="dotsContainer">
+          <div class="dot active" onclick="goToSlide(0)"></div>
+          <div class="dot" onclick="goToSlide(1)"></div>
+          <div class="dot" onclick="goToSlide(2)"></div>
+          <div class="dot" onclick="goToSlide(3)"></div>
+        </div>
+        
+        <div class="flex gap-3">
+          <button onclick="skipTour()" class="px-4 py-2 text-slate-500 hover:text-slate-700 text-sm font-medium">
+            تخطي
+          </button>
+          <button onclick="nextSlide()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            التالي →
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 4;
+    
+    function goToSlide(index) {
+      // إخفاء الكل
+      document.querySelectorAll('.slide').forEach((el, i) => {
+        el.classList.remove('active', 'inactive');
+        el.classList.add(i === index ? 'active' : 'inactive');
+      });
+      
+      // تحديث النقاط
+      document.querySelectorAll('.dot').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+      });
+      
+      currentSlide = index;
+    }
+    
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        goToSlide(currentSlide + 1);
+      } else {
+        // انتهت الجولة
+        skipTour();
+      }
+    }
+    
+    function skipTour() {
+      // حفظ أن المستخدم شاهد الجولة
+      localStorage.setItem('tourCompleted', 'true');
+      window.location.href = '/admin_dashboard.html';
+    }
+    
+    // التنقل بالسهمين
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (currentSlide > 0) goToSlide(currentSlide - 1);
+      }
+    });
+    
+    // النقر على النقاط
+    document.querySelectorAll('.dot').forEach((el, i) => {
+      el.addEventListener('click', () => goToSlide(i));
+    });
+    
+    // التحقق إذا كان المستخدم شاهد الجولة من قبل
+    if (localStorage.getItem('tourCompleted') === 'true') {
+      window.location.href = '/admin_dashboard.html';
+    }
+  </script>
+</body>
+</html>

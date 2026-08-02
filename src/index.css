@@ -1,0 +1,234 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@theme {
+  --font-sans: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ============================================================
+   🚀 CYBERLUX THEME - نظام الهضبة ERP
+   ============================================================ */
+
+:root {
+  /* الألوان الأساسية */
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #13131A;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-glow: rgba(108, 43, 217, 0.3);
+  
+  /* النصوص */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0B0;
+  
+  /* الألوان المميزة (Accent) */
+  --accent-primary: #6C2BD9;
+  --accent-glow: #8B5CF6;
+  --accent-dark: #4A1A8A;
+  
+  /* التدرجات */
+  --gradient-main: linear-gradient(135deg, #0A0A0F 0%, #1A0A2E 50%, #2D1B4E 100%);
+  --gradient-accent: linear-gradient(135deg, #6C2BD9, #8B5CF6);
+  
+  /* الظلال والإضاءة */
+  --shadow-glow: 0 0 30px rgba(108, 43, 217, 0.15);
+  --shadow-neon: 0 0 20px rgba(108, 43, 217, 0.3);
+}
+
+/* حاوية التطبيق الرئيسية */
+.cyberlux-app {
+  background: var(--gradient-main);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* تأثير إضاءة خلفية متحركة */
+.cyberlux-app::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(108, 43, 217, 0.08) 0%, transparent 60%);
+  animation: glowPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+}
+
+/* ----------------------------------------------
+   4.  الأزرار (Buttons)
+   ---------------------------------------------- */
+.btn-neon {
+  background: var(--gradient-accent) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: var(--shadow-neon) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 40px rgba(108, 43, 217, 0.6) !important;
+  transform: scale(1.05) !important;
+}
+
+.btn-neon::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn-neon:hover::after {
+  opacity: 1;
+}
+
+/* ----------------------------------------------
+   5.  البطاقات (Cards)
+   ---------------------------------------------- */
+.card-glow {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid var(--border-glow) !important;
+  border-radius: 16px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: var(--shadow-glow) !important;
+}
+
+.card-glow:hover {
+  border-color: var(--accent-glow) !important;
+  box-shadow: 0 0 40px rgba(108, 43, 217, 0.2) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* Glassmorphism للعناصر */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+/* ----------------------------------------------
+   6.  الجداول (Tables)
+   ---------------------------------------------- */
+.cyber-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cyber-table thead {
+  background: rgba(108, 43, 217, 0.15) !important;
+  backdrop-filter: blur(10px);
+}
+
+.cyber-table th {
+  padding: 14px 16px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--text-secondary) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cyber-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-primary) !important;
+}
+
+.cyber-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.cyber-table tbody tr:hover {
+  background: rgba(108, 43, 217, 0.08) !important;
+}
+
+/* ----------------------------------------------
+   7.  القوائم الجانبية (Sidebar)
+   ---------------------------------------------- */
+.cyber-sidebar {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+  width: 260px;
+  min-height: 100vh;
+  padding: 20px 16px;
+  position: sticky;
+  top: 0;
+}
+
+.cyber-sidebar .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: var(--text-secondary) !important;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.cyber-sidebar .nav-item:hover {
+  background: rgba(108, 43, 217, 0.15) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 20px rgba(108, 43, 217, 0.05) !important;
+}
+
+.cyber-sidebar .nav-item.active {
+  background: var(--gradient-accent) !important;
+  color: white !important;
+  box-shadow: var(--shadow-neon) !important;
+}
+
+/* ----------------------------------------------
+   8.  التأثيرات الحركية (Animations)
+   ---------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(108, 43, 217, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(108, 43, 217, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}

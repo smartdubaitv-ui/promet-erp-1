@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم المتقدمة - الهضبة ERP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+    body { background: #f8fafc; }
+    .sidebar { background: #0B2B4A; min-height: 100vh; width: 260px; }
+    .sidebar a:hover { background: #153c63; }
+    .stat-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+    .chat-message-user { background: #2563eb; color: white; }
+    .chat-message-assistant { background: white; border: 1px solid #e2e8f0; color: #1e293b; }
+    
+    /* Onboarding Tour Styles */
+    .tour-highlight {
+      position: relative !important;
+      z-index: 51 !important;
+      box-shadow: 0 0 0 4px #2563eb, 0 0 0 8px rgba(37, 99, 235, 0.2) !important;
+      border-radius: 12px !important;
+      background-color: white !important;
+      transition: all 0.3s !important;
+    }
+    
+    #tourTooltip {
+      animation: tooltipPulse 2s infinite;
+    }
+    
+    @keyframes tooltipPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.015); }
+    }
+  </style>
+</head>
+<body class="flex min-h-screen bg-slate-50">
+
+  <!-- Mobile Sidebar Menu Button -->
+  <button onclick="toggleSidebar()" class="lg:hidden fixed top-4 right-4 z-50 bg-[#0B2B4A] hover:bg-[#153c63] text-white p-3 rounded-xl shadow-lg border border-blue-900/40 cursor-pointer transition-transform duration-200 hover:scale-105 active:scale-95">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <!-- Sidebar (Desktop Viewports) -->
+  <aside id="sidebar" class="sidebar text-white p-5 flex flex-col h-screen sticky top-0 hidden lg:flex shrink-0">
+    <div class="text-2xl font-bold mb-8 flex items-center gap-2 border-b border-blue-800/40 pb-4">
+      <span class="text-3xl">🏗️</span>
+      <span class="tracking-tight">الهضبة ERP</span>
+    </div>
+    <nav class="flex-1 space-y-1">
+      <a href="/admin_dashboard.html" class="block p-3 rounded-lg bg-blue-600 font-bold transition-all" data-i18n="dashboard">📊 لوحة التحكم</a>
+      <a href="/#hr" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-all" data-i18n="employees">👥 الموظفين</a>
+      <a href="/#hr" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-all" data-i18n="payroll">💰 الرواتب</a>
+      <a href="/#invoices" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-all" data-i18n="invoices">📋 الفواتير</a>
+      <a href="/#inventory" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-all" data-i18n="inventory">📦 المخزون</a>
+      <a href="/#reports" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-all" data-i18n="reports">📊 التقارير</a>
+      <a href="#ai-copilot-section" class="block p-3 rounded-lg hover:bg-blue-800/50 text-indigo-300 transition-all">🤖 المساعد الذكي</a>
+    </nav>
+    <div class="border-t border-blue-800/50 pt-4 mt-4">
+      <a href="/" class="block p-3 rounded-lg text-slate-300 hover:text-white hover:bg-blue-800/50 flex items-center gap-2 transition-all">
+        <span>🚪</span> العودة للنظام الرئيسي
+      </a>
+    </div>
+  </aside>
+
+  <!-- Sidebar (Mobile Viewports Popup Drawer) -->
+  <div id="mobileSidebar" class="fixed inset-0 z-40 bg-[#0B2B4A]/95 text-white p-6 hidden lg:hidden overflow-y-auto backdrop-blur-md">
+    <button onclick="toggleSidebar()" class="absolute top-4 left-4 text-white hover:text-slate-300 text-3xl cursor-pointer transition-transform active:scale-90 p-2">✕</button>
+    <div class="text-2xl font-black mb-8 mt-6 flex items-center gap-2 border-b border-blue-800/40 pb-4">
+      <span class="text-3xl">🏗️</span>
+      <span>الهضبة ERP</span>
+    </div>
+    <nav class="space-y-1.5 text-sm">
+      <a href="/admin_dashboard.html" onclick="toggleSidebar()" class="block p-3 rounded-lg bg-blue-600 font-bold">📊 لوحة التحكم</a>
+      <a href="/#hr" onclick="toggleSidebar()" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-colors">👥 الموظفين</a>
+      <a href="/#hr" onclick="toggleSidebar()" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-colors">💰 الرواتب</a>
+      <a href="/#invoices" onclick="toggleSidebar()" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-colors">📋 الفواتير</a>
+      <a href="/#inventory" onclick="toggleSidebar()" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-colors">📦 المخزون</a>
+      <a href="/#reports" onclick="toggleSidebar()" class="block p-3 rounded-lg hover:bg-blue-800/50 transition-colors">📊 التقارير</a>
+      <a href="#ai-copilot-section" onclick="toggleSidebar()" class="block p-3 rounded-lg hover:bg-blue-800/50 text-indigo-300 transition-colors">🤖 المساعد الذكي</a>
+    </nav>
+    <div class="border-t border-blue-800/40 pt-6 mt-6">
+      <a href="/" class="block p-3 rounded-lg text-slate-300 hover:text-white hover:bg-blue-800/50 flex items-center gap-2 transition-colors">
+        <span>🚪</span> العودة للنظام الرئيسي
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-4 md:p-6 overflow-y-auto max-h-screen">
+    
+    <!-- Header -->
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pt-14 lg:pt-0">
+      <div>
+        <h1 class="text-xl md:text-2xl font-black text-slate-800 tracking-tight">📊 لوحة التحكم المتقدمة</h1>
+        <p class="text-[11px] md:text-xs text-slate-500 mt-1">آخر تحديث محلي للنظام: <span id="lastUpdate" class="font-bold text-blue-600">جاري التحميل...</span></p>
+      </div>
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <!-- دليل التطبيق (Tour Trigger Button) -->
+        <button onclick="startTour()" class="px-2.5 py-2.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200/60 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-sm shrink-0">
+          <span>🎯</span> دليل التطبيق
+        </button>
+        <!-- Notification Dropdown Container -->
+        <div class="relative shrink-0">
+          <button onclick="toggleNotifications()" class="relative p-2.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg shadow-sm transition-colors cursor-pointer flex items-center justify-center">
+            <span class="text-sm">🔔</span>
+            <span id="notifBadge" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+          </button>
+          
+          <!-- Dropdown List -->
+          <div id="notifDropdown" class="absolute left-0 mt-2 w-72 md:w-80 bg-white rounded-xl shadow-xl border border-slate-200/80 hidden z-50 overflow-hidden text-right" dir="rtl">
+            <div class="p-3 bg-slate-50 border-b border-slate-100 flex justify-between items-center gap-2">
+              <span class="font-bold text-xs text-slate-800">🔔 الإشعارات والعمليات</span>
+              <button onclick="markAllRead()" class="text-[10px] text-blue-600 hover:text-blue-800 font-bold cursor-pointer">تحديد الكل كمقروء</button>
+            </div>
+            <div id="notifList" class="max-h-64 overflow-y-auto divide-y divide-slate-100">
+              <!-- Filled Dynamically -->
+            </div>
+            <div class="p-2 border-t border-slate-100 text-center bg-slate-50/50 flex justify-between px-3 items-center">
+              <button onclick="sendTestNotification()" class="text-[9px] text-emerald-600 hover:text-emerald-700 font-bold cursor-pointer flex items-center gap-0.5">
+                <span>➕ إشعار تجريبي</span>
+              </button>
+              <button onclick="document.getElementById('notifDropdown').classList.add('hidden')" class="text-[10px] text-slate-400 hover:text-slate-600 font-medium cursor-pointer">إغلاق</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- أزرار تصدير التقارير -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button onclick="exportReport('pdf')" class="px-2.5 py-2.5 bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200/60 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-sm">
+            <span>📄</span> PDF
+          </button>
+          <button onclick="exportReport('excel')" class="px-2.5 py-2.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/60 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-sm">
+            <span>📊</span> Excel
+          </button>
+          <button onclick="exportReport('csv')" class="px-2.5 py-2.5 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200/60 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 shadow-sm">
+            <span>📋</span> CSV
+          </button>
+        </div>
+
+        <!-- نظام الترجمة متعدد اللغات (Dropdown) -->
+        <div class="relative">
+          <button onclick="toggleLanguageMenu()" class="flex items-center gap-1.5 px-3 py-2.5 bg-slate-100 border border-slate-200 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors text-xs font-bold cursor-pointer">
+            <span id="currentLangFlag">🇪🇬</span>
+            <span id="currentLangName">العربية</span>
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          
+          <div id="languageMenu" class="absolute left-0 mt-2 w-40 bg-white rounded-xl shadow-xl border border-slate-200 hidden z-50">
+            <div class="p-1">
+              <button onclick="changeLanguage('ar')" class="w-full text-right px-3 py-2 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
+                <span>🇪🇬</span> العربية
+              </button>
+              <button onclick="changeLanguage('en')" class="w-full text-right px-3 py-2 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
+                <span>🇬🇧</span> English
+              </button>
+              <button onclick="changeLanguage('fr')" class="w-full text-right px-3 py-2 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
+                <span>🇫🇷</span> Français
+              </button>
+              <button onclick="changeLanguage('tr')" class="w-full text-right px-3 py-2 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
+                <span>🇹🇷</span> Türkçe
+              </button>
+              <button onclick="changeLanguage('es')" class="w-full text-right px-3 py-2 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-2.5 text-xs font-semibold text-slate-700 cursor-pointer">
+                <span>🇪🇸</span> Español
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="refreshData()" class="flex-1 sm:flex-none px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 cursor-pointer transition-colors shadow-sm">
+          <span>🔄</span> تحديث يدوي
+        </button>
+        <a href="/" class="flex-1 sm:flex-none px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg text-xs transition-colors flex items-center justify-center gap-1 shadow-sm">
+          <span>🏠</span> النظام الرئيسي
+        </a>
+      </div>
+    </header>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- KPIs Cards -->
+    <div id="dashboardStats" class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6">
+      <div class="stat-card bg-white p-3.5 md:p-5 rounded-xl border border-slate-200 shadow-xs border-r-4 border-blue-600">
+        <p class="text-[10px] md:text-xs text-slate-500 font-semibold mb-1">👥 الموظفين</p>
+        <p class="text-base md:text-2xl font-black text-slate-800 leading-none" id="totalEmployees">--</p>
+        <p class="text-[9px] text-green-600 font-semibold mt-2 hidden md:block">↑ نشط في قاعدة البيانات</p>
+      </div>
+      <div class="stat-card bg-white p-3.5 md:p-5 rounded-xl border border-slate-200 shadow-xs border-r-4 border-emerald-600">
+        <p class="text-[10px] md:text-xs text-slate-500 font-semibold mb-1">💰 الإيرادات</p>
+        <p class="text-base md:text-2xl font-black text-emerald-600 leading-none" id="totalRevenue">-- ج.م</p>
+        <p class="text-[9px] text-green-600 font-semibold mt-2 hidden md:block">↑ من واقع فواتير المبيعات</p>
+      </div>
+      <div class="stat-card bg-white p-3.5 md:p-5 rounded-xl border border-slate-200 shadow-xs border-r-4 border-rose-600">
+        <p class="text-[10px] md:text-xs text-slate-500 font-semibold mb-1">💸 المصروفات</p>
+        <p class="text-base md:text-2xl font-black text-rose-600 leading-none" id="totalExpenses">-- ج.م</p>
+        <p class="text-[9px] text-red-600 font-semibold mt-2 hidden md:block">↓ تكاليف ونفقات عامة</p>
+      </div>
+      <div class="stat-card bg-white p-3.5 md:p-5 rounded-xl border border-slate-200 shadow-xs border-r-4 border-amber-500">
+        <p class="text-[10px] md:text-xs text-slate-500 font-semibold mb-1">📋 فواتير معلقة</p>
+        <p class="text-base md:text-2xl font-black text-amber-600 leading-none" id="pendingInvoices">--</p>
+        <p class="text-[9px] text-amber-600 font-semibold mt-2 hidden md:block">⚠️ بحاجة للمتابعة</p>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+        <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-1.5">
+          <span>📈</span> التدفقات والعمليات المالية (الإيرادات والمصروفات)
+        </h3>
+        <div style="position: relative; height:240px; width:100%;">
+          <canvas id="revenueExpenseChart"></canvas>
+        </div>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+        <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-1.5">
+          <span>📊</span> توزيع القوى العاملة والموظفين حسب القسم
+        </h3>
+        <div style="position: relative; height:240px; width:100%;" class="flex justify-center">
+          <canvas id="departmentChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Row (Recent Activities & Smart Alerts) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      
+      <!-- Recent Activities -->
+      <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div>
+          <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-1.5">
+            <span>🕒</span> آخر النشاطات والإجراءات في النظام
+          </h3>
+          <div class="space-y-3" id="recentActivities">
+            <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping"></span>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-slate-700">جاري الاتصال بالخادم لطلب السجلات...</p>
+                <p class="text-[10px] text-slate-400">الآن</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smart Alerts -->
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+        <h3 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-1.5">
+          <span>🔔</span> تنبيهات النظام الذكية
+        </h3>
+        <div class="space-y-3" id="smartAlerts">
+          <div class="p-3.5 bg-blue-50 rounded-lg border-r-4 border-blue-500">
+            <p class="text-xs font-bold text-blue-800">✅ النظام متصل محليًا</p>
+            <p class="text-[10px] text-blue-600 mt-1">تتم المزامنة تلقائيًا مع خادم Express الخلفي.</p>
+          </div>
+          <div class="p-3.5 bg-amber-50 rounded-lg border-r-4 border-amber-500">
+            <p class="text-xs font-bold text-amber-800">📦 فحص مستويات المخزون</p>
+            <p class="text-[10px] text-amber-600 mt-1">المساعد المحاسبي يقوم بتتبع مستويات إعادة الطلب تلقائيًا.</p>
+          </div>
+          <div class="p-3.5 bg-rose-50 rounded-lg border-r-4 border-rose-500">
+            <p class="text-xs font-bold text-rose-800">💼 الذمم والتحصيلات</p>
+            <p class="text-[10px] text-rose-600 mt-1">فحص الفواتير غير المدفوعة وجدولتها فورياً.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 🤖 قسم المساعد الذكي المتكامل (AI Copilot) -->
+    <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl shadow-lg border border-indigo-950 p-6" id="ai-copilot-section">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl animate-pulse">🤖</span>
+          <div>
+            <h3 class="text-base font-black text-white">مساعدك المحاسبي والإداري الذكي (AI Copilot)</h3>
+            <p class="text-[10px] text-indigo-200/70 mt-0.5">اسألني عن الموظفين، الإيرادات، المصروفات، المخزون، والرواتب وسأجيبك بدعم من Gemini 3.5</p>
+          </div>
+        </div>
+        <span class="text-[9px] bg-indigo-500/20 text-indigo-200 border border-indigo-500/40 p-1 px-3 rounded-full font-bold">مفعل محلياً</span>
+      </div>
+      
+      <!-- Chat message logs -->
+      <div id="chatMessages" class="bg-slate-950/40 rounded-xl p-4 h-64 overflow-y-auto mb-4 border border-white/5 space-y-3">
+        <div class="text-center text-indigo-200/50 text-xs py-12">
+          🤖 مرحباً بك! أستطيع تحليل كامل سجلات النظام المالية والإدارية فوراً. اطرح أي سؤال للبدء.
+        </div>
+      </div>
+      
+      <!-- Custom Question Input -->
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          id="chatInput" 
+          placeholder="اكتب سؤالك هنا... (مثال: كم إجمالي الرواتب والرواتب المستحقة؟)"
+          class="flex-1 p-3 bg-white/10 border border-white/15 text-white placeholder-indigo-200/40 rounded-xl text-xs focus:outline-none focus:border-indigo-400 focus:bg-white/15"
+          onkeypress="if(event.key==='Enter') askCopilot()"
+        >
+        <button 
+          onclick="askCopilot()" 
+          class="px-6 py-3 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-500 transition-colors cursor-pointer flex items-center gap-1.5"
+        >
+          <span>إرسال</span> 📤
+        </button>
+      </div>
+      
+      <!-- Quick suggestions buttons -->
+      <div class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-white/5">
+        <button onclick="askQuick('كم عدد الموظفين والعمال حالياً في الشركة؟')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 active:bg-white/15 rounded-lg text-[10.5px] text-indigo-100 transition-colors border border-white/5 cursor-pointer">👥 عدد الموظفين</button>
+        <button onclick="askQuick('ما هي إجمالي الإيرادات والمبيعات المسجلة؟')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 active:bg-white/15 rounded-lg text-[10.5px] text-indigo-100 transition-colors border border-white/5 cursor-pointer">💰 الإيرادات والمبيعات</button>
+        <button onclick="askQuick('كم إجمالي المصروفات والنفقات التشغيلية؟')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 active:bg-white/15 rounded-lg text-[10.5px] text-indigo-100 transition-colors border border-white/5 cursor-pointer">💸 المصروفات والتشغيل</button>
+        <button onclick="askQuick('ما هي حالة المنتجات والمخزون حالياً؟')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 active:bg-white/15 rounded-lg text-[10.5px] text-indigo-100 transition-colors border border-white/5 cursor-pointer">📦 المخزون والنواقص</button>
+        <button onclick="askQuick('أعطني تقريراً شاملاً عن أداء الشركة ماليًا وإداريًا مع التوصيات')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 active:bg-white/15 rounded-lg text-[10.5px] text-indigo-100 transition-colors border border-white/5 cursor-pointer">📊 تقرير شامل وتوصيات</button>
+      </div>
+    </div>
+
+    <!-- 🇪🇬 قسم الفواتير الإلكترونية المصرية (ETA Invoicing) -->
+    <div class="mt-6 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+      <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-4 mb-4 gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🇪🇬</span>
+          <div>
+            <h3 class="text-base font-black text-slate-800">منظومة الفواتير الإلكترونية المصرية (ETA)</h3>
+            <p class="text-[11px] text-slate-500 mt-0.5">توليد ملفات XML، إصدار رموز الاستجابة السريعة (QR Codes)، والمزامنة المباشرة مع مصلحة الضرائب المصرية.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openETASettings()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 border border-slate-200">
+            ⚙️ إعدادات المنظومة
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- القائمة الفرعية لاختيار الفاتورة لإرسالها -->
+        <div class="lg:col-span-1 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+            <span>🧾</span> اختر فاتورة مبيعات
+          </h4>
+          <div class="space-y-2 overflow-y-auto max-h-80" id="etaInvoicesList">
+            <p class="text-xs text-slate-400 text-center py-8">جاري تحميل الفواتير المتاحة...</p>
+          </div>
+        </div>
+
+        <!-- تفاصيل الفاتورة الإلكترونية المحددة وعمليات الإرسال -->
+        <div class="lg:col-span-2 bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between min-h-[300px]" id="etaInvoiceDetailView">
+          <div class="text-center py-16 text-slate-400 text-xs">
+            👈 اختر فاتورة من القائمة لعرض تفاصيلها الإلكترونية وإرسالها لمصلحة الضرائب المصرية.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⚙️ مودال إعدادات منظومة الفواتير الإلكترونية (ETA Settings Modal) -->
+    <div id="etaSettingsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center hidden z-50 p-4">
+      <div class="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-2xl flex flex-col max-h-[90vh]">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🇪🇬</span>
+            <h3 class="text-base font-black text-slate-800">إعدادات منظومة الفواتير الإلكترونية (ETA)</h3>
+          </div>
+          <button onclick="closeETASettings()" class="text-slate-400 hover:text-slate-600 transition-colors text-xl">✕</button>
+        </div>
+        
+        <form id="etaSettingsForm" onsubmit="saveETASettings(event)" class="p-6 overflow-y-auto space-y-4 text-xs">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">اسم الشركة (بالعربية)</label>
+              <input type="text" id="eta_company_name" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">رقم التسجيل الضريبي (Tax ID)</label>
+              <input type="text" id="eta_tax_id" required placeholder="xxx-xxx-xxx" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block font-bold text-slate-700 mb-1">عنوان الشركة</label>
+              <input type="text" id="eta_company_address" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">كود النشاط الرئيسي (Activity Code)</label>
+              <input type="text" id="eta_activity_code" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">كود الفرع (Branch Code)</label>
+              <input type="text" id="eta_branch_code" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">رقم المبنى</label>
+              <input type="text" id="eta_building_number" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">رقم الطابق / الغرفة</label>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="eta_floor_number" placeholder="طابق" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+                <input type="text" id="eta_room_number" placeholder="غرفة" class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">الرمز البريدي</label>
+              <input type="text" id="eta_postal_code" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">عنوان بيئة المنظومة (API URL)</label>
+              <input type="url" id="eta_api_url" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+          </div>
+          
+          <div class="pt-4 border-t border-slate-100 flex justify-end gap-2">
+            <button type="button" onclick="closeETASettings()" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg font-bold hover:bg-slate-200 transition-colors cursor-pointer">إلغاء</button>
+            <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors cursor-pointer">حفظ الإعدادات 💾</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- طبقة الجولة التعريفية الذكية -->
+    <div id="tourOverlay" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs hidden transition-all duration-300">
+      <div id="tourTooltip" class="absolute bg-white rounded-2xl shadow-2xl p-6 max-w-sm border border-slate-100 z-50 transition-all duration-300 text-right" dir="rtl">
+        <div id="tourContent">
+          <h3 id="tourTitle" class="text-base font-black text-slate-800 mb-2 flex items-center gap-1.5">مرحباً بك!</h3>
+          <p id="tourDescription" class="text-slate-600 text-xs leading-relaxed mb-4">هذا هو دليل التطبيق. سيساعدك على التعرف على الأقسام الرئيسية في لوحة التحكم.</p>
+          <div class="flex justify-between items-center border-t border-slate-50 pt-3.5">
+            <span id="tourProgress" class="text-[10px] font-bold text-slate-400">1 / 5</span>
+            <div class="flex gap-1.5">
+              <button onclick="endTour()" class="px-3 py-1.5 text-xs text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">تخطي</button>
+              <button onclick="nextTourStep()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-0.5">
+                <span>التالي</span> <span>→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🧑🔧 قسم العمالة اليومية (Daily Workers Management) -->
+    <div class="mt-6 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+      <div class="border-b border-slate-100 pb-4 mb-6">
+        <h3 class="text-base font-black text-slate-800 flex items-center gap-2">
+          <span>🧑🔧</span> منظومة إدارة العمالة اليومية (Daily Workers)
+        </h3>
+        <p class="text-[11px] text-slate-500 mt-0.5">تسجيل حضور وانصراف العمال اليومية بشكل مرن، حساب المستحقات المباشرة، وصرف الرواتب النقدية والبنكية.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- نموذج تسجيل الحضور -->
+        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/80">
+          <h4 class="text-xs font-bold text-slate-700 mb-4 flex items-center gap-1.5">
+            <span>💾</span> تسجيل حضور يومي جديد
+          </h4>
+          <div class="space-y-4 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">العامل اليومي</label>
+              <select id="dailyWorkerSelect" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+                <option value="">اختر العامل...</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">تاريخ العمل</label>
+              <input type="date" id="dailyWorkDate" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">ساعات العمل</label>
+                <input type="number" id="dailyHours" value="8" min="1" max="24" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">أجر الساعة/اليوم (ج.م)</label>
+                <input type="number" id="dailyRate" placeholder="مثال: 300" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">الحالة اليومية</label>
+              <select id="dailyStatus" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+                <option value="present">✅ حاضر (كامل الوردية)</option>
+                <option value="half_day">🌓 نصف يوم (نصف وردية)</option>
+                <option value="absent">❌ غائب</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">ملاحظات العمل</label>
+              <textarea id="dailyNotes" placeholder="أعمال الخرسانة، التشطيبات، إلخ..." class="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 h-16 resize-none"></textarea>
+            </div>
+            <button onclick="saveDailyAttendance()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm text-xs">
+              <span>💾</span> تسجيل وحفظ الحضور
+            </button>
+          </div>
+        </div>
+
+        <!-- سجل الحضور الأخير وصرف المستحقات -->
+        <div class="lg:col-span-2 flex flex-col gap-6">
+          <!-- جدول الحضور غير المدفوع للعمالة اليومية -->
+          <div class="bg-white p-5 rounded-xl border border-slate-200 flex-1 flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center justify-between">
+                <span class="flex items-center gap-1.5"><span>📋</span> سجل حضور العمال اليومية الأخير</span>
+                <span class="text-[10px] text-slate-400 bg-slate-50 px-2.5 py-0.5 rounded-full" id="attendanceRecordCount">0 سجل</span>
+              </h4>
+              <div class="overflow-x-auto max-h-56">
+                <table class="w-full text-right border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-bold">
+                      <th class="py-2 px-1">العامل</th>
+                      <th class="py-2 px-1">التاريخ</th>
+                      <th class="py-2 px-1">الساعات</th>
+                      <th class="py-2 px-1">أجر اليوم</th>
+                      <th class="py-2 px-1">المستحق الإجمالي</th>
+                      <th class="py-2 px-1">الحالة</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dailyAttendanceTableBody" class="divide-y divide-slate-50">
+                    <tr>
+                      <td colspan="6" class="text-center text-slate-400 py-12">لا توجد سجلات حضور مسجلة حالياً.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- صرف مستحقات العمالة اليومية -->
+            <div class="mt-4 pt-4 border-t border-slate-100 bg-slate-50/50 p-4 rounded-xl border border-slate-100">
+              <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-1.5">
+                <span>💸</span> تصفية وصرف مستحقات عامل يومي
+              </h4>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs mb-3">
+                <div>
+                  <label class="block text-[10px] text-slate-500 mb-0.5">العامل لتصفيته</label>
+                  <select id="payWorkerSelect" class="w-full p-2 bg-white border border-slate-200 rounded-lg">
+                    <option value="">اختر العامل للتصفية...</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-500 mb-0.5">تاريخ البداية</label>
+                  <input type="date" id="payPeriodStart" class="w-full p-2 bg-white border border-slate-200 rounded-lg">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-500 mb-0.5">تاريخ النهاية</label>
+                  <input type="date" id="payPeriodEnd" class="w-full p-2 bg-white border border-slate-200 rounded-lg">
+                </div>
+                <div>
+                  <label class="block text-[10px] text-slate-500 mb-0.5">طريقة الصرف</label>
+                  <select id="payMethod" class="w-full p-2 bg-white border border-slate-200 rounded-lg">
+                    <option value="cash">💵 نقدي (خزينة)</option>
+                    <option value="bank">🏦 تحويل بنكي</option>
+                    <option value="cheque">✍️ شيك</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex justify-end gap-2">
+                <button onclick="payDailyWorker()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1">
+                  <span>💸</span> صرف المستحقات وإصدار إذن دفع
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📝 قسم فترة التجربة وتثبيت الموظفين (Probation & Placement System) -->
+    <div class="mt-6 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+      <div class="border-b border-slate-100 pb-4 mb-6">
+        <h3 class="text-base font-black text-slate-800 flex items-center gap-2">
+          <span>📝</span> منظومة متابعة فترات التجربة والتثبيت (Probation Tracking)
+        </h3>
+        <p class="text-[11px] text-slate-500 mt-0.5">مراقبة الموظفين في فترة الاختبار والتجربة، إرسال تنبيهات تلقائية قبل انتهاء الفترة، وتحويلهم للملاك الدائم بنقرة واحدة.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- نموذج تعيين أو تحديث حالة فترة التجربة -->
+        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200/80 text-xs">
+          <h4 class="text-xs font-bold text-slate-700 mb-4 flex items-center gap-1.5">
+            <span>📝</span> تعيين / تعديل نوع التوظيف
+          </h4>
+          <div class="space-y-4">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">الموظف المعني</label>
+              <select id="probationEmployeeSelect" onchange="onProbationEmployeeChange()" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg">
+                <option value="">اختر الموظف...</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">نوع التعيين الجديد</label>
+              <select id="employmentType" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg">
+                <option value="probation">📝 فترة تجربة واختبار (Probation)</option>
+                <option value="permanent">✅ مثبت (Permanent)</option>
+                <option value="daily">🧑🔧 عمالة يومية (Daily Basis)</option>
+              </select>
+            </div>
+
+            <!-- حقول فترة التجربة -->
+            <div id="probationFields" class="space-y-4">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">تاريخ البدء</label>
+                  <input type="date" id="probationStart" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">تاريخ الانتهاء</label>
+                  <input type="date" id="probationEnd" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg">
+                </div>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">أجر اليوم أو الراتب الافتراضي (ج.م)</label>
+                <input type="number" id="probationDailyRate" placeholder="مثال: 5000" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg">
+              </div>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+              <button onclick="setProbation()" class="flex-1 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1">
+                <span>📝</span> تطبيق النظام
+              </button>
+              <button onclick="convertToPermanent()" class="flex-1 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold transition-all cursor-pointer flex items-center justify-center gap-1">
+                <span>🎯</span> تحويل للتثبيت
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- تنبيهات فترة التجربة ومستويات الخطورة -->
+        <div class="lg:col-span-2">
+          <div class="bg-white p-5 rounded-xl border border-slate-200 h-full flex flex-col justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-700 mb-4 flex items-center gap-1.5">
+                <span>⏳</span> تنبيهات ومؤشرات فترات التجربة النشطة
+              </h4>
+              <div id="probationAlerts" class="space-y-2 max-h-80 overflow-y-auto">
+                <div class="p-4 bg-green-50 text-green-700 rounded-lg text-center text-xs">
+                  ✅ لا توجد تنبيهات عاجلة لفترة التجربة حالياً.
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-[10px] text-slate-400 mt-4 border-t border-slate-50 pt-2 flex items-center gap-4">
+              <span class="flex items-center gap-1">🔴 حرج (أقل من 7 أيام)</span>
+              <span class="flex items-center gap-1">🟡 تنبيه متوسط (أقل من 15 يوم)</span>
+              <span class="flex items-center gap-1">🔵 مراقبة عادية (أقل من 30 يوم)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // ==========================================
+    // 0. دالة إظهار وإخفاء القائمة في الموبايل
+    // ==========================================
+    function toggleSidebar() {
+      const sidebar = document.getElementById('mobileSidebar');
+      if (sidebar) {
+        sidebar.classList.toggle('hidden');
+      }
+    }
+
+    // ==========================================
+    // 1. بيانات النظام الأساسية الافتراضية
+    // ==========================================
+    const dashboardData = {
+      employees: 0,
+      revenue: 0,
+      expenses: 0,
+      pendingInvoices: 0,
+      departments: {
+        'المبيعات': 0,
+        'المحاسبة': 0,
+        'المخازن': 0,
+        'الإدارة': 0
+      },
+      monthlyData: {
+        labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+        revenue: [280000, 310000, 340000, 380000, 400000, 425000],
+        expenses: [120000, 135000, 148000, 162000, 175000, 189000]
+      }
+    };
+
+    // ==========================================
+    // 2. تحديث مؤشرات الأداء (KPIs) في الواجهة
+    // ==========================================
+    function updateKPIs() {
+      document.getElementById('totalEmployees').textContent = dashboardData.employees;
+      document.getElementById('totalRevenue').textContent = dashboardData.revenue.toLocaleString('ar-EG') + ' ج.م';
+      document.getElementById('totalExpenses').textContent = dashboardData.expenses.toLocaleString('ar-EG') + ' ج.m';
+      document.getElementById('pendingInvoices').textContent = dashboardData.pendingInvoices;
+    }
+
+    // ==========================================
+    // 3. بناء وإعداد الرسوم البيانية (Chart.js)
+    // ==========================================
+    let revenueChart, departmentChart;
+
+    function initCharts() {
+      try {
+        // مخطط الإيرادات والمصروفات
+        const ctx1 = document.getElementById('revenueExpenseChart').getContext('2d');
+        if (revenueChart) {
+          revenueChart.destroy();
+        }
+        revenueChart = new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: dashboardData.monthlyData.labels,
+            datasets: [
+              {
+                label: 'الإيرادات (ج.م)',
+                data: dashboardData.monthlyData.revenue,
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                fill: true,
+                tension: 0.35,
+                borderWidth: 3,
+                pointBackgroundColor: '#10b981'
+              },
+              {
+                label: 'المصروفات (ج.م)',
+                data: dashboardData.monthlyData.expenses,
+                borderColor: '#f43f5e',
+                backgroundColor: 'rgba(244, 63, 94, 0.05)',
+                fill: true,
+                tension: 0.35,
+                borderWidth: 3,
+                pointBackgroundColor: '#f43f5e'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                position: 'top',
+                labels: { font: { family: 'Cairo', size: 10 } }
+              }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { font: { family: 'Cairo', size: 10 } } },
+              y: { beginAtZero: true, ticks: { font: { family: 'Cairo', size: 10 } } }
+            }
+          }
+        });
+
+        // مخطط توزيع الموظفين
+        const ctx2 = document.getElementById('departmentChart').getContext('2d');
+        if (departmentChart) {
+          departmentChart.destroy();
+        }
+        
+        const deptLabels = Object.keys(dashboardData.departments);
+        const deptValues = Object.values(dashboardData.departments);
+        const hasData = deptValues.some(v => v > 0);
+        
+        // If no data, populate mock visual categories
+        const labelsToUse = hasData ? deptLabels : ['الإدارة العامة', 'قسم المبيعات', 'المحاسبة والمالية', 'العمليات اللوجستية'];
+        const valuesToUse = hasData ? deptValues : [5, 4, 3, 3];
+        const colors = ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899'];
+
+        departmentChart = new Chart(ctx2, {
+          type: 'doughnut',
+          data: {
+            labels: labelsToUse,
+            datasets: [{
+              data: valuesToUse,
+              backgroundColor: colors.slice(0, labelsToUse.length),
+              borderWidth: 2,
+              borderColor: '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                position: 'bottom',
+                labels: { font: { family: 'Cairo', size: 10 } }
+              }
+            }
+          }
+        });
+      } catch (err) {
+        console.error('Error initializing charts:', err);
+      }
+    }
+
+    // ==========================================
+    // 4. جلب وتحديث السجلات من الخادم محلياً
+    // ==========================================
+    async function refreshData() {
+      const updateEl = document.getElementById('lastUpdate');
+      updateEl.textContent = 'جاري التحديث الآن...';
+      updateEl.className = 'text-amber-500 font-bold';
+      
+      try {
+        const res = await fetch('/api/dashboard');
+        const data = await res.json();
+        
+        if (data) {
+          dashboardData.employees = data.totalEmployees || 0;
+          dashboardData.revenue = data.totalRevenue || 0;
+          dashboardData.expenses = data.totalExpenses || 0;
+          dashboardData.pendingInvoices = data.pendingInvoices || 0;
+          
+          if (data.departments) {
+            dashboardData.departments = data.departments;
+          }
+          if (data.monthlyRevenue) {
+            dashboardData.monthlyData.revenue = data.monthlyRevenue;
+          }
+          if (data.monthlyExpenses) {
+            dashboardData.monthlyData.expenses = data.monthlyExpenses;
+          }
+          
+          updateKPIs();
+          initCharts();
+          
+          // Render Recent Activities dynamically
+          if (data.recentActivities && data.recentActivities.length > 0) {
+            const actContainer = document.getElementById('recentActivities');
+            actContainer.innerHTML = '';
+            data.recentActivities.forEach(act => {
+              const div = document.createElement('div');
+              div.className = 'flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100';
+              
+              let dotColor = 'bg-blue-500';
+              if (act.type === 'invoice') dotColor = 'bg-emerald-500';
+              if (act.type === 'expense') dotColor = 'bg-rose-500';
+              if (act.type === 'employee') dotColor = 'bg-indigo-500';
+              
+              div.innerHTML = `
+                <span class="w-2.5 h-2.5 rounded-full ${dotColor}"></span>
+                <div class="flex-1">
+                  <p class="text-xs font-semibold text-slate-700">${act.text}</p>
+                  <p class="text-[10px] text-slate-400 mt-0.5">${act.time || 'منذ قليل'}</p>
+                </div>
+              `;
+              actContainer.appendChild(div);
+            });
+          } else {
+            // Static/fallback list if no transactions recorded
+            const actContainer = document.getElementById('recentActivities');
+            actContainer.innerHTML = `
+              <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <div class="flex-1">
+                  <p class="text-xs font-semibold text-slate-700">تم فحص أرصدة الحسابات البنكية والمصرفية بنجاح</p>
+                  <p class="text-[10px] text-slate-400">منذ دقائق</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                <div class="flex-1">
+                  <p class="text-xs font-semibold text-slate-700">النظام جاهز ومستقر للتشغيل في بيئة التطوير المحلية</p>
+                  <p class="text-[10px] text-slate-400">الآن</p>
+                </div>
+              </div>
+            `;
+          }
+        }
+        
+        updateEl.textContent = new Date().toLocaleTimeString('ar-EG');
+        updateEl.className = 'text-green-600 font-bold';
+      } catch (error) {
+        console.error('❌ فشل المزامنة:', error);
+        updateEl.textContent = '⚠️ فشل تحديث البيانات (تأكد من تشغيل الخادم)';
+        updateEl.className = 'text-rose-500 font-bold';
+      }
+    }
+
+    // ==========================================
+    // 5. وظائف المساعد الذكي (AI Copilot Chat Engine)
+    // ==========================================
+    async function askCopilot() {
+      const input = document.getElementById('chatInput');
+      const question = input.value.trim();
+      if (!question) return;
+      
+      // إضافة سؤال المستخدم في واجهة الشات
+      addMessage('user', question);
+      input.value = '';
+      
+      // Add loading state message placeholder
+      const loadingMsgId = addMessage('assistant', '🤖 جاري التفكير وتحليل السجلات ماليًا...', true);
+      
+      try {
+        const response = await fetch('/api/ai/copilot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+        
+        const data = await response.json();
+        
+        // Remove loading state placeholder
+        removeLoadingPlaceholder(loadingMsgId);
+        
+        if (data && data.response) {
+          addMessage('assistant', data.response);
+        } else {
+          addMessage('assistant', '❌ عذراً، لم نتمكن من الحصول على رد مفيد من المساعد الذكي.');
+        }
+      } catch (error) {
+        removeLoadingPlaceholder(loadingMsgId);
+        addMessage('assistant', '❌ عذراً، تعذر الاتصال بالخادم الخلفي لطلب تحليل المساعد الذكي.');
+      }
+    }
+    
+    // إضافة رسالة في صندوق الشات
+    function addMessage(type, text, isLoadingPlaceholder = false) {
+      const container = document.getElementById('chatMessages');
+      const msgDiv = document.createElement('div');
+      const msgId = 'msg-' + Math.random().toString(36).substr(2, 9);
+      msgDiv.id = msgId;
+      
+      if (type === 'user') {
+        msgDiv.className = 'text-right flex justify-end';
+        msgDiv.innerHTML = `
+          <div class="inline-block bg-blue-600 text-white px-4 py-2.5 rounded-2xl rounded-tr-none max-w-[85%] text-xs leading-relaxed">
+            ${text}
+          </div>
+        `;
+      } else {
+        msgDiv.className = 'text-left flex justify-start';
+        msgDiv.innerHTML = `
+          <div class="inline-block bg-slate-800 text-slate-100 border border-slate-700/60 px-4 py-2.5 rounded-2xl rounded-tl-none max-w-[85%] text-xs leading-relaxed ${isLoadingPlaceholder ? 'animate-pulse' : ''}">
+            <div class="text-[10px] text-indigo-300 font-bold mb-1">🤖 المساعد الذكي</div>
+            <div class="whitespace-pre-line">${text}</div>
+          </div>
+        `;
+      }
+      
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+      return msgId;
+    }
+
+    function removeLoadingPlaceholder(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.remove();
+      }
+    }
+    
+    // دالة الأسئلة السريعة
+    function askQuick(question) {
+      document.getElementById('chatInput').value = question;
+      askCopilot();
+    }
+
+    // ==========================================
+    // 5.5. إدارة الإشعارات والتنبيهات المنبثقة (Notifications Engine)
+    // ==========================================
+    let notifications = [];
+
+    function renderNotifications() {
+      const list = document.getElementById('notifList');
+      const badge = document.getElementById('notifBadge');
+      if (!list || !badge) return;
+      
+      const unreadCount = notifications.filter(n => !n.read).length;
+      if (unreadCount > 0) {
+        badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+      
+      if (notifications.length === 0) {
+        list.innerHTML = `
+          <div class="p-6 text-center text-slate-400 text-xs">
+            🎉 لا توجد إشعارات حالياً
+          </div>
+        `;
+        return;
+      }
+      
+      list.innerHTML = notifications.map(n => `
+        <div class="p-3 border-b border-slate-50 hover:bg-slate-50 cursor-pointer transition-colors ${n.read ? 'opacity-60' : 'bg-blue-50/40 font-semibold'}" onclick="markAsRead(${n.id})">
+          <div class="flex items-start gap-2.5">
+            <span class="text-base mt-0.5 shrink-0">${n.title.split(' ')[0] || '📌'}</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs text-slate-800 font-bold">${n.title}</p>
+              <p class="text-[11px] text-slate-600 mt-0.5">${n.message}</p>
+              <p class="text-[9px] text-slate-400 mt-1">${n.time || 'الآن'}</p>
+            </div>
+            ${!n.read ? '<span class="w-2 h-2 rounded-full bg-blue-600 shrink-0 mt-1.5"></span>' : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleNotifications() {
+      const dropdown = document.getElementById('notifDropdown');
+      if (dropdown) {
+        dropdown.classList.toggle('hidden');
+        if (!dropdown.classList.contains('hidden')) {
+          renderNotifications();
+        }
+      }
+    }
+
+    async function markAsRead(id) {
+      const notif = notifications.find(n => n.id === id);
+      if (notif) {
+        notif.read = true;
+        renderNotifications();
+        try {
+          await fetch(`/api/notifications/${id}/read`, { method: 'PUT' });
+        } catch (e) {
+          console.error('Error marking as read:', e);
+        }
+      }
+    }
+
+    async function markAllRead() {
+      notifications.forEach(n => n.read = true);
+      renderNotifications();
+      try {
+        await fetch('/api/notifications/read-all', { method: 'PUT' });
+        showToast('🔄 تم التحديث', 'تم تحديد جميع التنبيهات كمقروءة', 'success');
+      } catch (e) {
+        console.error('Error marking all read:', e);
+      }
+    }
+
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      
+      const colors = {
+        info: 'border-blue-500 bg-blue-50/95 text-blue-900',
+        success: 'border-emerald-500 bg-emerald-50/95 text-emerald-900',
+        warning: 'border-amber-500 bg-amber-50/95 text-amber-900',
+        error: 'border-rose-500 bg-rose-50/95 text-rose-900'
+      };
+      
+      const icons = {
+        info: '🔵',
+        success: '✅',
+        warning: '⚠️',
+        error: '❌'
+      };
+      
+      const toast = document.createElement('div');
+      toast.className = `p-4 rounded-xl shadow-lg border-r-4 ${colors[type] || colors.info} bg-white pointer-events-auto max-w-sm transform transition-all duration-500 translate-x-full border border-slate-200/50 backdrop-blur-xs text-right`;
+      toast.setAttribute('dir', 'rtl');
+      toast.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="text-lg mt-0.5 shrink-0">${icons[type] || '📌'}</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-xs">${title}</p>
+            <p class="text-[11px] mt-0.5 leading-relaxed">${message}</p>
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" class="text-slate-400 hover:text-slate-600 cursor-pointer shrink-0 p-0.5 text-xs">✕</button>
+        </div>
+      `;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-x-full');
+        toast.classList.add('translate-x-0');
+      }, 100);
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-x-0');
+        toast.classList.add('translate-x-full');
+        setTimeout(() => toast.remove(), 500);
+      }, 5000);
+    }
+
+    async function fetchNotifications() {
+      try {
+        const res = await fetch('/api/notifications');
+        const data = await res.json();
+        if (data && Array.isArray(data)) {
+          // Check if there are any new unread notifications that were not present previously
+          const oldUnreads = notifications.filter(n => !n.read).map(n => n.id);
+          const newUnreads = data.filter(n => !n.read && !oldUnreads.includes(n.id));
+          
+          notifications = data;
+          renderNotifications();
+          
+          // Trigger toast alert for newly fetched unread items
+          newUnreads.forEach(notif => {
+            let toastType = 'info';
+            if (notif.type === 'invoice') toastType = 'success';
+            if (notif.type === 'inventory') toastType = 'warning';
+            if (notif.type === 'payroll') toastType = 'info';
+            showToast(notif.title, notif.message, toastType);
+          });
+        }
+      } catch (error) {
+        console.error('❌ فشل جلب الإشعارات:', error);
+      }
+    }
+
+    async function sendTestNotification() {
+      try {
+        const testTypes = [
+          { title: '📋 فاتورة جديدة', message: 'تم إصدار فاتورة مبيعات رقم INV-2026-050 للعميل محمد سالم', type: 'invoice' },
+          { title: '📦 تنبيه مخزون', message: 'نفذت كمية كابلات التوصيل النحاسية بالكامل بالمستودع الرئيسي', type: 'inventory' },
+          { title: '💰 رواتب الموظفين', message: 'تم إيداع رواتب الوردية المسائية بنجاح في الحسابات البنكية', type: 'payroll' }
+        ];
+        const randomType = testTypes[Math.floor(Math.random() * testTypes.length)];
+        
+        const res = await fetch('/api/notifications/simulate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(randomType)
+        });
+        const newNotif = await res.json();
+        
+        // Fetch to sync
+        await fetchNotifications();
+      } catch (err) {
+        console.error('Error simulating notification:', err);
+      }
+    }
+
+    // Close notifications dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('notifDropdown');
+      if (dropdown && !dropdown.classList.contains('hidden')) {
+        if (!e.target.closest('#notifDropdown') && !e.target.closest('[onclick="toggleNotifications()"]')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    });
+
+    // ==========================================
+    // 5.6. تصدير التقارير (Export Reports)
+    // ==========================================
+    function exportReport(format) {
+      showToast('⏳ جاري التصدير...', `جاري تحضير تقرير بصيغة ${format.toUpperCase()}`, 'info');
+      
+      fetch(`/api/export/${format}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'dashboard',
+          period: 'monthly',
+          year: 2026
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.blob();
+        }
+        throw new Error('فشل التصدير');
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `تقرير_الهضبة_${new Date().toISOString().slice(0,10)}.${format === 'pdf' ? 'pdf' : format === 'excel' ? 'xlsx' : 'csv'}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        
+        showToast('✅ تم التصدير!', `تم تحميل التقرير بنجاح بصيغة ${format.toUpperCase()}`, 'success');
+      })
+      .catch(error => {
+        console.error('❌ فشل التصدير:', error);
+        showToast('❌ فشل التصدير', 'حدث خطأ أثناء تصدير التقرير من الخادم الرئيسي', 'error');
+      });
+    }
+
+    function exportSalesReport(format) {
+      showToast('⏳ جاري تصدير تقرير المبيعات...', 'جاري التحضير', 'info');
+      window.open(`/api/export/sales/${format}`, '_blank');
+    }
+
+    function exportEmployeesReport(format) {
+      showToast('⏳ جاري تصدير تقرير الموظفين...', 'جاري التحضير', 'info');
+      window.open(`/api/export/employees/${format}`, '_blank');
+    }
+
+    // ==========================================
+    // 5.7. منظومة الفواتير الإلكترونية المصرية (ETA)
+    // ==========================================
+    let etaInvoices = [];
+    let selectedEtaInvoice = null;
+
+    async function loadETAInvoices() {
+      try {
+        const res = await fetch('/api/invoices');
+        const data = await res.json();
+        if (data && Array.isArray(data)) {
+          etaInvoices = data;
+          renderETAInvoices();
+        }
+      } catch (err) {
+        console.error('❌ فشل جلب فواتير ETA:', err);
+      }
+    }
+
+    function renderETAInvoices() {
+      const container = document.getElementById('etaInvoicesList');
+      if (!container) return;
+      
+      if (etaInvoices.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">لا توجد فواتير حالية</p>`;
+        return;
+      }
+
+      container.innerHTML = etaInvoices.map(invoice => {
+        const isSelected = selectedEtaInvoice && selectedEtaInvoice.id === invoice.id;
+        const statusClass = invoice.eta_status === 'submitted' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800';
+        const statusText = invoice.eta_status === 'submitted' ? 'مرسلة وموثقة' : 'مسودة إلكترونية';
+        
+        return `
+          <div onclick="selectETAInvoice('${invoice.id}')" class="p-3 rounded-lg border transition-all cursor-pointer text-right text-xs ${isSelected ? 'border-blue-600 bg-blue-50/40' : 'border-slate-100 bg-white hover:bg-slate-50'}">
+            <div class="flex items-center justify-between font-bold text-slate-700 mb-1">
+              <span>#${invoice.invoiceNumber || invoice.id}</span>
+              <span class="text-slate-950">${invoice.totalAmount || 0} ج.م</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px] text-slate-500 mt-1.5">
+              <span>${invoice.date}</span>
+              <span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold ${statusClass}">${statusText}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function selectETAInvoice(id) {
+      selectedEtaInvoice = etaInvoices.find(inv => inv.id === id);
+      renderETAInvoices(); // update selection visual
+      
+      const detailContainer = document.getElementById('etaInvoiceDetailView');
+      if (!detailContainer || !selectedEtaInvoice) return;
+
+      // Render loading state
+      detailContainer.innerHTML = `<div class="text-center py-16 text-slate-400 text-xs">جاري تحميل تفاصيل الفاتورة...</div>`;
+
+      // Render actual detail
+      const qrCodeHtml = selectedEtaInvoice.qr_code 
+        ? `<img src="${selectedEtaInvoice.qr_code}" alt="ETA QR Code" class="w-32 h-32 mx-auto border border-slate-200 p-1.5 rounded-lg">`
+        : `<div class="w-32 h-32 mx-auto border border-dashed border-slate-300 rounded-lg flex items-center justify-center text-[10px] text-slate-400">لم يتم توليد رمز QR</div>`;
+
+      const uuidHtml = selectedEtaInvoice.eta_uuid 
+        ? `<span class="font-mono text-[10.5px] bg-slate-100 px-2.5 py-1 rounded-md text-slate-600 select-all">${selectedEtaInvoice.eta_uuid}</span>`
+        : `<span class="text-[10px] text-slate-400">سيتم توليده تلقائياً عند الإرسال</span>`;
+
+      const submissionDateHtml = selectedEtaInvoice.eta_submission_date
+        ? `<span>${new Date(selectedEtaInvoice.eta_submission_date).toLocaleString('ar-EG')}</span>`
+        : `<span>لم ترسل بعد</span>`;
+
+      detailContainer.innerHTML = `
+        <div class="space-y-4 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span class="font-bold text-slate-800 text-sm">تفاصيل الفاتورة الإلكترونية #${selectedEtaInvoice.invoiceNumber}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${selectedEtaInvoice.eta_status === 'submitted' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+              ${selectedEtaInvoice.eta_status === 'submitted' ? 'مكتملة وموثقة لدى ETA' : 'جاهزة للإرسال'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <div class="flex justify-between text-slate-500">
+                <span>تاريخ الفاتورة:</span>
+                <span class="font-bold text-slate-700">${selectedEtaInvoice.date}</span>
+              </div>
+              <div class="flex justify-between text-slate-500">
+                <span>مبلغ الفاتورة الكلي:</span>
+                <span class="font-bold text-slate-700">${selectedEtaInvoice.totalAmount} ج.م</span>
+              </div>
+              <div class="flex justify-between text-slate-500">
+                <span>الرقم الموحد (UUID):</span>
+                <span class="font-bold text-slate-700">${uuidHtml}</span>
+              </div>
+              <div class="flex justify-between text-slate-500">
+                <span>تاريخ التوثيق:</span>
+                <span class="font-bold text-slate-700">${submissionDateHtml}</span>
+              </div>
+            </div>
+            
+            <div class="text-center md:border-r border-slate-100 md:pr-4 flex flex-col justify-center items-center">
+              ${qrCodeHtml}
+              <p class="text-[9.5px] text-slate-400 mt-2">رمز الاستجابة السريعة لمصلحة الضرائب المصرية (QR Code)</p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap gap-2 justify-end text-xs font-bold">
+            <button onclick="downloadETAXML('${selectedEtaInvoice.id}')" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors cursor-pointer flex items-center gap-1 border border-slate-200">
+              📥 تحميل XML
+            </button>
+            <button onclick="generateETAQRCode('${selectedEtaInvoice.id}')" class="px-3.5 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors cursor-pointer flex items-center gap-1 border border-blue-200/50">
+              🔄 توليد QR
+            </button>
+            <button onclick="submitToETA('${selectedEtaInvoice.id}')" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors cursor-pointer flex items-center gap-1 shadow-sm">
+              🚀 إرسال للضرائب
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function downloadETAXML(id) {
+      showToast('⏳ جاري تصدير XML...', 'يتم جلب البيانات وتصميم ملف XML الضريبي', 'info');
+      window.open(`/api/invoices/${id}/xml`, '_blank');
+    }
+
+    async function generateETAQRCode(id) {
+      showToast('⏳ جاري توليد QR Code...', 'يتم تصميم الرمز الموثق طبقاً لمعايير مصلحة الضرائب', 'info');
+      try {
+        const res = await fetch(`/api/invoices/${id}/generate-qr`, { method: 'POST' });
+        const data = await res.json();
+        if (data.qr_code) {
+          showToast('✅ تم التوليد!', 'تم توليد وتحديث رمز الاستجابة الضريبية والموحد بنجاح.', 'success');
+          await loadETAInvoices();
+          if (selectedEtaInvoice && selectedEtaInvoice.id === id) {
+            selectETAInvoice(id);
+          }
+        } else {
+          showToast('❌ فشل توليد الرمز', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('❌ فشل توليد الرمز', 'عطل في الخادم', 'error');
+      }
+    }
+
+    async function submitToETA(id) {
+      showToast('🚀 جاري الإرسال للضرائب...', 'جاري توقيع وتشفير الفاتورة وإرسالها لمصلحة الضرائب المصرية', 'info');
+      try {
+        const res = await fetch(`/api/invoices/${id}/submit-eta`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: 'u-1' })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast('🇪🇬 تم التوثيق بنجاح!', 'تم توثيق وإرسال الفاتورة وحفظها في منظومة الفواتير الضريبية بنجاح.', 'success');
+          await loadETAInvoices();
+          selectETAInvoice(id);
+        } else {
+          showToast('❌ فشل الإرسال والتوثيق', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('❌ فشل الإرسال والتوثيق', 'عطل في الخادم الرئيسي', 'error');
+      }
+    }
+
+    async function openETASettings() {
+      document.getElementById('etaSettingsModal').classList.remove('hidden');
+      try {
+        const res = await fetch('/api/eta-settings');
+        const settings = await res.json();
+        if (settings) {
+          document.getElementById('eta_company_name').value = settings.company_name || '';
+          document.getElementById('eta_tax_id').value = settings.tax_id || '';
+          document.getElementById('eta_company_address').value = settings.company_address || '';
+          document.getElementById('eta_activity_code').value = settings.activity_code || '';
+          document.getElementById('eta_branch_code').value = settings.branch_code || '';
+          document.getElementById('eta_building_number').value = settings.building_number || '';
+          document.getElementById('eta_floor_number').value = settings.floor_number || '';
+          document.getElementById('eta_room_number').value = settings.room_number || '';
+          document.getElementById('eta_postal_code').value = settings.postal_code || '';
+          document.getElementById('eta_api_url').value = settings.api_url || '';
+        }
+      } catch (err) {
+        console.error('❌ فشل تحميل الإعدادات:', err);
+      }
+    }
+
+    function closeETASettings() {
+      document.getElementById('etaSettingsModal').classList.add('hidden');
+    }
+
+    async function saveETASettings(event) {
+      event.preventDefault();
+      const settingsData = {
+        company_name: document.getElementById('eta_company_name').value,
+        tax_id: document.getElementById('eta_tax_id').value,
+        company_address: document.getElementById('eta_company_address').value,
+        activity_code: document.getElementById('eta_activity_code').value,
+        branch_code: document.getElementById('eta_branch_code').value,
+        building_number: document.getElementById('eta_building_number').value,
+        floor_number: document.getElementById('eta_floor_number').value,
+        room_number: document.getElementById('eta_room_number').value,
+        postal_code: document.getElementById('eta_postal_code').value,
+        api_url: document.getElementById('eta_api_url').value
+      };
+
+      try {
+        const res = await fetch('/api/eta-settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(settingsData)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('✅ تم الحفظ!', 'تم تحديث وحفظ إعدادات منظومة الفواتير الإلكترونية (ETA) في قاعدة البيانات.', 'success');
+          closeETASettings();
+        } else {
+          showToast('❌ فشل الحفظ', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('❌ فشل الحفظ', 'عطل في الاتصال بالخادم', 'error');
+      }
+    }
+
+    // ==========================================
+    // 5.8. نظام الترجمة متعدد اللغات (Translation System)
+    // ==========================================
+    let currentLanguage = localStorage.getItem('erp_language') || 'ar';
+    let localTranslations = {};
+
+    function toggleLanguageMenu() {
+      const menu = document.getElementById('languageMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    async function changeLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('erp_language', lang);
+      toggleLanguageMenu();
+      
+      const flagMap = { ar: '🇪🇬', en: '🇬🇧', fr: '🇫🇷', tr: '🇹🇷', es: '🇪🇸' };
+      const nameMap = { ar: 'العربية', en: 'English', fr: 'Français', tr: 'Türkçe', es: 'Español' };
+      
+      document.getElementById('currentLangFlag').innerText = flagMap[lang] || '🌐';
+      document.getElementById('currentLangName').innerText = nameMap[lang] || lang;
+
+      // Update text direction
+      if (lang === 'ar') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+      } else {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = lang;
+      }
+
+      await loadTranslations();
+      showToast('🌍 تم تغيير اللغة', `تم تحديث واجهة النظام إلى لغة: ${nameMap[lang]}`, 'success');
+    }
+
+    async function loadTranslations() {
+      try {
+        const res = await fetch(`/api/translations/${currentLanguage}`);
+        const result = await res.json();
+        if (result.success && result.data) {
+          localTranslations = result.data;
+          applyTranslations();
+        }
+      } catch (err) {
+        console.error('❌ فشل جلب الترجمات:', err);
+      }
+    }
+
+    function applyTranslations() {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(elem => {
+        const key = elem.getAttribute('data-i18n');
+        if (localTranslations[key]) {
+          const text = localTranslations[key];
+          
+          const currentHTML = elem.innerHTML;
+          const matchEmoji = currentHTML.match(/^(\s*<[^>]+>)*\s*([\uD800-\uDBFF][\uDC00-\uDFFF]|\p{Emoji_Presentation}|\p{Emoji_Modifier_Base})\s*/u);
+          if (matchEmoji) {
+            elem.innerHTML = matchEmoji[0] + ' ' + text;
+          } else {
+            elem.innerText = text;
+          }
+        }
+      });
+    }
+
+    // Close language menu when clicking outside
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('languageMenu');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!e.target.closest('#languageMenu') && !e.target.closest('[onclick="toggleLanguageMenu()"]')) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+
+    // ==========================================
+    // 6. التهيئة والتشغيل عند تحميل الصفحة
+    // ==========================================
+    window.onload = async function() {
+      // First update layout
+      updateKPIs();
+      initCharts();
+      
+      // Load selected language if saved
+      if (currentLanguage !== 'ar') {
+        const flagMap = { ar: '🇪🇬', en: '🇬🇧', fr: '🇫🇷', tr: '🇹🇷', es: '🇪🇸' };
+        const nameMap = { ar: 'العربية', en: 'English', fr: 'Français', tr: 'Türkçe', es: 'Español' };
+        document.getElementById('currentLangFlag').innerText = flagMap[currentLanguage] || '🌐';
+        document.getElementById('currentLangName').innerText = nameMap[currentLanguage] || currentLanguage;
+        if (currentLanguage === 'ar') {
+          document.documentElement.dir = 'rtl';
+          document.documentElement.lang = 'ar';
+        } else {
+          document.documentElement.dir = 'ltr';
+          document.documentElement.lang = currentLanguage;
+        }
+      }
+      await loadTranslations();
+
+      // Fetch dynamic live records immediately
+      await refreshData();
+      
+      // Load initial notifications and set interval
+      await fetchNotifications();
+      setInterval(fetchNotifications, 25000);
+
+      // Load ETA data
+      await loadETAInvoices();
+      
+      // Welcome toast
+      setTimeout(() => {
+        showToast('👋 مرحباً بك في لوحة الهضبة المتقدمة!', 'تم الاتصال بالخادم الرئيسي وتحديث مؤشرات الأداء والإشعارات بنجاح.', 'info');
+      }, 1200);
+
+      // Welcome tour auto start
+      if (localStorage.getItem('tourCompleted') !== 'true') {
+        setTimeout(startTour, 2500);
+      }
+
+      // Load daily workers & probation data
+      await loadEmployeesAndProbationData();
+    };
+
+    // ==========================================
+    // 5.9. الجولة التعريفية الذكية (Onboarding Tour)
+    // ==========================================
+    const tourSteps = [
+      {
+        element: '#sidebar',
+        title: '📊 القائمة الجانبية',
+        description: 'من هنا تتنقل بين أقسام التطبيق المختلفة: لوحة التحكم، الموظفين، الرواتب، الفواتير، المخزون، والمشاريع.'
+      },
+      {
+        element: '#dashboardStats',
+        title: '📈 إحصائيات سريعة',
+        description: 'تعرض أرقاماً فورية مهمة مثل عدد الموظفين، إجمالي الإيرادات، المصروفات، والفواتير المعلقة في النظام.'
+      },
+      {
+        element: '#recentActivities',
+        title: '🕒 آخر النشاطات والعمليات',
+        description: 'تتبع هنا أحدث الإجراءات في النظام بشكل حي ومباشر مثل إضافة موظف أو إصدار فاتورة مبيعات جديدة.'
+      },
+      {
+        element: '#smartAlerts',
+        title: '🔔 تنبيهات ذكية',
+        description: 'تنبيهات ومؤشرات ذكية فورية عن الفواتير المتأخرة، المخزون المنخفض، والرواتب المعلقة لتسهيل المتابعة.'
+      },
+      {
+        element: '#ai-copilot-section',
+        title: '🤖 المساعد الذكي (AI Copilot)',
+        description: 'اسأل مساعدك المحاسبي والإداري الذكي أي سؤال مالي أو استفسار عن شركتك وسيقوم بتحليل البيانات وإجابتك فوراً!'
+      }
+    ];
+    
+    let currentTourStep = 0;
+    
+    function startTour() {
+      currentTourStep = 0;
+      document.getElementById('tourOverlay').classList.remove('hidden');
+      highlightStep(currentTourStep);
+    }
+    
+    function highlightStep(index) {
+      const step = tourSteps[index];
+      const element = document.querySelector(step.element);
+      
+      if (!element) {
+        // إذا لم يتم العثور على العنصر، انتقل للخطوة التالية
+        nextTourStep();
+        return;
+      }
+      
+      const rect = element.getBoundingClientRect();
+      const tooltip = document.getElementById('tourTooltip');
+      
+      // التمرير إلى العنصر ليظهر بوضوح
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      
+      // تحديد موقع التلميحة بشكل مرن ليتماشى مع التمرير
+      setTimeout(() => {
+        const updatedRect = element.getBoundingClientRect();
+        tooltip.style.left = (updatedRect.left + updatedRect.width / 2 - 160) + 'px';
+        tooltip.style.top = (updatedRect.bottom + window.scrollY + 20) + 'px';
+        
+        // تأكد من أن التلميحة في حدود الشاشة
+        const tooltipWidth = 320;
+        if (updatedRect.left + updatedRect.width / 2 - 160 < 10) {
+          tooltip.style.left = '10px';
+        } else if (updatedRect.left + updatedRect.width / 2 + 160 > window.innerWidth) {
+          tooltip.style.left = (window.innerWidth - tooltipWidth - 10) + 'px';
+        }
+      }, 300);
+      
+      // تحديث المحتوى
+      document.getElementById('tourTitle').innerHTML = `<span>🎯</span> ${step.title}`;
+      document.getElementById('tourDescription').textContent = step.description;
+      document.getElementById('tourProgress').textContent = `${index + 1} / ${tourSteps.length}`;
+      
+      // إضافة تأثير إضاءة على العنصر
+      document.querySelectorAll('.tour-highlight').forEach(el => {
+        el.classList.remove('tour-highlight');
+        el.style.boxShadow = '';
+        el.style.zIndex = '';
+      });
+      element.classList.add('tour-highlight');
+      element.style.position = 'relative';
+      element.style.zIndex = '51';
+    }
+    
+    function nextTourStep() {
+      // إزالة التحديد من العنصر الحالي
+      document.querySelectorAll('.tour-highlight').forEach(el => {
+        el.classList.remove('tour-highlight');
+        el.style.boxShadow = '';
+        el.style.zIndex = '';
+      });
+      
+      currentTourStep++;
+      if (currentTourStep < tourSteps.length) {
+        highlightStep(currentTourStep);
+      } else {
+        endTour();
+      }
+    }
+    
+    function endTour() {
+      document.getElementById('tourOverlay').classList.add('hidden');
+      document.querySelectorAll('.tour-highlight').forEach(el => {
+        el.classList.remove('tour-highlight');
+        el.style.boxShadow = '';
+        el.style.zIndex = '';
+      });
+      localStorage.setItem('tourCompleted', 'true');
+      showToast('🎉 جولة ممتعة!', 'لقد أكملت الدليل بنجاح، يمكنك الآن استخدام كافة مميزات المنظومة.', 'success');
+    }
+
+    // ==========================================
+    // 5.10. إدارة العمالة اليومية وفترة التجربة
+    // ==========================================
+    let allEmployees = [];
+
+    async function loadEmployeesAndProbationData() {
+      try {
+        const res = await fetch('/api/employees');
+        allEmployees = await res.json();
+        
+        // تعيين قيم افتراضية للتواريخ
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.getElementById('dailyWorkDate').value = todayStr;
+        document.getElementById('payPeriodStart').value = todayStr;
+        document.getElementById('payPeriodEnd').value = todayStr;
+        document.getElementById('probationStart').value = todayStr;
+        
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 3); // فترات تجربة 3 أشهر افتراضياً
+        document.getElementById('probationEnd').value = nextMonth.toISOString().split('T')[0];
+
+        // ملء قوائم الاختيار
+        populateDropdowns();
+
+        // تحميل التنبيهات وحضور العمالة اليومية
+        await loadProbationAlerts();
+        await loadDailyAttendanceLogs();
+        
+      } catch (err) {
+        console.error('Error loading employees/probation data:', err);
+        showToast('❌ خطأ في الاتصال', 'فشل تحميل بيانات الموظفين والعمالة اليومية.', 'error');
+      }
+    }
+
+    function populateDropdowns() {
+      const dailySelect = document.getElementById('dailyWorkerSelect');
+      const paySelect = document.getElementById('payWorkerSelect');
+      const probationSelect = document.getElementById('probationEmployeeSelect');
+
+      if (!dailySelect || !paySelect || !probationSelect) return;
+
+      // تفريغ القوائم
+      dailySelect.innerHTML = '<option value="">اختر العامل اليومي...</option>';
+      paySelect.innerHTML = '<option value="">اختر العامل للتصفية...</option>';
+      probationSelect.innerHTML = '<option value="">اختر الموظف...</option>';
+
+      allEmployees.forEach(emp => {
+        const empName = emp.name || emp.full_name || 'غير معروف';
+        const empDept = emp.department || emp.department_name || 'غير محدد';
+        const label = `${empName} (${empDept}) - ${emp.employment_type === 'daily' ? 'عامل يومي' : emp.employment_type === 'probation' ? 'فترة تجربة' : 'مثبت'}`;
+        
+        // أي عامل يومي
+        if (emp.employment_type === 'daily') {
+          dailySelect.innerHTML += `<option value="${emp.id}">${empName} [أجر يومي: ${emp.daily_rate || 0} ج.م]</option>`;
+          paySelect.innerHTML += `<option value="${emp.id}">${empName}</option>`;
+        }
+        
+        // كل الموظفين يمكن تعيين فترات تجربة لهم أو تعديل حالتهم
+        probationSelect.innerHTML += `<option value="${emp.id}">${label}</option>`;
+      });
+    }
+
+    function onProbationEmployeeChange() {
+      const empId = document.getElementById('probationEmployeeSelect').value;
+      if (!empId) return;
+
+      const emp = allEmployees.find(e => String(e.id) === String(empId));
+      if (emp) {
+        // ملء الحقول تلقائياً
+        const typeSelect = document.getElementById('employmentType');
+        if (typeSelect) {
+          typeSelect.value = emp.employment_type || 'permanent';
+        }
+        
+        if (emp.probation_start_date) {
+          document.getElementById('probationStart').value = emp.probation_start_date;
+        }
+        if (emp.probation_end_date) {
+          document.getElementById('probationEnd').value = emp.probation_end_date;
+        }
+        
+        document.getElementById('probationDailyRate').value = emp.daily_rate || emp.basicSalary || emp.base_salary || 0;
+        
+        // إظهار/إخفاء الحقول بناء على النوع
+        toggleProbationFields();
+      }
+    }
+
+    function toggleProbationFields() {
+      const typeSelect = document.getElementById('employmentType');
+      const fields = document.getElementById('probationFields');
+      if (!typeSelect || !fields) return;
+
+      const type = typeSelect.value;
+      if (type === 'probation') {
+        fields.style.display = 'block';
+      } else {
+        fields.style.display = 'none';
+      }
+    }
+
+    // ربط مستمع الحدث لتغيير نوع التعيين
+    const empTypeEl = document.getElementById('employmentType');
+    if (empTypeEl) {
+      empTypeEl.addEventListener('change', toggleProbationFields);
+    }
+
+    async function saveDailyAttendance() {
+      const employee_id = document.getElementById('dailyWorkerSelect').value;
+      const work_date = document.getElementById('dailyWorkDate').value;
+      const hours_worked = document.getElementById('dailyHours').value;
+      const daily_rate = document.getElementById('dailyRate').value;
+      const status = document.getElementById('dailyStatus').value;
+      const notes = document.getElementById('dailyNotes').value;
+      
+      if (!employee_id || !work_date) {
+        showToast('⚠️ بيانات ناقصة', 'يرجى اختيار العامل وتاريخ العمل.', 'warning');
+        return;
+      }
+      
+      try {
+        const res = await fetch('/api/daily-workers/attendance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ employee_id, work_date, hours_worked, daily_rate, status, notes })
+        });
+        
+        const data = await res.json();
+        if (res.ok) {
+          showToast('✅ تم التسجيل', 'تم تسجيل حضور العامل اليومي بنجاح في النظام.', 'success');
+          // تصفير النموذج
+          document.getElementById('dailyWorkerSelect').value = '';
+          document.getElementById('dailyNotes').value = '';
+          // إعادة التحميل
+          await loadDailyAttendanceLogs();
+        } else {
+          showToast('❌ فشل التسجيل', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (error) {
+        console.error('Error saving daily attendance:', error);
+        showToast('❌ خطأ في الاتصال', 'حدث خطأ أثناء الاتصال بالخادم.', 'error');
+      }
+    }
+
+    async function loadDailyAttendanceLogs() {
+      try {
+        const res = await fetch('/api/daily-workers/attendance');
+        const logs = await res.json();
+        
+        const tbody = document.getElementById('dailyAttendanceTableBody');
+        const countEl = document.getElementById('attendanceRecordCount');
+        if (!tbody || !countEl) return;
+        
+        countEl.textContent = `${logs.length} سجل`;
+        
+        if (logs.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center text-slate-400 py-12">لا توجد سجلات حضور مسجلة حالياً.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        // ترتيب تنازلي حسب التاريخ
+        logs.sort((a, b) => new Date(b.work_date) - new Date(a.work_date));
+
+        tbody.innerHTML = logs.map(log => {
+          const emp = allEmployees.find(e => String(e.id) === String(log.employee_id));
+          const empName = emp ? (emp.name || emp.full_name) : 'عامل غير معروف';
+          
+          let statusBadge = '';
+          if (log.status === 'present') {
+            statusBadge = '<span class="px-2 py-0.5 bg-green-100 text-green-700 rounded-full font-bold">✅ حاضر</span>';
+          } else if (log.status === 'half_day') {
+            statusBadge = '<span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-bold">🌓 نصف يوم</span>';
+          } else if (log.status === 'absent') {
+            statusBadge = '<span class="px-2 py-0.5 bg-red-100 text-red-700 rounded-full font-bold">❌ غائب</span>';
+          } else if (log.status === 'paid') {
+            statusBadge = '<span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full font-bold">💵 مدفوع</span>';
+          }
+
+          return `
+            <tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-50">
+              <td class="py-2 px-1 font-bold text-slate-800">${empName}</td>
+              <td class="py-2 px-1 text-slate-500">${log.work_date}</td>
+              <td class="py-2 px-1 font-semibold text-slate-600">${log.hours_worked} ساعة</td>
+              <td class="py-2 px-1 text-slate-600">${log.daily_rate} ج.م</td>
+              <td class="py-2 px-1 font-black text-slate-800">${log.total_amount} ج.م</td>
+              <td class="py-2 px-1">${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Error loading daily attendance logs:', err);
+      }
+    }
+
+    async function payDailyWorker() {
+      const employee_id = document.getElementById('payWorkerSelect').value;
+      const period_start = document.getElementById('payPeriodStart').value;
+      const period_end = document.getElementById('payPeriodEnd').value;
+      const payment_method = document.getElementById('payMethod').value;
+      
+      if (!employee_id || !period_start || !period_end) {
+        showToast('⚠️ بيانات ناقصة', 'يرجى ملء جميع حقول التصفية والصرف.', 'warning');
+        return;
+      }
+
+      if (!confirm('هل أنت متأكد من رغبتك في صرف مستحقات هذا العامل للفترة المحددة؟ سيتم قفل الأيام المصروفة وتغيير حالتها.')) {
+        return;
+      }
+      
+      try {
+        const res = await fetch('/api/daily-workers/pay', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ employee_id, period_start, period_end, payment_method })
+        });
+        
+        const data = await res.json();
+        if (res.ok) {
+          showToast('🎉 تم صرف الرواتب', `بنجاح! إجمالي المستحقات المصفاة: ${data.data.total_amount} ج.م لعدد ${data.data.total_days} أيام عمل.`, 'success');
+          // إعادة التحميل
+          await loadDailyAttendanceLogs();
+          await refreshData();
+        } else {
+          showToast('❌ فشل صرف المستحقات', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (error) {
+        console.error('Error paying daily worker:', error);
+        showToast('❌ خطأ في الاتصال', 'فشل في الاتصال بالخادم.', 'error');
+      }
+    }
+
+    async function setProbation() {
+      const employee_id = document.getElementById('probationEmployeeSelect').value;
+      const typeSelect = document.getElementById('employmentType');
+      if (!typeSelect) return;
+      const type = typeSelect.value;
+      const probation_start_date = document.getElementById('probationStart').value;
+      const probation_end_date = document.getElementById('probationEnd').value;
+      const daily_rate = document.getElementById('probationDailyRate').value;
+      
+      if (!employee_id) {
+        showToast('⚠️ اختر الموظف', 'يرجى تحديد الموظف أولاً لتعديل حالته.', 'warning');
+        return;
+      }
+
+      // إذا كان التثبيت فوري
+      if (type === 'permanent') {
+        await convertToPermanentDirect(employee_id);
+        return;
+      }
+      
+      try {
+        const res = await fetch('/api/employees/probation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ employee_id, probation_start_date, probation_end_date, daily_rate })
+        });
+        
+        const data = await res.json();
+        if (res.ok) {
+          showToast('✅ تم التعيين بنجاح', 'تم وضع الموظف في فترة التجربة وإنشاء تنبيهات ذكية للمتابعة.', 'success');
+          await loadEmployeesAndProbationData();
+        } else {
+          showToast('❌ فشل العملية', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (error) {
+        console.error('Error setting probation:', error);
+        showToast('❌ خطأ في الاتصال', 'فشل الاتصال بالخادم.', 'error');
+      }
+    }
+
+    async function convertToPermanent() {
+      const employee_id = document.getElementById('probationEmployeeSelect').value;
+      if (!employee_id) {
+        showToast('⚠️ اختر الموظف', 'يرجى تحديد الموظف أولاً لتحويله للتثبيت.', 'warning');
+        return;
+      }
+      await convertToPermanentDirect(employee_id);
+    }
+
+    async function convertToPermanentDirect(employee_id) {
+      if (!confirm('هل أنت متأكد من تحويل هذا الموظف إلى كادر التثبيت الدائم بالمنظومة؟')) {
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/employees/convert-to-permanent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ employee_id })
+        });
+        
+        const data = await res.json();
+        if (res.ok) {
+          showToast('🎉 مبروك التثبيت!', 'تم تثبيت الموظف بنجاح في كادر المنظومة وإرسال إشعار رسمي فوري له.', 'success');
+          await loadEmployeesAndProbationData();
+        } else {
+          showToast('❌ فشل التثبيت', data.error || 'خطأ غير معروف', 'error');
+        }
+      } catch (error) {
+        console.error('Error converting to permanent:', error);
+        showToast('❌ خطأ في الاتصال', 'فشل في الاتصال بالخادم الرئيسي.', 'error');
+      }
+    }
+
+    async function loadProbationAlerts() {
+      try {
+        const res = await fetch('/api/probation/alerts');
+        const alerts = await res.json();
+        
+        const container = document.getElementById('probationAlerts');
+        if (!container) return;
+        
+        if (alerts.length === 0) {
+          container.innerHTML = `
+            <div class="p-4 bg-green-50 text-green-700 rounded-lg text-center text-xs font-semibold">
+              ✅ لا توجد تنبيهات عاجلة لفترة التجربة حالياً.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = alerts.map(alert => {
+          let bgStyle = 'bg-blue-50/60';
+          let borderStyle = 'border-r-4 border-blue-500';
+          let textStyle = 'text-blue-800';
+          let emoji = '🔵';
+
+          if (alert.days_remaining <= 7) {
+            bgStyle = 'bg-red-50/60';
+            borderStyle = 'border-r-4 border-red-500';
+            textStyle = 'text-red-800';
+            emoji = '🔴';
+          } else if (alert.days_remaining <= 15) {
+            bgStyle = 'bg-amber-50/60';
+            borderStyle = 'border-r-4 border-amber-500';
+            textStyle = 'text-amber-800';
+            emoji = '🟡';
+          }
+
+          return `
+            <div class="flex items-center justify-between p-3.5 ${bgStyle} rounded-xl border border-slate-100 ${borderStyle}">
+              <div>
+                <p class="font-black text-slate-800 text-xs">${alert.employee_name}</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">${alert.employee_department}</p>
+                <p class="text-[10px] ${textStyle} font-bold mt-1">⏳ متبقي ${alert.days_remaining} يوم على نهاية فترة الاختبار والتجربة</p>
+              </div>
+              <span class="text-xl">${emoji}</span>
+            </div>
+          `;
+        }).join('');
+        
+      } catch (error) {
+        console.error('❌ فشل جلب التنبيهات:', error);
+      }
+    }
+  </script>
+
+</body>
+</html>
