@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { AsyncLocalStorage } from 'async_hooks';
+import bcrypt from 'bcryptjs';
 import { logger } from '../config/logger';
 
 // ============================================================
@@ -69,7 +70,6 @@ export const loadDatabase = (): DatabaseSchema => {
 export const saveDatabase = (data: DatabaseSchema): void => {
   const currentDbFile = getDbFile();
   try {
-    // التأكد من وجود المجلد
     const dir = path.dirname(currentDbFile);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
@@ -89,14 +89,21 @@ export const saveDatabase = (data: DatabaseSchema): void => {
 
 export const getInitialSeededData = (): DatabaseSchema => {
   const now = new Date().toISOString();
-  
+
+  const seedPasswordPlain = process.env.DEFAULT_ADMIN_PASSWORD || 'admin123';
+  const seedPasswordHash = bcrypt.hashSync(seedPasswordPlain, 10);
+
+  if (!process.env.DEFAULT_ADMIN_PASSWORD) {
+    logger.warn('⚠️ DEFAULT_ADMIN_PASSWORD غير محدد في متغيرات البيئة — تم استخدام كلمة المرور الافتراضية "admin123" لحسابات التجربة. يُنصح بضبطها في بيئة الإنتاج.');
+  }
+
   return {
     users: [
       {
         id: 'u-1',
         name: 'أحمد حماد',
         email: 'admin@promet.com',
-        password: '$2a$10$5n4p6K7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3g4h5i6j7k8l9m0n1o2p', // "admin123"
+        password: seedPasswordHash,
         role: 'admin',
         tenantId: 't-1',
         createdAt: now,
@@ -106,7 +113,7 @@ export const getInitialSeededData = (): DatabaseSchema => {
         id: 'u-2',
         name: 'Manager User',
         email: 'manager@promet.com',
-        password: '$2a$10$5n4p6K7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3g4h5i6j7k8l9m0n1o2p',
+        password: seedPasswordHash,
         role: 'manager',
         tenantId: 't-1',
         createdAt: now,
@@ -116,7 +123,7 @@ export const getInitialSeededData = (): DatabaseSchema => {
         id: 'u-3',
         name: 'Employee User',
         email: 'employee@promet.com',
-        password: '$2a$10$5n4p6K7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e2f3g4h5i6j7k8l9m0n1o2p',
+        password: seedPasswordHash,
         role: 'employee',
         tenantId: 't-1',
         createdAt: now,
@@ -339,7 +346,6 @@ export const updateInDatabase = <T>(
   const index = items.findIndex((item: any) => item.id === id);
   if (index === -1) return null;
   
-  // إضافة updatedAt تلقائياً
   const updated = { 
     ...items[index], 
     ...updates, 
